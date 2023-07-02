@@ -39,10 +39,22 @@ if (isset($_POST['login'])) {
                 document.location.href = 'index.php';
                 </script>
                 ";
-            } else if ($row['hak_akses'] != 'user') {
+            } else if ($row['hak_akses'] == 'admin') {
                 echo "
                 <script>
                 document.location.href = 'admin_index.php';
+                </script>
+                ";
+            } else if ($row['hak_akses'] == 'humas') {
+                echo "
+                <script>
+                document.location.href = 'humas_index.php';
+                </script>
+                ";
+            } else if ($row['hak_akses'] == 'bendahara') {
+                echo "
+                <script>
+                document.location.href = 'bendahara_index.php';
                 </script>
                 ";
             }

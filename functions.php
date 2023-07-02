@@ -132,6 +132,7 @@ function tambahAbsensi($data)
     $catatan = $data['catatan'];
     $jamMasuk = date('H:i:s');
     $jamPulang = 'Belum Tercatat';
+    $tunjangan = $data['tunjangan'];
 
     $tanggal = date('Y-m-d');
     $stmt = hitungBaris("SELECT * FROM tb_absensi WHERE tanggal_absen = '$tanggal' AND nip = '$nip'");
@@ -140,7 +141,7 @@ function tambahAbsensi($data)
         $query = 123;
         mysqli_query($conn, $query);
     } elseif ($stmt == 0) {
-        $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggal', '$jamMasuk', '$jamPulang', '$catatan')";
+        $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggal', '$jamMasuk', '$jamPulang', '$catatan', '$tunjangan')";
 
         mysqli_query($conn, $query);
     }
