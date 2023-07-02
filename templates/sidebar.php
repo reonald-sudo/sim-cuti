@@ -47,7 +47,7 @@ if (!isset($_SESSION['login'])) {
                         <a href="index.php" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard User
+                                Dashboard
                                 <i class="right"></i>
                             </p>
                         </a>
@@ -58,12 +58,28 @@ if (!isset($_SESSION['login'])) {
                         <a href="admin_index.php" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard Admin
+                                Dashboard
                                 <i class="right"></i>
                             </p>
                         </a>
                     <?php
-                    } ?>
+                    } elseif ($_SESSION['hak_akses'] === 'bendahara') { ?>
+                        <a href="bendahara_index.php" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                                <i class="right"></i>
+                            </p>
+                        </a>
+                    <?php } elseif ($_SESSION['hak_akses'] === 'humas') { ?>
+                        <a href="humas_index.php" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                                <i class="right"></i>
+                            </p>
+                        </a>
+                    <?php } ?>
 
                 </li>
 

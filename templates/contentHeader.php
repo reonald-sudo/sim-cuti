@@ -16,7 +16,7 @@ if (!isset($_SESSION['login'])) {
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Dashboard user</h1>
+                <h1 class="m-0">Dashboard</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -25,11 +25,15 @@ if (!isset($_SESSION['login'])) {
                     ?>
                         <li class="breadcrumb-item active">Dashboard User</li>
                     <?php
-                    } else {
+                    } else if ($_SESSION['hak_akses'] == 'admin') {
                     ?>
                         <li class="breadcrumb-item active">Dashboard Admin</li>
                     <?php
-                    } ?>
+                    } else if ($_SESSION['hak_akses'] == 'humas') { ?>
+                        <li class="breadcrumb-item active">Dashboard Humas</li>
+                    <?php } else if ($_SESSION['hak_akses'] == 'bendahara') { ?>
+                        <li class="breadcrumb-item active">Dashboard Bendahara</li>
+                    <?php } ?>
                 </ol>
             </div>
         </div>

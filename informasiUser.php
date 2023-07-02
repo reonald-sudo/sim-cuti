@@ -24,6 +24,11 @@ if (!isset($_SESSION['login'])) {
 $nipPegawai = $_GET['nip'];
 
 $informasi = editData("SELECT * FROM pegawai WHERE nip = '$nipPegawai'");
+$golongan = $informasi['golongan'];
+
+$queryPangkat = editData("SELECT pangkat FROM pangkat WHERE golongan = '$golongan'");
+$pangkat = $queryPangkat['pangkat'];
+
 
 ?>
 
@@ -59,33 +64,93 @@ $informasi = editData("SELECT * FROM pegawai WHERE nip = '$nipPegawai'");
                 </div>
             </div>
 
+            <style>
+                /* Gaya CSS untuk card informasi pegawai */
+                .employee-card {
+                    display: flex;
+                    align-items: center;
+                    background-color: #ffffff;
+                    padding: 20px;
+                    border-radius: 4px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    width: 500px;
+                    margin-bottom: 6px;
+                }
+
+                .employee-card img {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    margin-right: 20px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                }
+
+                .employee-card .info {
+                    flex: 1;
+                }
+
+                .employee-card h2 {
+                    margin-top: 0;
+                }
+
+                .employee-card p {
+                    margin-bottom: 0;
+                }
+
+                /* Gaya CSS untuk responsif */
+                @media (max-width: 600px) {
+                    .employee-card {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        width: 100%;
+                    }
+
+                    .employee-card img {
+                        margin-right: 0;
+                        margin-bottom: 10px;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                    }
+                }
+            </style>
 
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
 
-                    <div class="card">
-                        <div class="card-header">
-
-                            <h5><b>Papan Informasi, <?= $_SESSION['nama']; ?></b></h5>
-                            <hr>
-                            <img src="dist/img/user2-160x160.jpg" class="float-right" alt="" srcset="">
-
-
-                            <h5>Nama : <?= $_SESSION['nama']; ?></h5>
-                            <h5>Nip : <?= $informasi['nip']; ?></h5>
-                            <h5>Pangkat : <?= $informasi['golongan']; ?></h5>
-                            <h5>Alamat : <?= $informasi['alamat']; ?></h5>
-                            <h5>Handphone : <?= $informasi['no_telp']; ?></h5>
-                            <h5>Email : <?= $informasi['email']; ?></h5>
-
-
-
-
-
-                        </div>
+                    <div class="employee-card">
+                        <img src="dist/img/reonald.jpeg" alt="Foto Pegawai">
+                        <table>
+                            <tr>
+                                <td>
+                                    <h2><?= $informasi['nama']; ?></h2>
+                                    <table>
+                                        <tr>
+                                            <td><strong>Nip </strong></td>
+                                            <td>: <?= $informasi['nip']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Golongan </strong></td>
+                                            <td>: <?= $informasi['golongan']; ?>, <?= $pangkat ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Email </strong></td>
+                                            <td>: <?= $informasi['email']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Alamat </strong></td>
+                                            <td>: <?= $informasi['alamat']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Telepon </strong></td>
+                                            <td>: <?= $informasi['no_telp']; ?></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-
+                    <a href="#" class="btn btn-warning">Ubah data</a>
                 </div>
             </section>
         </div>

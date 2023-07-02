@@ -56,7 +56,9 @@ if (isset($_POST['pulangKerja'])) {
     }
 };
 
-$absensi = showSingleTable("SELECT * FROM tb_absensi WHERE nip = $nip");
+$bulanSekarang = date('m');
+
+$absensi = showSingleTable("SELECT * FROM tb_absensi WHERE nip = $nip AND MONTH(tanggal_absen) = $bulanSekarang");
 $absensiCek = editData("SELECT * FROM tb_absensi WHERE nip = $nip");
 
 $absensiMasukCek = editData("SELECT * FROM tb_absensi WHERE nip = $nip AND tanggal_absen = '$tanggal'");
@@ -75,12 +77,12 @@ $cekHari = date('D');
 if (empty($absensiMasukCek) && $jamMasuk >= '17:00:00') {
     global $conn;
 
-    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggalSekarang', '-', '-', 'tanpa keterangan')";
+    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggalSekarang', '-', '-', 'tanpa keterangan', '0')";
     mysqli_query($conn, $query);
 } else if (empty($absensiMasukCek) && $jamMasuk >= '07:30:00') {
     global $conn;
 
-    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggalSekarang', '$jamMasuk', 'belum tercatat', 'terlambat')";
+    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggalSekarang', '$jamMasuk', 'belum tercatat', 'terlambat', '20000')";
     mysqli_query($conn, $query);
 }
 
@@ -199,7 +201,9 @@ if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
 
                                         <input type="hidden" name="nama" value="<?= $_SESSION['nama']; ?>">
 
-                                        <input type="text" class="form-control mb-3" name="catatan" id="" placeholder="Hadir / Izin" value="hadir">
+                                        <input type="text" class="form-control mb-3" name="catatan" id="" placeholder="Hadir / Izin">
+
+                                        <input type="hidden" class="form-control mb-3" name="tunjangan" id="" value="44000">
 
                                         <button type="submit" name="masukKerja" class="btn btn-success mr-2" id="masukKerja">Masuk Kerja</button>
 
@@ -210,43 +214,64 @@ if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
 
                         </div>
 
-                        <div class="card container mb-3 col-lg-11 p-3">
-                            <table id="testing" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tanggal Absen</th>
-                                        <th>Jam Masuk</th>
-                                        <th>Jam Pulang</th>
-                                        <th>Catatan</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tanggal</th>
-                                        <th>Jam Masuk</th>
-                                        <th>Jam Pulang</th>
-                                        <th>Catatan</th>
-                                    </tr>
-                                </tfoot>
+                        <div class="card container">
+                            <div class="card-header">
+                                <h4>Tunjangan bulan ini</h4>
 
-                                <tbody>
-                                    <?php $i = 1; ?>
-                                    <?php foreach ($absensi as $row) : ?>
+                                <?php
+                                $totalTunjangan = 0;
+                                foreach ($absensi as $row) {
+                                    $totalTunjangan += (float)$row['tunjangan'];
+                                }
+                                ?>
+                                <h4 style="color: green;"><strong>Rp. <?= number_format($totalTunjangan, 0, ",", "."); ?></strong></h4>
+                            </div>
 
+                            <div class="card-body">
+                                <table id="testing" class="table table-bordered table-hover">
+                                    <thead>
                                         <tr>
-                                            <td><?= $i; ?></td>
-                                            <td><?= $row['tanggal_absen']; ?></td>
-                                            <td><?= $row['jam_masuk']; ?></td>
-                                            <td><?= $row['jam_pulang']; ?></td>
-                                            <td><?= $row['catatan']; ?></td>
+                                            <th>#</th>
+                                            <th>Tanggal Absen</th>
+                                            <th>Jam Masuk</th>
+                                            <th>Jam Pulang</th>
+                                            <th>Catatan</th>
+                                            <th>Tunjangan</th>
                                         </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tanggal</th>
+                                            <th>Jam Masuk</th>
+                                            <th>Jam Pulang</th>
+                                            <th>Catatan</th>
+                                            <th>Tunjangan</th>
+                                        </tr>
+                                    </tfoot>
 
-                                        <?php $i++; ?>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                    <tbody>
+                                        <?php $i = 1; ?>
+                                        <?php foreach ($absensi as $row) : ?>
+
+                                            <tr>
+                                                <td><?= $i; ?></td>
+                                                <td><?= $row['tanggal_absen']; ?></td>
+                                                <td><?= $row['jam_masuk']; ?></td>
+                                                <td><?= $row['jam_pulang']; ?></td>
+                                                <?php if ($row['catatan'] == 'terlambat') : ?>
+                                                    <td style="color: red;"><?= $row['catatan']; ?></td>
+                                                <?php elseif ($row['catatan'] == 'tanpa keterangan') : ?>
+                                                    <td style="color: red;"><?= $row['catatan']; ?></td>
+                                                <?php endif; ?>
+                                                <td style="color: green;">Rp. <?= number_format($row['tunjangan'], 0, ",", "."); ?></td>
+                                            </tr>
+
+                                            <?php $i++; ?>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                     </div>
