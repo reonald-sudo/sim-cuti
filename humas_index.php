@@ -34,13 +34,13 @@
                             <div class="small-box bg-info">
                                 <div class="inner">
 
-                                    <p>Validasi dan Laporan Presensi</p>
+                                    <p>Laporan Presensi</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                                 <?php $tanggal = date('Y-m-d') ?>
-                                <a href="admin_presensiPegawai.php" class="small-box-footer">More Info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="humas_laporanPresensi.php" class="small-box-footer">More Info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
