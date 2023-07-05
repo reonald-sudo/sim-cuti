@@ -1,0 +1,19 @@
+git push origin --delete <nama-branch> = menghapus di github
+git branch -d <nama-branch> = menghapus branch di stagging area namun sudah di merge
+git branch -D <nama-branch> = menghapus paksa branch di stagging area
+git checkout <nama-branch> = berpindah branch
+git branch <nama-branch> = membuat branch baru
+git merge origin/main = menyamakan file di laptop dengan di repository
+git status = melihat status file dengan staging
+git add . = memasukan file ke stagging area
+git git commit -m "<isi commit>" = membuat commit baru
+alias graph="git log --all --decorate --oneline --graph" = membuat alias graph
+git remote -v = digunakan untuk mengecek repository mana yang digunakan untuk pull and fetch
+git reflog = digunakan untuk melihat log branch
+git push -u origin <nama branch> = untuk push branch ke github
+git pull = untuk mengambil perubahan terbaru dari repository tanpa memperdulikan conflict
+git fetch = menggambungkan namun memperhatikan conflict
+git remote add origin <URL repositori GitHub> = untuk melakukan remote ke github repositori
+git clone = untuk cloning dari repositori menuju lokal
+git branch -m master main = agar main branch yang ada di git otomatis ke main, bukan ke master
+git remote remove origin = digunakan untuk menghapus remote 
