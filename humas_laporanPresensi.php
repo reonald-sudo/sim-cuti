@@ -4,7 +4,35 @@
 <?php
 
 require_once 'functions.php';
-require_once 'templates/header.php'
+require_once 'templates/header.php';
+
+$tahunSekarang = date('Y');
+
+
+if (isset($_GET['tahun']) && isset($_GET['status'])) {
+    $tahun = $_GET['tahun'];
+    $status = $_GET['status'];
+
+    $absensi = query("SELECT * FROM tb_absensi WHERE YEAR(tanggal_absen) = '$tahun' AND catatan = '$status'");
+} else {
+    $absensi = query("SELECT * FROM tb_absensi WHERE YEAR(tanggal_absen) = '$tahunSekarang' AND catatan = 'hadir'");
+}
+
+$absensiData = [];  // Inisialisasi array untuk menyimpan data bulanan
+
+// Inisialisasi array data dengan nilai awal 0 untuk setiap bulan
+for ($i = 0; $i < 12; $i++) {
+    $absensiData[$i] = 0;
+}
+
+// Loop melalui data absensi yang didapatkan dan hitung jumlah kejadian untuk setiap bulan
+foreach ($absensi as $data) {
+    $bulan = date('n', strtotime($data['tanggal_absen']));  // Ambil bulan dari tanggal
+    $absensiData[$bulan - 1]++;  // Tambahkan jumlah untuk bulan yang sesuai
+}
+
+// Konversi array absensiData menjadi string yang dipisahkan oleh koma
+$absensiDataString = implode(', ', $absensiData);
 
 ?>
 
@@ -42,8 +70,11 @@ require_once 'templates/header.php'
                 <div class="container-fluid">
 
                     <div class="mb-2">
-                        <a href="#" class="btn btn-primary btn-sm">Cetak keseluruhan</a>
-                        <a href="#" class="btn btn-success btn-sm">Cetak Spesifik</a>
+                        <?php if (isset($_GET['tahun']) && isset($_GET['status'])) : ?>
+                            <a href="humas_cetakPresensi.php?tahun=<?= $_GET['tahun']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-success btn-sm" target="_blank">Cetak berdasarkan pencarian</a>
+                        <?php else : ?>
+                            <a href="humas_cetakPresensiAll.php" class="btn btn-success btn-sm" target="_blank">Cetak semua data</a>
+                        <?php endif; ?>
                     </div>
 
                     <div class="card">
@@ -57,33 +88,37 @@ require_once 'templates/header.php'
 
                             <div class="row">
 
-                                <!-- dropdown tahun -->
-                                <div class="dropdown mr-2">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Tahun
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">2022</a></li>
-                                        <li><a class="dropdown-item" href="#">2023</a></li>
-                                        <li><a class="dropdown-item" href="#">2024</a></li>
-                                        <li><a class="dropdown-item" href="#">2025</a></li>
-                                        <li><a class="dropdown-item" href="#">2026</a></li>
-                                    </ul>
-                                </div>
+                                <form action="humas_laporanPresensi.php" method="get">
 
-                                <!-- dropdown berdasarkan apa ? -->
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Keterangan
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Hadir</a></li>
-                                        <li><a class="dropdown-item" href="#">Izin</a></li>
-                                        <li><a class="dropdown-item" href="#">Sakit</a></li>
-                                        <li><a class="dropdown-item" href="#">Tanpa Keterangan</a></li>
-                                        <li><a class="dropdown-item" href="#">Terlambat</a></li>
-                                    </ul>
-                                </div>
+                                    <div class="row">
+                                        <div class="mr-2">
+                                            <!-- TAHUN -->
+                                            <select class="form-select form-control" name="tahun">
+                                                <option selected>Tahun</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mr-2">
+                                            <!-- STATUS -->
+                                            <select class="form-select form-control" name="status">
+                                                <option selected>Status</option>
+                                                <option value="hadir">Hadir</option>
+                                                <option value="izin">Izin</option>
+                                                <option value="sakit">Sakit</option>
+                                                <option value="tanpa keterangan">Tanpa keterangan</option>
+                                                <option value="terlambat">Terlambat</option>
+                                            </select>
+                                        </div>
+
+                                        <button class="submit btn-primary btn" type="submit">Cari</button>
+                                    </div>
+
+                                </form>
+
 
                             </div>
 
@@ -125,8 +160,14 @@ require_once 'templates/header.php'
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 8, 3, 12, 19, 3, 5, 8, 3],
+                label: '<?php
+                        if (isset($_GET['tahun']) && isset($_GET['status'])) {
+                            echo $tahun . ' - ' . $status;
+                        } else {
+                            echo $tahunSekarang . ' - Hadir';
+                        }
+                        ?>',
+                data: [<?= $absensiDataString; ?>],
                 borderWidth: 0,
                 pointRadius: 4,
                 backgroundColor: 'transparent',
