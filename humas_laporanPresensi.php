@@ -16,17 +16,18 @@ require_once 'templates/header.php'
         <?php require_once 'templates/navbar.php' ?>
         <?php require_once 'templates/sidebar.php' ?>
 
+        <!-- Header 🗣 -->
         <div class="content-wrapper">
 
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Data seluruh presensi pegawai</h1>
+                            <h1 class="m-0">Presensi pegawai</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="absensi.php">Data seluruh presensi pegawai</a></li>
+                                <li class="breadcrumb-item"><a href="humas_laporanPresensi.php">Presensi pegawai</a></li>
                                 <li class="breadcrumb-item active">Humas</li>
                             </ol>
                         </div>
@@ -35,185 +36,113 @@ require_once 'templates/header.php'
             </div>
 
 
-            <!-- Main content -->
+            <!-- \\Content Area 😗 -->
+
             <section class="content">
                 <div class="container-fluid">
 
+                    <div class="mb-2">
+                        <a href="#" class="btn btn-primary btn-sm">Cetak keseluruhan</a>
+                        <a href="#" class="btn btn-success btn-sm">Cetak Spesifik</a>
+                    </div>
+
                     <div class="card">
-                        <div class="card-header mb-0">
-                            <img src="dist/img/presensi_admin.jpg" alt="" style="width: 290px;" class="float-right pl-3">
-                            <h4>Data presensi pegawai pengadilan negeri banjarbaru</h4>
-                            <p><em>Berisikan data presensi para pegawai pengadilan negeri banjarbaru yang tercatat pada aplikasi SIM Cuti</em></p>
-                            <p style="margin: 0px; padding: 0px;"><b>Total Presensi Tercatat SIM CUTI</b></p>
-                            <?php $absensi = hitungBaris("SELECT * FROM tb_absensi"); ?>
-                            <p class="badge badge-primary"><?= $absensi; ?> Data</p>
-                            <br>
 
-                            <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakPresensiNip">
-                                Cetak data berdasarkan nip
-                            </button>
+                        <!-- header card -->
+                        <div class="ml-3">
+                            <img src="dist/img/humas_absensi.jpg" alt="" style="width: 180px;" class="float-right pl-3 mr-2">
 
-                            <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#cetakPresensiTanggal" style="display: inline;">
-                                Cetak data berdasarkan tanggal
-                            </button>
+                            <h5 class="mt-3"><strong>Laporan presensi pegawai pengadilan negeri banjarbaru</strong></h5>
+                            <p><em>Data presensi para pegawai pengadilan negeri banjarbaru, pada aplikasi SIM Cuti yang tersaji dalam diagram.</em></p>
 
-                            <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#cetakPresensiCatatan" style="display: inline;">
-                                Cetak data berdasarkan catatan
-                            </button>
+                            <div class="row">
 
-                            <!-- Modal -->
-                            <form action="admin_cetakAbsensiByNip.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakPresensiNip" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan NIP</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="nip" id="" placeholder="Nip">
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <!-- dropdown tahun -->
+                                <div class="dropdown mr-2">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Tahun
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">2022</a></li>
+                                        <li><a class="dropdown-item" href="#">2023</a></li>
+                                        <li><a class="dropdown-item" href="#">2024</a></li>
+                                        <li><a class="dropdown-item" href="#">2025</a></li>
+                                        <li><a class="dropdown-item" href="#">2026</a></li>
+                                    </ul>
                                 </div>
-                            </form>
 
-
-                            <!-- Modal -->
-                            <form action="admin_cetakAbsensiByTanggal.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakPresensiTanggal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Tanggal</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="form-group col-lg-6">
-                                                        <input type="date" class="form-control" name="dari" id="">
-                                                    </div>
-
-                                                    <div class="form-group col-lg-6">
-                                                        <input type="date" class="form-control" name="sampai" id="">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <!-- dropdown berdasarkan apa ? -->
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Keterangan
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Hadir</a></li>
+                                        <li><a class="dropdown-item" href="#">Izin</a></li>
+                                        <li><a class="dropdown-item" href="#">Sakit</a></li>
+                                        <li><a class="dropdown-item" href="#">Tanpa Keterangan</a></li>
+                                        <li><a class="dropdown-item" href="#">Terlambat</a></li>
+                                    </ul>
                                 </div>
-                            </form>
 
-                            <!-- Modal -->
-                            <form action="admin_cetakAbsensiByCatatan.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakPresensiCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Catatan</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
+                            </div>
 
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="catatan" id="" placeholder="Hadir">
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
+                        <hr>
 
-
-                        <div class="container col-lg-12 p-3">
-                            <table id="testing" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
-                                        <th>Tanggal Absen</th>
-                                        <th>Jam Masuk</th>
-                                        <th>Jam Pulang</th>
-                                        <th>Catatan</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
-                                        <th>Tanggal</th>
-                                        <th>Jam Masuk</th>
-                                        <th>Jam Pulang</th>
-                                        <th>Catatan</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <?php $absensi = query("SELECT * FROM tb_absensi"); ?>
-                                    <?php $i = 1; ?>
-                                    <?php foreach ($absensi as $row) : ?>
-                                        <tr>
-                                            <td><?= $i; ?></td>
-                                            <td><?= $row['nama']; ?></td>
-                                            <td><?= $row['nip']; ?></td>
-                                            <td><?= $row['tanggal_absen']; ?></td>
-                                            <td><?= $row['jam_masuk']; ?></td>
-                                            <td><?= $row['jam_pulang']; ?></td>
-                                            <td><?= $row['catatan']; ?></td>
-                                        </tr>
-                                        <?php $i++; ?>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                        <!-- chart 📊 -->
+                        <div class="p-4">
+                            <canvas id="chartAbsensiHumas"></canvas>
                         </div>
 
                     </div>
                     <br>
                 </div>
             </section>
+
+            <!-- \\End Content Area 👋 -->
         </div>
+
+
 
         <!-- Footer -->
         <?php require_once 'templates/footer.php' ?>
-
-        </aside>
     </div>
 
-    <?php require_once 'templates/script.php' ?>
 </body>
 
+<!-- PER SCRIPT AN DUNIAWI 👩‍🔬 -->
+
+<?php require_once 'templates/script.php' ?>
 <script src="js/script.js"></script>
 
+<!-- Scipt untuk Chart.Js-->
 <script>
-    $(function() {
-        $('#testing').DataTable()
+    const ctx = document.getElementById('chartAbsensiHumas');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 8, 3, 12, 19, 3, 5, 8, 3],
+                borderWidth: 0,
+                pointRadius: 4,
+                backgroundColor: 'transparent',
+                borderColor: 'rgb(75, 192, 192)',
+                pointBackgroundColor: 'black',
+                pointBorderColor: 'black',
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
     });
 </script>
 
