@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <script src="sweetalert2-11.3.4/package/dist/sweetalert2.all.min.js"></script>
 
 <!DOCTYPE html>
@@ -8,7 +9,7 @@
 //     session_start();
 // }
 
-session_start();
+
 
 require_once 'functions.php';
 

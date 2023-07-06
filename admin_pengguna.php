@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+session_start();
 
-<?php require_once 'functions.php' ?>
+require_once 'functions.php' ?>
 <?php require_once 'templates/header.php' ?>
 
 <?php

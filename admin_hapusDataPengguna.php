@@ -1,9 +1,9 @@
-<?php require_once 'functions.php' ?>
+<?php
+session_start();
+require_once 'functions.php' ?>
 <?php require_once 'templates/header.php' ?>
 
 <?php
-
-session_start();
 
 if (!isset($_SESSION['login'])) {
     header('Location:login.php');

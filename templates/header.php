@@ -1,3 +1,10 @@
+<?php
+
+// session_start();
+
+require_once 'cssdatatables.php';
+require_once 'scriptsdatatables.php'; ?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,8 +33,6 @@
     <!-- table -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
 
-    <?php
-    require_once 'cssdatatables.php';
-    require_once 'scriptsdatatables.php'; ?>
+
 
 </head>

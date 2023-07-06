@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-
-
 <?php
+session_start();
 
 require_once 'functions.php';
 
 $bulanIni = date('n');
 
-if (!isset($_SESSION)) {
-    session_start();
-}
+// if (!isset($_SESSION)) {
+//     session_start();
+// }
 
 if (!isset($_SESSION['login'])) {
     header('Location:../login.php');

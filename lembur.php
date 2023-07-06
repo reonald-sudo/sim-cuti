@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+session_start();
 
-<?php require_once 'templates/header.php' ?>
+require_once 'templates/header.php' ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
 
