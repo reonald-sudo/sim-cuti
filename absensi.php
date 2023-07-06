@@ -31,7 +31,7 @@ if (!isset($_SESSION['login'])) {
 <?php
 
 if (isset($_POST['masukKerja'])) {
-    if (tambahAbsensi($_POST) >= 0) {
+    if (tambahAbsensi($_POST) > 0) {
         echo "<script>
             alert('Berhasil Catat Presensi Masuk');
         </script>
@@ -45,7 +45,7 @@ if (isset($_POST['masukKerja'])) {
 }
 
 if (isset($_POST['pulangKerja'])) {
-    if (tambahPulangKerja($_POST) >= 0) {
+    if (tambahPulangKerja($_POST) > 0) {
         echo "<script>
             alert('Berhasil Catat Presensi Pulang');
         </script>

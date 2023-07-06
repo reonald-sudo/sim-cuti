@@ -138,8 +138,9 @@ function tambahAbsensi($data)
     $stmt = hitungBaris("SELECT * FROM tb_absensi WHERE tanggal_absen = '$tanggal' AND nip = '$nip'");
 
     if ($stmt > 0) {
-        $query = 123;
-        mysqli_query($conn, $query);
+        $stmt = 0;
+
+        return $stmt;
     } elseif ($stmt == 0) {
         $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggal', '$jamMasuk', '$jamPulang', '$catatan', '$tunjangan')";
 
@@ -167,9 +168,9 @@ function tambahPulangKerja($data)
 
         mysqli_query($conn, $query);
     } else {
-        $query = 123;
+        $stmt = 0;
 
-        mysqli_query($conn, $query);
+        return $stmt;
     }
 
     return mysqli_affected_rows($conn);
