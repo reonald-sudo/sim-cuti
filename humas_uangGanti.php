@@ -32,12 +32,12 @@ if (isset($_POST['verifikasi'])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Data Pengajuan Uang Ganti</h1>
+                            <h1 class="m-0">Laporan pengajuan uang ganti</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="absensi.php">Data Pengajuan Uang Ganti</a></li>
-                                <li class="breadcrumb-item active">Dashboard Admin</li>
+                                <li class="breadcrumb-item active">Humas</li>
                             </ol>
                         </div>
                     </div>
@@ -52,11 +52,24 @@ if (isset($_POST['verifikasi'])) {
                     <div class="card">
                         <div class="card-header mb-0">
                             <img src="dist/img/duitadmin.jpg" alt="" style="width: 250px;" class="float-right pl-3">
-                            <h4>Pengajuan uang ganti</h4>
-                            <p><em>Berikut merupakan data uang ganti yang tercatat pada SIM Cuti</em></p>
-                            <p style="margin: 0px; padding: 0px;"><b>Total pengajuan peggantian uang yang tercatat pada SIM CUTI</b></p>
-                            <?php $uangGanti = hitungBaris("SELECT * FROM tb_uang_ganti"); ?>
-                            <p><?= $uangGanti; ?></p>
+
+                            <?php
+                            $bulanNow =  date('m');
+                            $tahunNow =  date('Y');
+                            ?>
+
+                            <p style="margin: 0px; padding: 0px;"><b>Total reimbursement bulan <?= date('F') ?> - <?= $tahunNow ?></b></p>
+
+                            <?php
+                            $uangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE MONTH(tanggal_transaksi) = '$bulanNow' AND YEAR (tanggal_transaksi) = '$tahunNow' ");
+                            $totalUangGanti = 0;
+
+                            foreach ($uangGanti as $row) {
+                                $totalUangGanti += $row['nominal'];
+                            }
+                            ?>
+
+                            <p>Rp. <?= number_format($totalUangGanti, 0, ",", "."); ?></p>
 
                             <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakPengajuanByNip">
                                 Cetak data berdasarkan nip
@@ -211,13 +224,11 @@ if (isset($_POST['verifikasi'])) {
                                                                     <input type="hidden" name="id" value="<?= $row['id']; ?>">
 
                                                                     <div class="form-group">
-                                                                        <select class="form-control" aria-label="Default select example" id="verifikasiPengajuan" name="verifikasiPengajuan">
+                                                                        <select class="form-control" aria-label="Default select example" name="verifikasiPengajuan">
                                                                             <option selected>Verifikasi pengajuan</option>
                                                                             <option value="acc admin">Acc</option>
                                                                             <option value="ditolak">Ditolak</option>
                                                                         </select>
-
-                                                                        <input type="text" name="verifikasiPengajuan" id="alasanDitolak" class="form-control mt-3" placeholder="Alasan ditolak" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -258,19 +269,11 @@ if (isset($_POST['verifikasi'])) {
     <?php require_once 'templates/script.php' ?>
 </body>
 
+<script src="js/script.js"></script>
+
 <script>
     $(function() {
         $('#testing').DataTable()
-    });
-
-    $(document).ready(function() {
-        $("#verifikasiPengajuan").each().change(function() {
-            if ($(this).val() == "ditolak") {
-                $("#alasanDitolak").removeAttr("readonly");
-            } else {
-                $("#alasanDitolak").attr("readonly", "readonly");
-            }
-        });
     });
 </script>
 

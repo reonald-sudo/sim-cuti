@@ -62,7 +62,7 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
 
                     <div class="card">
                         <div class="card-header pb-3">
-                            <img src="dist/img/duit bro.jpg" class="float-right" alt="" srcset="" style="width: 280px;">
+                            <img src="dist/img/duit bro.jpg" class="float-right" alt="" srcset="" style="width: 250px;">
                             <h4>Pengajuan penggantian uang</h4>
                             <p><em>Halaman ini berisikan pengajuan penggantian uang anda</em></p>
 
@@ -76,9 +76,7 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
                             <?php foreach ($hitungUangGanti as $row) : ?>
                                 <?php $total += $row['nominal'] ?>
                             <?php endforeach; ?>
-                            <h3>Rp.<?= $total; ?>,-</h3>
-
-                            <a href="cetakPengajuanUang.php?nip=<?= $_SESSION['nip']; ?>&status=acc" class="btn btn-info mb-3" onclick="javascript: return confirm('Dengan mencairkan dana, data pengajuan yang telah acc akan terhapus, yakin ?');">Cairkan</a>
+                            <h3>Rp. <?= number_format($total, 0, ",", "."); ?></h3>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -153,10 +151,10 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
                                             <tr>
                                                 <td><?= $i; ?></td>
                                                 <td><?= $row['tanggal_transaksi']; ?></td>
-                                                <td>Rp.<?= $row['nominal']; ?>,-</td>
+                                                <td>Rp. <?= number_format($row['nominal'], 0, ",", "."); ?></td>
 
                                                 <td>
-                                                    <!-- Button trigger modal -->
+                                                    <!-- Button trigger modal nota -->
                                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#nota<?= $row['id']; ?>">
                                                         <i class="far fa-eye"></i> Lihat
                                                     </button>
@@ -177,7 +175,17 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><?= $row['status']; ?></td>
+                                                <td>
+                                                    <?php if ($row['status'] === 'acc admin') : ?>
+                                                        <p style="color: green;"><?= $row['status']; ?></p>
+                                                    <?php elseif ($row['status'] === 'sedang proses') : ?>
+                                                        <p style="color: orange;"><?= $row['status']; ?></p>
+                                                    <?php elseif ($row['status'] === 'acc humas') : ?>
+                                                        <a href="#" class="btn btn-success btn-sm">[Acc humas] - Cetak Kwitansi</a>
+                                                    <?php else : ?>
+                                                        <p style="color: red;"><?= $row['status']; ?></p>
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td><a href="editUangGanti.php?id=<?= $row['id']; ?>" class="badge badge-warning">Edit</a>
                                                     <a href="hapusUangGanti.php?id=<?= $row['id']; ?>" class="badge badge-danger" onclick="javascript: return confirm('Konfirmasi data akan dihapus');">Hapus</a>
                                                 </td>

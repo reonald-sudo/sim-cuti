@@ -215,7 +215,7 @@ foreach ($absensi as $row) {
                 <?php foreach ($hitungUangGanti as $row) : ?>
                     <?php $total += $row['nominal'] ?>
                 <?php endforeach; ?>
-                <h5>Rp. <?= $total; ?>,-</h5>
+                <h5>Rp. <?= number_format($total, 0, ",", "."); ?></h5>
 
                 <p>Ajukan uang ganti</p>
             </div>
