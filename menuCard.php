@@ -210,7 +210,7 @@ foreach ($absensi as $row) {
     <div class="col-lg-3 col-6">
         <div class="small-box bg-success">
             <div class="inner">
-                <?php $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip AND status = 'acc'"); ?>
+                <?php $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip AND status = 'acc humas'"); ?>
                 <?php $total = 0 ?>
                 <?php foreach ($hitungUangGanti as $row) : ?>
                     <?php $total += $row['nominal'] ?>

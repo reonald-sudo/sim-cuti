@@ -16,6 +16,38 @@ if (isset($_POST['verifikasi'])) {
     }
 }
 
+$tahunSekarang = date('Y');
+
+if (isset($_GET['tahun']) && isset($_GET['status'])) {
+    $tahun = $_GET['tahun'];
+    $status = $_GET['status'];
+
+    $reimburstment = query("SELECT SUM(nominal) AS total_nominal, MONTH(tanggal_transaksi) AS bulan FROM tb_uang_ganti WHERE YEAR(tanggal_transaksi) = '$tahun' AND status = '$status' GROUP BY bulan");
+} else {
+    $reimburstment = query("SELECT SUM(nominal) AS total_nominal, MONTH(tanggal_transaksi) AS bulan FROM tb_uang_ganti WHERE YEAR(tanggal_transaksi) = '$tahunSekarang' AND status = 'acc humas' GROUP BY bulan");
+}
+
+$reimburstmentData = [];  // Inisialisasi array untuk menyimpan data bulanan
+$totalNominal = 0;  // Inisialisasi variabel total nominal
+
+// Inisialisasi array data dengan nilai awal 0 untuk setiap bulan
+for ($i = 0; $i < 12; $i++) {
+    $reimburstmentData[$i] = 0;
+}
+
+// Loop melalui data reimbursement yang didapatkan dan hitung total nominal untuk setiap bulan
+foreach ($reimburstment as $data) {
+    $bulan = $data['bulan'];  // Ambil bulan dari hasil query
+    $reimburstmentData[$bulan - 1] = $data['total_nominal'];  // Simpan total nominal untuk bulan yang sesuai
+    $totalNominal += $data['total_nominal'];  // Tambahkan total nominal
+}
+
+// Format total nominal dengan Rp. dan pemisah ribuan dan desimal
+$totalNominalFormatted = 'Rp. ' . number_format($totalNominal, 0, ',', '.');
+
+// Konversi array reimbursementData menjadi string yang dipisahkan oleh koma
+$reimburstmentDataString = implode(', ', $reimburstmentData);
+
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -36,7 +68,7 @@ if (isset($_POST['verifikasi'])) {
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="absensi.php">Data Pengajuan Uang Ganti</a></li>
+                                <li class="breadcrumb-item"><a href="#">Data Pengajuan Uang Ganti</a></li>
                                 <li class="breadcrumb-item active">Humas</li>
                             </ol>
                         </div>
@@ -69,77 +101,43 @@ if (isset($_POST['verifikasi'])) {
                             }
                             ?>
 
-                            <p>Rp. <?= number_format($totalUangGanti, 0, ",", "."); ?></p>
+                            <h3 style="color: green;">Rp. <?= number_format($totalUangGanti, 0, ",", "."); ?></h3>
+                            <p><em>Ini merupakan total dari seluruh pengajuan reimbursement, bulan <?= date('F'); ?> tahun <?= $tahunNow; ?>.</em></p>
 
-                            <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakPengajuanByNip">
-                                Cetak data berdasarkan nip
-                            </button>
+                            <form action="humas_uangGanti.php" method="get">
 
-                            <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#cetakPengajuanByTanggal" style="display: inline;">
-                                Cetak data berdasarkan tanggal transaksi
-                            </button>
-
-                            <!-- Modal -->
-                            <form action="admin_cetakPengajuanByNip.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakPengajuanByNip" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Pengajuan Berdasarkan NIP</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="nip" id="" placeholder="Nip">
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
+                                <div class="row">
+                                    <div class="mr-2">
+                                        <!-- TAHUN -->
+                                        <select class="form-select form-control" name="tahun">
+                                            <option selected>Tahun</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                        </select>
                                     </div>
-                                </div>
-                            </form>
 
-                            <!-- Modal -->
-                            <form action="admin_cetakPengajuanByTanggal.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakPengajuanByTanggal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Tanggal</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="form-group col-lg-6">
-                                                        <input type="date" class="form-control" name="dari" id="">
-                                                    </div>
-
-                                                    <div class="form-group col-lg-6">
-                                                        <input type="date" class="form-control" name="sampai" id="">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
+                                    <div class="mr-2">
+                                        <!-- STATUS -->
+                                        <select class="form-select form-control" name="status">
+                                            <option selected>Status</option>
+                                            <option value="acc humas">acc humas</option>
+                                            <option value="ditolak">ditolak</option>
+                                        </select>
                                     </div>
+
+                                    <button class="submit btn-primary btn" type="submit">Cari</button>
                                 </div>
+
                             </form>
 
                         </div>
+
+                        <div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <hr>
 
                         <div class="container mb-3 p-3">
                             <table id="testing" class="table table-bordered table-hover">
@@ -201,7 +199,17 @@ if (isset($_POST['verifikasi'])) {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><?= $row['status']; ?></td>
+                                            <td>
+                                                <?php if ($row['status'] === 'acc admin') : ?>
+                                                    <p class="badge badge-success"><?= $row['status']; ?></p>
+                                                <?php elseif ($row['status'] === 'sedang proses') : ?>
+                                                    <p class="badge badge-warning"><?= $row['status']; ?></p>
+                                                <?php elseif ($row['status'] === 'acc humas') : ?>
+                                                    <p class="badge badge-success">[Acc humas]</p>
+                                                <?php else : ?>
+                                                    <p class="badge badge-danger"><?= $row['status'] . ' - ' . $row['alasan']; ?></p>
+                                                <?php endif; ?>
+                                            </td>
 
                                             <td>
                                                 <!-- Button trigger modal -->
@@ -224,11 +232,13 @@ if (isset($_POST['verifikasi'])) {
                                                                     <input type="hidden" name="id" value="<?= $row['id']; ?>">
 
                                                                     <div class="form-group">
-                                                                        <select class="form-control" aria-label="Default select example" name="verifikasiPengajuan">
+                                                                        <select class="form-control verifikasiPengajuan" aria-label="Default select example" name="verifikasiPengajuan">
                                                                             <option selected>Verifikasi pengajuan</option>
-                                                                            <option value="acc admin">Acc</option>
+                                                                            <option value="acc humas">Acc</option>
                                                                             <option value="ditolak">Ditolak</option>
                                                                         </select>
+
+                                                                        <input type="text" name="statusDitolak" id="alasanDitolak" class="form-control mt-3 alasanDitolak" placeholder="Alasan ditolak" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -274,6 +284,71 @@ if (isset($_POST['verifikasi'])) {
 <script>
     $(function() {
         $('#testing').DataTable()
+    });
+
+    $(".verifikasiPengajuan").change(function() {
+        var alasanDitolak = $(this).closest('.form-group').find('.alasanDitolak');
+        if ($(this).val() == "ditolak") {
+            alasanDitolak.removeAttr("readonly");
+        } else {
+            alasanDitolak.attr("readonly", "readonly");
+        }
+    });
+</script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: '<?php
+                        if (isset($_GET['tahun']) && isset($_GET['status'])) {
+                            echo $tahun . ' - ' . $status . ' (Total: ' . $totalNominalFormatted . ')';
+                        } else {
+                            echo $tahunSekarang . ' - Acc humas (Total: ' . $totalNominalFormatted . ')';
+                        }
+                        ?>',
+                data: [<?= $reimburstmentDataString; ?>],
+                borderWidth: 0,
+                pointRadius: 4,
+                backgroundColor: 'transparent',
+                borderColor: 'rgb(75, 192, 192)',
+                pointBackgroundColor: 'black',
+                pointBorderColor: 'black',
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(context) {
+                            var label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += 'Rp. ' + context.parsed.y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return label;
+                        }
+                    }
+                },
+                datalabels: {
+                    display: true,
+                    formatter: function(value, context) {
+                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                }
+            }
+        }
     });
 </script>
 

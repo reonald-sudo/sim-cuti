@@ -21,7 +21,7 @@ if (isset($_POST['simpan'])) {
 }
 
 $uangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip");
-$hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip AND status = 'acc'");
+$hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip AND status = 'acc humas'");
 ?>
 
 <!DOCTYPE html>
@@ -109,6 +109,8 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
                                                     <input type="file" name="nota" id="" class="form-control">
 
                                                     <input type="hidden" name="status" id="" class="form-control" value='sedang proses'>
+
+                                                    <input type="hidden" name="alasan" id="" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -177,16 +179,20 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
                                                 </td>
                                                 <td>
                                                     <?php if ($row['status'] === 'acc admin') : ?>
-                                                        <p style="color: green;"><?= $row['status']; ?></p>
+                                                        <p class="badge badge-success"><?= $row['status']; ?></p>
                                                     <?php elseif ($row['status'] === 'sedang proses') : ?>
-                                                        <p style="color: orange;"><?= $row['status']; ?></p>
+                                                        <p class="badge badge-warning"><?= $row['status']; ?></p>
                                                     <?php elseif ($row['status'] === 'acc humas') : ?>
-                                                        <a href="#" class="btn btn-success btn-sm">[Acc humas] - Cetak Kwitansi</a>
+                                                        <a href="cetakKwitansiUser.php?nip=<?= $nip ?>&id=<?= $row['id']; ?>" class="btn btn-success btn-sm" target="_blank">[Acc humas] - Cetak Kwitansi</a>
                                                     <?php else : ?>
-                                                        <p style="color: red;"><?= $row['status']; ?></p>
+                                                        <p class="badge badge-danger"><?= $row['status'] . ' - ' . $row['alasan']; ?></p>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><a href="editUangGanti.php?id=<?= $row['id']; ?>" class="badge badge-warning">Edit</a>
+                                                <td>
+                                                    <?php if ($row['status'] != 'acc humas') : ?>
+                                                        <a href="editUangGanti.php?id=<?= $row['id']; ?>" class="badge badge-warning">Edit</a>
+                                                    <?php endif; ?>
+
                                                     <a href="hapusUangGanti.php?id=<?= $row['id']; ?>" class="badge badge-danger" onclick="javascript: return confirm('Konfirmasi data akan dihapus');">Hapus</a>
                                                 </td>
                                             </tr>

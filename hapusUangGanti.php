@@ -1,12 +1,9 @@
 <?php
 session_start();
-
-require_once 'functions.php' ?>
-<?php require_once 'templates/header.php' ?>
-
+?>
 <?php
-
-session_start();
+require_once 'functions.php';
+require_once 'templates/header.php';
 
 if (!isset($_SESSION['login'])) {
     header('Location:login.php');
@@ -29,4 +26,6 @@ if (hapusUangGanti($id) > 0) {
     mysqli_error($conn);
 }
 
+
 require_once 'templates/script.php';
+?>

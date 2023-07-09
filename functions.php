@@ -202,8 +202,9 @@ function tambahPengajuanUang($data)
     $nominal = $data['nominal'];
     $nota = uploadNota();
     $status = $data['status'];
+    $alasan = $data['alasan'];
 
-    $query = "INSERT INTO tb_uang_ganti VALUE('', '$nip', '$nama', '$tanggalTransaksi', '$nominal', '$nota', '$status')";
+    $query = "INSERT INTO tb_uang_ganti VALUE('', '$nip', '$nama', '$tanggalTransaksi', '$nominal', '$nota', '$status', '$alasan')";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
@@ -367,8 +368,9 @@ function verifikasiPengajuan($data)
 
     $id = $data['id'];
     $verifikasiPengajuan = $data['verifikasiPengajuan'];
+    $statusDitolak = $data['statusDitolak'];
 
-    $query = "UPDATE tb_uang_ganti SET status = '$verifikasiPengajuan' WHERE id = '$id'";
+    $query = "UPDATE tb_uang_ganti SET status = '$verifikasiPengajuan', alasan = '$statusDitolak' WHERE id = '$id'";
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }

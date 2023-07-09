@@ -7,8 +7,6 @@ require_once 'functions.php';
 // $bulan = $_GET['bulan'];
 // $tahun = $_GET['tahun'];
 
-session_start();
-
 require_once 'functions.php';
 
 // $tanggal = $_GET['tanggal_absen'];
@@ -24,10 +22,10 @@ if (!isset($_SESSION['login'])) {
 
 $catatan = $_GET['catatan'];
 
-$dariTanggal = $_GET['dari'];
-$sampaiTanggal = $_GET['sampai'];
+// $dariTanggal = $_GET['dari'];
+// $sampaiTanggal = $_GET['sampai'];
 
-$cetakFilterPresensiByTahunAndBulan = query("SELECT * FROM " . 'tb_absensi' . " WHERE " . "tanggal_absen >= " . "'$dariTanggal'" . ' AND ' . "tanggal_absen <= " . "'$sampaiTanggal'" . ' AND ' . " nip = " . "'$nip'");
+// $cetakFilterPresensiByTahunAndBulan = query("SELECT * FROM " . 'tb_absensi' . " WHERE " . "tanggal_absen >= " . "'$dariTanggal'" . ' AND ' . "tanggal_absen <= " . "'$sampaiTanggal'" . ' AND ' . " nip = " . "'$nip'");
 
 $cetakFilterPresensiByCatatan = query("SELECT * FROM tb_absensi WHERE catatan = '$catatan'");
 
@@ -112,8 +110,8 @@ foreach ($cetakFilterPresensiByCatatan as $row) :
     $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_absen']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['jam_masuk']  . ' WITA</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['jam_pulang']  . ' WITA</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['jam_masuk']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['jam_pulang']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['catatan']  . '</td>';
     $html .= '</tr>';
     $i++;

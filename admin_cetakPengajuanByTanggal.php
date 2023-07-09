@@ -4,14 +4,7 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 require_once 'functions.php';
 
-// $bulan = $_GET['bulan'];
-// $tahun = $_GET['tahun'];
-
-session_start();
-
 require_once 'functions.php';
-
-// $tanggal = $_GET['tanggal_absen'];
 
 if (!isset($_SESSION['login'])) {
     header('Location:login.php');
@@ -22,12 +15,11 @@ if (!isset($_SESSION['login'])) {
     $hakAses = $_SESSION['hak_akses'];
 }
 
-// $nipModal = $_GET['nip'];
-
 $dariTanggal = $_GET['dari'];
 $sampaiTanggal = $_GET['sampai'];
+$status = $_GET['status'];
 
-$cetakFilterPengajuanByTahunAndBulan = query("SELECT * FROM " . 'tb_uang_ganti' . " WHERE " . "tanggal_transaksi >= " . "'$dariTanggal'" . ' AND ' . "tanggal_transaksi <= " . "'$sampaiTanggal'");
+$cetakFilterPengajuanByTahunAndBulan = query("SELECT * FROM " . 'tb_uang_ganti' . " WHERE " . "tanggal_transaksi >= " . "'$dariTanggal'" . ' AND ' . "tanggal_transaksi <= " . "'$sampaiTanggal'" . ' AND ' . "status = " . "'$status'");
 
 $a = editData("SELECT * FROM tb_absensi WHERE nip = '$nipModal'");
 
@@ -91,7 +83,7 @@ $html .= '</title>
         </tr>
     </table>
     <hr>
-    <h3 style="text-align: center;">REKAPITULASI PENGAJUAN DARI : ' . $dariTanggal . ' SAMPAI ' . $sampaiTanggal . '</h3>';
+    <h5 style="text-align: center;">Rekapitulasi pengajuan : ' . $dariTanggal . ' ~ ' . $sampaiTanggal . ' dengan status - ' . $status . '.</h5>';
 
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
     <tr style="background-color: #BAD7E9;">
@@ -100,6 +92,7 @@ $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" c
         <td style="border: 1px solid black;">Nip</td>
         <td style="border: 1px solid black;">Tanggal transaksi</td>
         <td style="border: 1px solid black;">Nominal</td>
+        <td style="border: 1px solid black;">Status</td>
     </tr>';
 
 
@@ -110,7 +103,8 @@ foreach ($cetakFilterPengajuanByTahunAndBulan as $row) :
     $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_transaksi']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">Rp. ' .  $row['nominal']  . ',-</td>';
+    $html .= '<td style="border: 1px solid black;">Rp. ' .  number_format($row['nominal'], 0, ",", ".") . ',-</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['status']  . '</td>';
     $html .= '</tr>';
     $i++;
 endforeach;

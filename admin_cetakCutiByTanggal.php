@@ -4,14 +4,7 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 require_once 'functions.php';
 
-// $bulan = $_GET['bulan'];
-// $tahun = $_GET['tahun'];
-
-session_start();
-
 require_once 'functions.php';
-
-// $tanggal = $_GET['tanggal_absen'];
 
 if (!isset($_SESSION['login'])) {
     header('Location:login.php');

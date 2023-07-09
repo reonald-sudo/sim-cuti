@@ -4,14 +4,7 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 require_once 'functions.php';
 
-// $bulan = $_GET['bulan'];
-// $tahun = $_GET['tahun'];
-
-session_start();
-
 require_once 'functions.php';
-
-// $tanggal = $_GET['tanggal_absen'];
 
 if (!isset($_SESSION['login'])) {
     header('Location:login.php');
@@ -91,7 +84,7 @@ $html .= '</title>
         </tr>
     </table>
     <hr>
-    <h3 style="text-align: center;">REKAPITULASI PENGAJUAN UANG GANTI : ' . $cetakFilterPresensiByTahunAndBulan['nama'] . '</h3>';
+    <h4 style="text-align: center;">Rekapitulasi pengajuan reimbursment dengan nip - ' . $cetakFilterPresensiByTahunAndBulan['nip'] . '</h5>';
 
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
         <tr style="background-color: #BAD7E9;">
@@ -100,6 +93,7 @@ $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" c
             <td style="border: 1px solid black;">Nip</td>
             <td style="border: 1px solid black;">Tanggal transaksi</td>
             <td style="border: 1px solid black;">Nominal</td>
+            <td style="border: 1px solid black;">Status</td>
         </tr>';
 
 
@@ -110,7 +104,8 @@ foreach ($cetakFilterPengajuanByNip as $row) :
     $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_transaksi']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">Rp. ' .  $row['nominal']  . ',-</td>';
+    $html .= '<td style="border: 1px solid black;">Rp. ' . number_format($row['nominal'], 0, ",", ".")  . ',-</td>';
+    $html .= '<td style="border: 1px solid black;">' . $row['status'] . '</td>';
     $html .= '</tr>';
     $i++;
 endforeach;

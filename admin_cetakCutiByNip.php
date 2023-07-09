@@ -7,8 +7,6 @@ require_once 'functions.php';
 // $bulan = $_GET['bulan'];
 // $tahun = $_GET['tahun'];
 
-session_start();
-
 require_once 'functions.php';
 
 // $tanggal = $_GET['tanggal_absen'];
@@ -24,8 +22,8 @@ if (!isset($_SESSION['login'])) {
 
 $nipModal = $_GET['nip'];
 
-$dariTanggal = $_GET['dari'];
-$sampaiTanggal = $_GET['sampai'];
+// $dariTanggal = $_GET['dari'];
+// $sampaiTanggal = $_GET['sampai'];
 
 $cetakFilterPresensiByTahunAndBulan = editData("SELECT * FROM tb_cuti WHERE nip = '$nipModal'");
 
