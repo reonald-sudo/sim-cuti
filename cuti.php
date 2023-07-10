@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_start();
 
 require_once 'functions.php';
 
@@ -89,7 +88,7 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
 
                                 <?php if (empty($hariCuti['status'])) { ?>
                                     <a href="cetakCuti.php?nip=<?= $_SESSION['nip']; ?>" target="_blank" class="btn btn-info ml-2" style="display: none;">Cetak SK Cuti</a>
-                                <?php } else if ($hariCuti['status'] === 'acc') { ?>
+                                <?php } else if ($hariCuti['status'] === 'acc humas') { ?>
                                     <a href="cetakCuti.php?nip=<?= $_SESSION['nip']; ?>" target="_blank" class="btn btn-info ml-2">Cetak SK Cuti</a>
                                 <?php } ?>
 
@@ -160,6 +159,8 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                                 <input type="file" name="surat_pengajuan" id="" class="form-control">
                                                 <small style="color: red;"><em>* Unggah file berekstensi PDF</em></small>
                                             </div>
+
+                                            <input type="hidden" name="alasan">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -181,8 +182,8 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                             <th>Tanggal Cuti</th>
                                             <th>Hari</th>
                                             <th>Tanggal Kembali</th>
-                                            <th>Status</th>
                                             <th>Surat Pengajuan</th>
+                                            <th>Status</th>
                                             <th>Opsi</th>
                                         </tr>
                                     </thead>
@@ -194,8 +195,8 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                             <th>Tanggal Cuti</th>
                                             <th>Hari</th>
                                             <th>Tanggal Kembali</th>
-                                            <th>Status</th>
                                             <th>Surat Pengajuan</th>
+                                            <th>Status</th>
                                             <th>Opsi</th>
                                         </tr>
                                     </tfoot>
@@ -209,7 +210,6 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                                 <td><?= $row['tanggal_cuti']; ?></td>
                                                 <td><?= $row['hari']; ?></td>
                                                 <td><?= $row['tanggal_kembali']; ?></td>
-                                                <td><?= $row['status']; ?></td>
 
                                                 <td>
                                                     <!-- Button trigger modal -->
@@ -232,6 +232,18 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </td>
+
+                                                <td>
+                                                    <?php if ($row['status'] === 'acc admin') : ?>
+                                                        <p class="badge badge-success"><?= $row['status']; ?></p>
+                                                    <?php elseif ($row['status'] === 'sedang proses') : ?>
+                                                        <p class="badge badge-warning"><?= $row['status']; ?></p>
+                                                    <?php elseif ($row['status'] === 'acc humas') : ?>
+                                                        <a href="#" class="btn btn-success btn-sm" target="_blank">[Acc humas] - Cetak SK</a>
+                                                    <?php else : ?>
+                                                        <p class="badge badge-danger"><?= $row['status'] . ' - ' . $row['alasan']; ?></p>
+                                                    <?php endif; ?>
                                                 </td>
 
                                                 <td>
