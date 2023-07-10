@@ -31,12 +31,12 @@ if (isset($_POST['verifikasi'])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Data pengajuan cuti</h1>
+                            <h1 class="m-0">Laporan pengajuan cuti</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="absensi.php">Data pengajuan cuti</a></li>
-                                <li class="breadcrumb-item active">Dashboard Admin</li>
+                                <li class="breadcrumb-item"><a href="absensi.php">Laporan pengajuan cuti</a></li>
+                                <li class="breadcrumb-item active">Humas</li>
                             </ol>
                         </div>
                     </div>
@@ -48,23 +48,26 @@ if (isset($_POST['verifikasi'])) {
             <section class="content">
                 <div class="container-fluid">
 
+                    <div class="mb-2">
+                        <?php if (isset($_GET['tahun']) && isset($_GET['status'])) : ?>
+                            <a href="#" class="btn btn-success btn-sm" target="_blank">Cetak berdasarkan pencarian</a>
+                        <?php else : ?>
+                            <a href="#" class="btn btn-success btn-sm" target="_blank">Cetak semua data</a>
+                        <?php endif; ?>
+                    </div>
+
                     <div class="card">
                         <div class="card-header mb-0">
                             <img src="dist/img/cutiadmin.jpg" alt="" style="width: 210px;" class="float-right pl-3">
-                            <h4>Data pengajuan cuti pegawai pengadilan negeri banjarbaru</h4>
-                            <p><em>Berisikan data pengajuan cuti para pegawai pengadilan negeri banjarbaru yang tercatat pada aplikasi SIM Cuti</em></p>
-                            <p style="margin: 0px; padding: 0px;"><b>Total Pengajuan Cuti Tercatat Pada SIM CUTI</b></p>
-                            <?php $hitungCuti = hitungBaris("SELECT * FROM tb_cuti"); ?>
-                            <p class="badge badge-primary"><?= $hitungCuti; ?> Data</p>
-                            <br>
+                            <h4>Laporan cuti pegawai pengadilan negeri banjarbaru</h4>
 
-                            <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakCutiNip">
-                                Cetak data berdasarkan nip
-                            </button>
+                            <?php
+                            $tanggalCuti = date('m');
+                            $hitungCuti = hitungBaris("SELECT * FROM tb_cuti WHERE MONTH(tanggal_cuti) = '$tanggalCuti' AND status = 'acc humas'");
 
-                            <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#cetakCutiTanggal" style="display: inline;">
-                                Cetak data berdasarkan tanggal
-                            </button>
+                            ?>
+                            <h3 style="color: green;"><?= $hitungCuti; ?>Data</h3>
+                            <p style="margin: 0px; padding: 0px;"><b><em>Total pegawai yang cuti bulan ini</em></b></p>
 
                             <!-- Modal -->
                             <form action="admin_cetakCutiByNip.php" method="get" target="_blank">
@@ -127,8 +130,40 @@ if (isset($_POST['verifikasi'])) {
                                 </div>
                             </form>
 
+                            <form action="#" method="get">
+
+                                <div class="row">
+                                    <div class="mr-2">
+                                        <!-- TAHUN -->
+                                        <select class="form-select form-control" name="tahun">
+                                            <option selected>Tahun</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mr-2">
+                                        <!-- STATUS -->
+                                        <select class="form-select form-control" name="status">
+                                            <option selected>Status</option>
+                                            <option value="acc humas">acc humas</option>
+                                            <option value="ditolak">ditolak</option>
+                                        </select>
+                                    </div>
+
+                                    <button class="submit btn-primary btn" type="submit">Cari</button>
+                                </div>
+
+                            </form>
                         </div>
 
+
+                        <div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <hr>
 
                         <div class="container col-lg-12 p-3">
                             <table id="testing" class="table table-bordered table-hover">
@@ -227,7 +262,7 @@ if (isset($_POST['verifikasi'])) {
                                                                     <div class="form-group">
                                                                         <select class="form-control verifikasiPengajuan" aria-label="Default select example" name="verifikasiCuti">
                                                                             <option selected>Verifikasi pengajuan</option>
-                                                                            <option value="acc admin">Acc</option>
+                                                                            <option value="acc humas">Acc</option>
                                                                             <option value="ditolak">Ditolak</option>
                                                                         </select>
 
@@ -284,6 +319,35 @@ if (isset($_POST['verifikasi'])) {
             alasanDitolak.removeAttr("readonly");
         } else {
             alasanDitolak.attr("readonly", "readonly");
+        }
+    });
+</script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: '#omaewa',
+                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                borderWidth: 0,
+                pointRadius: 4,
+                backgroundColor: 'transparent',
+                borderColor: 'rgb(75, 192, 192)',
+                pointBackgroundColor: 'black',
+                pointBorderColor: 'black',
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
     });
 </script>
