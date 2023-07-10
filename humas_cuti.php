@@ -4,16 +4,45 @@ session_start();
 require_once 'functions.php';
 require_once 'templates/header.php';
 
-$cuti = showSingleTable("SELECT * FROM tb_cuti");
+$cutiHumas = query("SELECT * FROM tb_cuti");
 
 if (isset($_POST['verifikasi'])) {
     if (verifikasiPengajuanCuti($_POST) > 0) {
         echo "<script>
         alert('berhasil diverifikasi');
-        document.location.href = 'admin_pengajuanCuti.php';
+        document.location.href = 'humas_cuti.php';
         </script>";
     }
 }
+
+$tahunSekarang = date('Y');
+
+
+if (isset($_GET['tahun']) && isset($_GET['status'])) {
+    $tahun = $_GET['tahun'];
+    $status = $_GET['status'];
+
+    $cuti = query("SELECT * FROM tb_cuti WHERE YEAR(tanggal_cuti) = '$tahun' AND status = '$status'");
+} else {
+    $cuti = query("SELECT * FROM tb_cuti WHERE YEAR(tanggal_cuti) = '$tahunSekarang' AND status = 'acc humas'");
+}
+
+$cutiData = [];  // Inisialisasi array untuk menyimpan data bulanan
+
+// Inisialisasi array data dengan nilai awal 0 untuk setiap bulan
+for ($i = 0; $i < 12; $i++) {
+    $cutiData[$i] = 0;
+}
+
+// Loop melalui data absensi yang didapatkan dan hitung jumlah kejadian untuk setiap bulan
+foreach ($cuti as $data) {
+    $bulan = date('n', strtotime($data['tanggal_cuti']));  // Ambil bulan dari tanggal
+    $cutiData[$bulan - 1]++;  // Tambahkan jumlah untuk bulan yang sesuai
+}
+
+// Konversi array absensiData menjadi string yang dipisahkan oleh koma
+$cutiDataString = implode(', ', $cutiData);
+
 
 ?>
 
@@ -50,9 +79,9 @@ if (isset($_POST['verifikasi'])) {
 
                     <div class="mb-2">
                         <?php if (isset($_GET['tahun']) && isset($_GET['status'])) : ?>
-                            <a href="#" class="btn btn-success btn-sm" target="_blank">Cetak berdasarkan pencarian</a>
+                            <a href="humas_cetakCuti.php?tahun=<?= $_GET['tahun']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-success btn-sm" target="_blank">Cetak berdasarkan pencarian</a>
                         <?php else : ?>
-                            <a href="#" class="btn btn-success btn-sm" target="_blank">Cetak semua data</a>
+                            <a href="humas_cetakCutiAll.php" class="btn btn-success btn-sm" target="_blank">Cetak semua data</a>
                         <?php endif; ?>
                     </div>
 
@@ -68,69 +97,9 @@ if (isset($_POST['verifikasi'])) {
                             ?>
                             <h3 style="color: green;"><?= $hitungCuti; ?>Data</h3>
                             <p style="margin: 0px; padding: 0px;"><b><em>Total pegawai yang cuti bulan ini</em></b></p>
+                            <br>
 
-                            <!-- Modal -->
-                            <form action="admin_cetakCutiByNip.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakCutiNip" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan NIP</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="nip" id="" placeholder="Nip">
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-
-                            <!-- Modal -->
-                            <form action="admin_cetakCutiByTanggal.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakCutiTanggal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Tanggal</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="form-group col-lg-6">
-                                                        <input type="date" class="form-control" name="dari" id="">
-                                                    </div>
-
-                                                    <div class="form-group col-lg-6">
-                                                        <input type="date" class="form-control" name="sampai" id="">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <form action="#" method="get">
+                            <form action="humas_cuti.php" method="get">
 
                                 <div class="row">
                                     <div class="mr-2">
@@ -195,7 +164,7 @@ if (isset($_POST['verifikasi'])) {
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    <?php foreach ($cuti as $row) : ?>
+                                    <?php foreach ($cutiHumas as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
                                             <td><?= $row['nama']; ?></td>
@@ -331,8 +300,14 @@ if (isset($_POST['verifikasi'])) {
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
-                label: '#omaewa',
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                label: '<?php
+                        if (isset($_GET['tahun']) && isset($_GET['status'])) {
+                            echo $tahun . ' - ' . $status;
+                        } else {
+                            echo $tahunSekarang . ' - acc humas';
+                        }
+                        ?>',
+                data: [<?= $cutiDataString; ?>],
                 borderWidth: 0,
                 pointRadius: 4,
                 backgroundColor: 'transparent',
