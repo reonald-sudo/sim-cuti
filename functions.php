@@ -221,8 +221,9 @@ function tambahCuti($data)
     $tanggalKembali = $data['tanggalKembali'];
     $status = $data['status'];
     $surat_pengajuan = uploadSuratPengajuan();
+    $alasan = $data['alasan'];
 
-    $query = "INSERT INTO tb_cuti VALUE ('', '$nip', '$nama', '$tanggalCuti', '$hari', '$tanggalKembali', '$status', '$surat_pengajuan')";
+    $query = "INSERT INTO tb_cuti VALUE ('', '$nip', '$nama', '$tanggalCuti', '$hari', '$tanggalKembali', '$status', '$surat_pengajuan', '$alasan')";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
@@ -381,8 +382,10 @@ function verifikasiPengajuanCuti($data)
 
     $id = $data['id'];
     $verifikasiCuti = $data['verifikasiCuti'];
+    $statusDitolak = $data['statusDitolak'];
 
-    $query = "UPDATE tb_cuti SET status = '$verifikasiCuti' WHERE id = '$id'";
+    $query = "UPDATE tb_cuti SET status = '$verifikasiCuti', alasan = '$statusDitolak' WHERE id = '$id'";
     mysqli_query($conn, $query);
+
     return mysqli_affected_rows($conn);
 }

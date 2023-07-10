@@ -66,7 +66,7 @@ require_once 'templates/header.php' ?>
                                 <div class="icon">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                 </div>
-                                <a href="admin_pengajuanCuti.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="humas_cuti.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 

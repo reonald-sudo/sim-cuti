@@ -140,8 +140,8 @@ if (isset($_POST['verifikasi'])) {
                                         <th>Tanggal Cuti</th>
                                         <th>Hari</th>
                                         <th>Tanggal Kembali</th>
-                                        <th>Status</th>
                                         <th>Surat Pengajuan</th>
+                                        <th>Status</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </thead>
@@ -153,8 +153,8 @@ if (isset($_POST['verifikasi'])) {
                                         <th>Tanggal Cuti</th>
                                         <th>Hari</th>
                                         <th>Tanggal Kembali</th>
-                                        <th>Status</th>
                                         <th>Surat Pengajuan</th>
+                                        <th>Status</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </tfoot>
@@ -168,7 +168,6 @@ if (isset($_POST['verifikasi'])) {
                                             <td><?= $row['tanggal_cuti']; ?></td>
                                             <td><?= $row['hari']; ?></td>
                                             <td><?= $row['tanggal_kembali']; ?></td>
-                                            <td><?= $row['status']; ?></td>
 
                                             <td>
                                                 <!-- Button trigger modal -->
@@ -194,6 +193,18 @@ if (isset($_POST['verifikasi'])) {
                                             </td>
 
                                             <td>
+                                                <?php if ($row['status'] === 'acc admin') : ?>
+                                                    <p class="badge badge-success"><?= $row['status']; ?></p>
+                                                <?php elseif ($row['status'] === 'sedang proses') : ?>
+                                                    <p class="badge badge-warning"><?= $row['status']; ?></p>
+                                                <?php elseif ($row['status'] === 'acc humas') : ?>
+                                                    <p class="badge badge-success" target="_blank">[Acc humas]</p>
+                                                <?php else : ?>
+                                                    <p class="badge badge-danger"><?= $row['status'] . ' - ' . $row['alasan']; ?></p>
+                                                <?php endif; ?>
+                                            </td>
+
+                                            <td>
                                                 <!-- Button trigger modal -->
                                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#verifikasi<?= $row['id']; ?>">
                                                     Verifikasi
@@ -214,11 +225,13 @@ if (isset($_POST['verifikasi'])) {
                                                                     <input type="hidden" name="id" value="<?= $row['id']; ?>">
 
                                                                     <div class="form-group">
-                                                                        <select class="form-control" aria-label="Default select example" name="verifikasiCuti">
+                                                                        <select class="form-control verifikasiPengajuan" aria-label="Default select example" name="verifikasiCuti">
                                                                             <option selected>Verifikasi pengajuan</option>
-                                                                            <option value="acc">Acc</option>
+                                                                            <option value="acc admin">Acc</option>
                                                                             <option value="ditolak">Ditolak</option>
                                                                         </select>
+
+                                                                        <input type="text" name="statusDitolak" id="alasanDitolak" class="form-control mt-3 alasanDitolak" placeholder="Alasan ditolak" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -257,6 +270,21 @@ if (isset($_POST['verifikasi'])) {
 <script>
     $(function() {
         $('#testing').DataTable()
+    });
+</script>
+
+<script>
+    $(function() {
+        $('#testing').DataTable()
+    });
+
+    $(".verifikasiPengajuan").change(function() {
+        var alasanDitolak = $(this).closest('.form-group').find('.alasanDitolak');
+        if ($(this).val() == "ditolak") {
+            alasanDitolak.removeAttr("readonly");
+        } else {
+            alasanDitolak.attr("readonly", "readonly");
+        }
     });
 </script>
 
