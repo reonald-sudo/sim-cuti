@@ -30,7 +30,7 @@ require_once 'templates/header.php' ?>
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-info">
                                 <div class="inner">
 
@@ -44,11 +44,11 @@ require_once 'templates/header.php' ?>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-success">
                                 <div class="inner">
 
-                                    <p>Validasi dan Laporan Pengajuan uang ganti</p>
+                                    <p>Laporan Pengajuan uang ganti</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -57,11 +57,11 @@ require_once 'templates/header.php' ?>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-warning">
                                 <div class="inner">
 
-                                    <p>Validasi dan Laporan Cuti</p>
+                                    <p>Laporan Cuti</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-user" aria-hidden="true"></i>
@@ -70,24 +70,11 @@ require_once 'templates/header.php' ?>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-6">
-                            <div class="small-box bg-primary">
-                                <div class="inner">
-
-                                    <p>Validasi dan Laporan Data Pegawai</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
-                                </div>
-                                <a href="admin_dataPegawai.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-secondary">
                                 <div class="inner">
 
-                                    <p>Validasi dan Laporan penggajian dan tunjangan</p>
+                                    <p>Laporan penggajian dan tunjangan</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-users" aria-hidden="true"></i>

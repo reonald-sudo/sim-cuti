@@ -5,13 +5,13 @@ session_start();
 require_once 'functions.php';
 require_once 'templates/header.php';
 
-$uangGantiAdmin = query("SELECT * FROM tb_uang_ganti");
+$uangGantiHumas = query("SELECT * FROM tb_uang_ganti");
 
 if (isset($_POST['verifikasi'])) {
     if (verifikasiPengajuan($_POST) > 0) {
         echo "<script>
         alert('berhasil diverifikasi');
-        document.location.href = 'admin_pengajuanUangGanti.php';
+        document.location.href = 'humas_uangGanti.php';
         </script>";
     }
 }
@@ -80,6 +80,14 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+
+                    <div class="mb-2">
+                        <?php if (isset($_GET['tahun']) && isset($_GET['status'])) : ?>
+                            <a href="humas_cetakUangGanti.php?tahun=<?= $_GET['tahun']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-success btn-sm" target="_blank">Cetak berdasarkan pencarian</a>
+                        <?php else : ?>
+                            <a href="humas_cetakUangGantiAll.php" class="btn btn-success btn-sm" target="_blank">Cetak semua data</a>
+                        <?php endif; ?>
+                    </div>
 
                     <div class="card">
                         <div class="card-header mb-0">
@@ -169,7 +177,7 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
                                 <tbody>
                                     <?php $i = 1; ?>
                                     <?php $total = 0 ?>
-                                    <?php foreach ($uangGantiAdmin as $row) : ?>
+                                    <?php foreach ($uangGantiHumas as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
                                             <td><?= $row['nama']; ?></td>
@@ -306,12 +314,12 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
             datasets: [{
                 label: '<?php
                         if (isset($_GET['tahun']) && isset($_GET['status'])) {
-                            echo $tahun . ' - ' . $status . ' (Total: ' . $totalNominalFormatted . ')';
+                            echo $tahun . ' - ' . $status;
                         } else {
-                            echo $tahunSekarang . ' - Acc humas (Total: ' . $totalNominalFormatted . ')';
+                            echo $tahunSekarang . ' - Acc humas';
                         }
                         ?>',
-                data: [<?= $reimburstmentDataString; ?>],
+                data: [<?= $reimburstmentDataString ?>],
                 borderWidth: 0,
                 pointRadius: 4,
                 backgroundColor: 'transparent',
@@ -326,30 +334,19 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
                 y: {
                     beginAtZero: true
                 }
-            },
-            plugins: {
-                tooltip: {
-                    enabled: true,
-                    callbacks: {
-                        label: function(context) {
-                            var label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            label += 'Rp. ' + context.parsed.y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                            return label;
-                        }
-                    }
-                },
-                datalabels: {
-                    display: true,
-                    formatter: function(value, context) {
-                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    }
-                }
             }
         }
     });
 </script>
+
+
+
+
+
+
+
+
+
+
 
 </html>
