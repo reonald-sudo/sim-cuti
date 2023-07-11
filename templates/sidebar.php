@@ -246,6 +246,18 @@ if (!isset($_SESSION['login'])) {
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="admin_gaji.php" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Data Gaji</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="admin_tunjangan.php" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Data Tunjangan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="admin_pengguna.php" class="nav-link">
                                     <i class="fas fa-file nav-icon"></i>
                                     <p>Data Pengguna</p>

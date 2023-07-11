@@ -30,67 +30,62 @@ require_once 'templates/header.php' ?>
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-info">
                                 <div class="inner">
 
                                     <p>Presensi</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                                 <?php $tanggal = date('Y-m-d') ?>
                                 <a href="admin_presensiPegawai.php" class="small-box-footer">More Info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-success">
                                 <div class="inner">
 
                                     <p>Pengajuan uang ganti</p>
                                 </div>
-                                <div class="icon">
-                                    <i class="fa fa-credit-card" aria-hidden="true"></i>
-                                </div>
                                 <a href="admin_pengajuanUangGanti.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-warning">
                                 <div class="inner">
 
                                     <p>Cuti</p>
                                 </div>
-                                <div class="icon">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                </div>
                                 <a href="admin_pengajuanCuti.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-primary">
                                 <div class="inner">
 
                                     <p>Data Pegawai</p>
                                 </div>
-                                <div class="icon">
-                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
-                                </div>
                                 <a href="admin_dataPegawai.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-light">
+                                <div class="inner">
+
+                                    <p>Data Gaji dan Tunjangan</p>
+                                </div>
+                                <a href="admin_GajidanTunjangan.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
                             <div class="small-box bg-secondary">
                                 <div class="inner">
 
                                     <p>Data Pengguna</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-users" aria-hidden="true"></i>
                                 </div>
                                 <a href="admin_pengguna.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
