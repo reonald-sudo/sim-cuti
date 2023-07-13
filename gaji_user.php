@@ -53,7 +53,7 @@ if (!isset($_SESSION['login'])) {
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="card">
                             <div class="card-header">
-                                <img src="dist/img/gaji_user.jpg" class="float-right" alt="" srcset="" style="width: 200px;">
+                                <img src="dist/img/gajian.jpg" class="float-right" alt="" srcset="" style="width: 220px;">
                                 <h4>Gaji dan Tunjangan bulan ini</h4>
                                 <p><em>Dashboard ini memberikan informasi mengenai gaji dan tunjangan mu.</em></p>
 

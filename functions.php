@@ -129,7 +129,7 @@ function tambahAbsensi($data)
     $tanggal = date('Y-m-d');
     $nip = $data['nip'];
     $nama = $data['nama'];
-    $catatan = $data['catatan'];
+    $catatan = 'hadir';
     $jamMasuk = date('H:i:s');
     $jamPulang = 'Belum Tercatat';
     $tunjangan = $data['tunjangan'];
@@ -385,6 +385,97 @@ function verifikasiPengajuanCuti($data)
     $statusDitolak = $data['statusDitolak'];
 
     $query = "UPDATE tb_cuti SET status = '$verifikasiCuti', alasan = '$statusDitolak' WHERE id = '$id'";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// penggajian
+
+// tambah data
+function tambahDataGaji($data)
+{
+    global $conn;
+
+    $kodeGaji = $data['kodeGaji'];
+    $golongan = $data['golongan'];
+    $gaji = $data['gaji'];
+
+    $query = "INSERT INTO tb_penggajian VALUE ('$kodeGaji', '$golongan', '$gaji')";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// edit
+function ubahGaji($data)
+{
+    global $conn;
+
+    $kodeGaji = $data['kodeGaji'];
+    $golongan = $data['golongan'];
+    $gaji = $data['gaji'];
+
+    $query = "UPDATE tb_penggajian SET golongan = '$golongan', gaji = '$gaji' WHERE kode_gaji = '$kodeGaji'";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// hapus
+function hapusGaji($kode_gaji)
+{
+    global $conn;
+
+    $query = "DELETE FROM tb_penggajian WHERE kode_gaji = '$kode_gaji'";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+
+// tunjangan
+
+// tambah data
+function tambahTunjangan($data)
+{
+    global $conn;
+
+    $kodeTunjangan = $data['kodeTunjangan'];
+    $golongan = $data['golongan'];
+    $hadir = $data['hadir'];
+    $terlambat = $data['terlambat'];
+    $tanpaKeterangan = $data['tanpaKeterangan'];
+
+    $query = "INSERT INTO tb_tunjangan VALUE ('$kodeTunjangan', '$golongan', '$hadir', '$terlambat', '$tanpaKeterangan')";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// edit
+function ubahTunjangan($data)
+{
+    global $conn;
+
+    $kodeTunjangan = $data['kodeTunjangan'];
+    $golongan = $data['golongan'];
+    $hadir = $data['hadir'];
+    $terlambat = $data['terlambat'];
+    $tanpaKeterangan = $data['tanpaKeterangan'];
+
+    $query = "UPDATE tb_tunjangan SET golongan = '$golongan', hadir = '$hadir', terlambat = '$terlambat', tanpa_keterangan = '$tanpaKeterangan' WHERE kode_tunjangan = '$kodeTunjangan'";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// hapus
+function hapusTunjangan($kode_tunjangan)
+{
+    global $conn;
+
+    $query = "DELETE FROM tb_tunjangan WHERE kode_tunjangan = '$kode_tunjangan'";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
