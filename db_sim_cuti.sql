@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2023 at 10:59 AM
+-- Generation Time: Jul 14, 2023 at 01:20 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -110,7 +110,9 @@ INSERT INTO `tb_absensi` (`id`, `nip`, `nama`, `tanggal_absen`, `jam_masuk`, `ja
 (287, '333', 'Mohamad Reonald. S,Kom', '2023-07-04', '-', '-', 'tanpa keterangan', '0'),
 (288, '333', 'Mohamad Reonald. S,Kom', '2023-07-06', '12:08:16', '18:44:38', 'terlambat', '20000'),
 (289, '333', 'Mohamad Reonald. S,Kom', '2023-07-08', '13:23:09', 'belum tercatat', 'terlambat', '20000'),
-(290, '333', 'Mohamad Reonald. S,Kom', '2023-07-10', '11:47:12', 'belum tercatat', 'terlambat', '20000');
+(290, '333', 'Mohamad Reonald. S,Kom', '2023-07-10', '11:47:12', 'belum tercatat', 'terlambat', '20000'),
+(292, '333', 'Mohamad Reonald. S,Kom', '2023-07-14', '04:36:53', 'Belum Tercatat', 'hadir', '44000'),
+(293, '111', 'aldino', '2023-07-14', '05:21:33', 'Belum Tercatat', 'hadir', '44000');
 
 -- --------------------------------------------------------
 
@@ -149,6 +151,13 @@ CREATE TABLE `tb_penggajian` (
   `gaji` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tb_penggajian`
+--
+
+INSERT INTO `tb_penggajian` (`kode_gaji`, `golongan`, `gaji`) VALUES
+('AB2A', '2b', '100000');
+
 -- --------------------------------------------------------
 
 --
@@ -158,8 +167,18 @@ CREATE TABLE `tb_penggajian` (
 CREATE TABLE `tb_tunjangan` (
   `kode_tunjangan` varchar(100) NOT NULL,
   `golongan` varchar(100) NOT NULL,
-  `gaji` varchar(100) NOT NULL
+  `hadir` varchar(100) NOT NULL,
+  `terlambat` varchar(100) NOT NULL,
+  `tanpa_keterangan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_tunjangan`
+--
+
+INSERT INTO `tb_tunjangan` (`kode_tunjangan`, `golongan`, `hadir`, `terlambat`, `tanpa_keterangan`) VALUES
+('213AD', '2b', '33000', '15000', '0'),
+('3BA31', '3b', '55000', '30000', '0');
 
 -- --------------------------------------------------------
 
@@ -307,7 +326,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `tb_absensi`
 --
 ALTER TABLE `tb_absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
 
 --
 -- AUTO_INCREMENT for table `tb_cuti`
