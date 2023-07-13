@@ -72,16 +72,14 @@ if (!isset($_SESSION['login'])) {
         data: {
             labels: [
                 'Hadir',
-                'Izin',
                 'Terlambat',
                 'Tanpa keterangan'
             ],
             datasets: [{
                 label: 'My First Dataset',
-                data: [<?= $absensiHadir; ?>, <?= $absensiIzin; ?>, <?= $absensiTerlambat; ?>, <?= $absensiTanpaKet; ?>],
+                data: [<?= $absensiHadir; ?>, <?= $absensiTerlambat; ?>, <?= $absensiTanpaKet; ?>],
                 backgroundColor: [
                     'rgb(23, 99, 11)',
-                    'rgb(54, 162, 235)',
                     'rgb(255, 205, 86)',
                     'rgb(255, 99, 132)',
                 ],

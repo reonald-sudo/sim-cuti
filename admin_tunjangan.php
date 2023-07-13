@@ -147,9 +147,9 @@ if (isset($_POST['submitTunjangan'])) {
                                             <td>Rp. <?= number_format($row['tanpa_keterangan'], 0, ",", "."); ?></td>
 
                                             <td>
-                                                <a href="#" class="badge badge-warning">Edit</a>
+                                                <a href="admin_editTunjangan.php?kode_tunjangan=<?= $row['kode_tunjangan']; ?>" class="badge badge-warning">Edit</a>
 
-                                                <a href="#" class="badge badge-danger" onclick="javascript: return confirm('Konfirmasi data akan dihapus');">Hapus</a>
+                                                <a href="admin_hapusTunjangan.php?kode_tunjangan=<?= $row['kode_tunjangan']; ?>" class="badge badge-danger" onclick="javascript: return confirm('Konfirmasi data akan dihapus');">Hapus</a>
                                             </td>
 
                                         </tr>

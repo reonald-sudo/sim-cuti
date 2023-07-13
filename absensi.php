@@ -202,7 +202,7 @@ if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
 
                                         <input type="hidden" name="nama" value="<?= $_SESSION['nama']; ?>">
 
-                                        <input type="text" class="form-control mb-3" name="catatan" id="" placeholder="Hadir / Izin">
+                                        <input type="text" class="form-control mb-3" name="catatan" id="" placeholder="Hadir">
 
                                         <input type="hidden" class="form-control mb-3" name="tunjangan" id="" value="44000">
 
@@ -264,6 +264,8 @@ if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
                                                     <td style="color: red;"><?= $row['catatan']; ?></td>
                                                 <?php elseif ($row['catatan'] == 'tanpa keterangan') : ?>
                                                     <td style="color: red;"><?= $row['catatan']; ?></td>
+                                                <?php else : ?>
+                                                    <td style="color: green;"><?= $row['catatan']; ?></td>
                                                 <?php endif; ?>
                                                 <td style="color: green;">Rp. <?= number_format($row['tunjangan'], 0, ",", "."); ?></td>
                                             </tr>

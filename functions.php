@@ -129,7 +129,7 @@ function tambahAbsensi($data)
     $tanggal = date('Y-m-d');
     $nip = $data['nip'];
     $nama = $data['nama'];
-    $catatan = $data['catatan'];
+    $catatan = 'hadir';
     $jamMasuk = date('H:i:s');
     $jamPulang = 'Belum Tercatat';
     $tunjangan = $data['tunjangan'];
@@ -448,6 +448,34 @@ function tambahTunjangan($data)
     $tanpaKeterangan = $data['tanpaKeterangan'];
 
     $query = "INSERT INTO tb_tunjangan VALUE ('$kodeTunjangan', '$golongan', '$hadir', '$terlambat', '$tanpaKeterangan')";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// edit
+function ubahTunjangan($data)
+{
+    global $conn;
+
+    $kodeTunjangan = $data['kodeTunjangan'];
+    $golongan = $data['golongan'];
+    $hadir = $data['hadir'];
+    $terlambat = $data['terlambat'];
+    $tanpaKeterangan = $data['tanpaKeterangan'];
+
+    $query = "UPDATE tb_tunjangan SET golongan = '$golongan', hadir = '$hadir', terlambat = '$terlambat', tanpa_keterangan = '$tanpaKeterangan' WHERE kode_tunjangan = '$kodeTunjangan'";
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// hapus
+function hapusTunjangan($kode_tunjangan)
+{
+    global $conn;
+
+    $query = "DELETE FROM tb_tunjangan WHERE kode_tunjangan = '$kode_tunjangan'";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
