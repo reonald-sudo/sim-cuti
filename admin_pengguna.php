@@ -77,13 +77,18 @@ if (isset($_POST['tambahPengguna'])) {
                                             <div class="modal-body">
 
                                                 <div class="row">
-                                                    <div class="form-group col-lg-6">
+                                                    <div class="form-group col-lg-4">
                                                         <h6 for="">NIP</h6>
                                                         <input type="text" name="nip" class="form-control" placeholder="Masukkan Nip" required>
                                                         <small style="color: red;">* Sesuaikan nip</small>
                                                     </div>
 
-                                                    <div class="form-group col-lg-6">
+                                                    <div class="form-group col-lg-4">
+                                                        <h6 for="">Golongan</h6>
+                                                        <input type="text" name="golongan" class="form-control" placeholder="Masukkan Golongan" required>
+                                                    </div>
+
+                                                    <div class="form-group col-lg-4">
                                                         <h6 for="">Nama</h6>
                                                         <input type="text" name="nama" class="form-control" placeholder="Masukkan Nama" required>
                                                         <small style="color: red;">* Sesuaikan dengan gelar</small>
@@ -125,6 +130,7 @@ if (isset($_POST['tambahPengguna'])) {
                                         <tr>
                                             <th>#</th>
                                             <th>Nip</th>
+                                            <th>Golongan</th>
                                             <th>Nama</th>
                                             <th>Hak Akses</th>
                                             <th>Opsi</th>
@@ -134,6 +140,7 @@ if (isset($_POST['tambahPengguna'])) {
                                         <tr>
                                             <th>#</th>
                                             <th>Nip</th>
+                                            <th>Golongan</th>
                                             <th>Nama</th>
                                             <th>Hak Akses</th>
                                             <th>Opsi</th>
@@ -147,6 +154,7 @@ if (isset($_POST['tambahPengguna'])) {
                                             <tr>
                                                 <td><?= $i; ?></td>
                                                 <td><?= $row['nip']; ?></td>
+                                                <td><?= $row['golongan']; ?></td>
                                                 <td><?= $row['nama']; ?></td>
                                                 <td><?= $row['hak_akses']; ?></td>
                                                 <td>

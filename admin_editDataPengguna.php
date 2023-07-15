@@ -63,6 +63,11 @@ if (isset($_POST['ubahData'])) {
                                     </div>
 
                                     <div class="form-group col-lg-3">
+                                        <label for="" class="">Golongan</label>
+                                        <input class="form-control" type="text" name="golongan" id="" value="<?= $pengguna['golongan']; ?>">
+                                    </div>
+
+                                    <div class="form-group col-lg-3">
                                         <label for="" class="">Nama</label>
                                         <input class="form-control" type="text" name="nama" id="" value="<?= $pengguna['nama']; ?>">
                                     </div>

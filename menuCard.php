@@ -33,7 +33,6 @@ foreach ($absensi as $row) {
     $totalTunjangan += (float)$row['tunjangan'];
 }
 
-
 ?>
 
 <div class="card">
@@ -142,8 +141,13 @@ foreach ($absensi as $row) {
                                     <table>
                                         <tr>
                                             <td><strong>Gapok </strong></td>
-                                            <?php $a = 2500000 ?>
-                                            <td style="color: green;">: Rp. 2.500.000</td>
+
+                                            <?php
+
+                                            $gaji = 25000000;
+
+                                            ?>
+                                            <td style="color: green;">: Rp. <?= number_format($gaji, 0, ",", "."); ?></td>
                                         </tr>
                                         <tr>
                                             <td><strong>Tunjangan Kinerja</strong></td>

@@ -181,11 +181,12 @@ function tambahPengguna($data)
     global $conn;
 
     $nip = $data['nip'];
+    $golongan = $data['golongan'];
     $nama = $data['nama'];
     $password = $data['password'];
     $hakAkses = $data['hakAkses'];
 
-    $query = "INSERT INTO user VALUE ('$nip', '$nama', '$hakAkses', '$password')";
+    $query = "INSERT INTO user VALUE ('$nip', '$golongan', '$nama', '$hakAkses', '$password')";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
@@ -268,11 +269,12 @@ function ubahPengguna($data)
     global $conn;
 
     $nip = $data['nip'];
+    $golongan = $data['golongan'];
     $nama = $data['nama'];
     $password = $data['password'];
     $hakAkses = $data['hakAkses'];
 
-    $query = "UPDATE user SET nama = '$nama', password = '$password', hak_akses = '$hakAkses' WHERE nip = '$nip'";
+    $query = "UPDATE user SET golongan = '$golongan', nama = '$nama', password = '$password', hak_akses = '$hakAkses' WHERE nip = '$nip'";
 
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);

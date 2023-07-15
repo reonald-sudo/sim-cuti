@@ -132,7 +132,6 @@ if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
                 </div>
             </div>
 
-
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
