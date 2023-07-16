@@ -20,6 +20,7 @@ if (!isset($_SESSION['login'])) {
 } else {
     $nip = $_SESSION['nip'];
     $nama = $_SESSION['nama'];
+    $golongan = $_SESSION['golongan'];
     $password = $_SESSION['password'];
     $hakAses = $_SESSION['hak_akses'];
 }
@@ -75,17 +76,34 @@ $tanggalSekarang = date('Y-m-d');
 $cekHari = date('D');
 // error_reporting(0);
 
-if (empty($absensiMasukCek) && $jamMasuk >= '17:00:00') {
+if (empty($absensiMasukCek) && $jamMasuk >= '17:00:00' && $cekHari !== 'Sat' && $cekHari !== 'Sun') {
     global $conn;
 
-    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggalSekarang', '-', '-', 'tanpa keterangan', '0')";
+    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '-', '-', 'tanpa keterangan', '0')";
     mysqli_query($conn, $query);
-} else if (empty($absensiMasukCek) && $jamMasuk >= '07:30:00') {
+} else if (empty($absensiMasukCek) && $jamMasuk >= '07:30:00' && $cekHari !== 'Sat' && $cekHari !== 'Sun') {
     global $conn;
 
-    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggalSekarang', '$jamMasuk', 'belum tercatat', 'terlambat', '20000')";
+    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '$jamMasuk', 'belum tercatat', 'terlambat', '20000')";
     mysqli_query($conn, $query);
 }
+
+if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
+    global $conn;
+
+    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '-', '-', 'Libur', 0)";
+    mysqli_query($conn, $query);
+} elseif ($cekHari === 'Sun' && empty($absensiMasukCek)) {
+    global $conn;
+
+    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '-', '-', 'Libur', 0)";
+    mysqli_query($conn, $query);
+}
+
+// if (isset($_POST['simpan'])) {
+//     if (cetakFilterAbsensi($_POST) > 0) {
+//     }
+// }
 
 ?>
 
@@ -114,6 +132,7 @@ if (empty($absensiMasukCek) && $jamMasuk >= '17:00:00') {
                     </div>
                 </div>
             </div>
+
 
             <!-- Main content -->
             <section class="content">
@@ -184,7 +203,9 @@ if (empty($absensiMasukCek) && $jamMasuk >= '17:00:00') {
 
                                         <input type="hidden" name="nama" value="<?= $_SESSION['nama']; ?>">
 
-                                        <input type="text" class="form-control mb-3" name="catatan" id="" placeholder="Hadir">
+                                        <input type="hidden" name="golongan" value="<?= $_SESSION['golongan']; ?>">
+
+                                        <input type="text" class="form-control mb-3" name="catatan" id="" placeholder="Hadir / Izin">
 
                                         <input type="hidden" class="form-control mb-3" name="tunjangan" id="" value="44000">
 
@@ -246,7 +267,9 @@ if (empty($absensiMasukCek) && $jamMasuk >= '17:00:00') {
                                                     <td style="color: red;"><?= $row['catatan']; ?></td>
                                                 <?php elseif ($row['catatan'] == 'tanpa keterangan') : ?>
                                                     <td style="color: red;"><?= $row['catatan']; ?></td>
-                                                <?php else : ?>
+                                                <?php elseif ($row['catatan'] == 'hadir') : ?>
+                                                    <td style="color: green;"><?= $row['catatan']; ?></td>
+                                                <?php elseif ($row['catatan'] == 'Libur') : ?>
                                                     <td style="color: green;"><?= $row['catatan']; ?></td>
                                                 <?php endif; ?>
                                                 <td style="color: green;">Rp. <?= number_format($row['tunjangan'], 0, ",", "."); ?></td>
