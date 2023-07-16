@@ -23,6 +23,7 @@ if (isset($_POST['login'])) {
 
         // variabel
         $_SESSION['nip'] = $row['nip'];
+        $_SESSION['golongan'] = $row['golongan'];
         $_SESSION['nama'] = $row['nama'];
         $_SESSION['password'] = $row['password'];
         $_SESSION['hak_akses'] = $row['hak_akses'];

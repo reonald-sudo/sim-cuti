@@ -10,6 +10,7 @@ if (!isset($_SESSION)) {
 if (!isset($_SESSION['login'])) {
     header('Location:../login.php');
 } else {
+    $golongan = $_SESSION['golongan'];
     $nip = $_SESSION['nip'];
     $nama = $_SESSION['nama'];
     $password = $_SESSION['password'];
@@ -144,10 +145,11 @@ foreach ($absensi as $row) {
 
                                             <?php
 
-                                            $gaji = 25000000;
+                                            $gaji = editData("SELECT * FROM tb_penggajian WHERE golongan = '$golongan'");
+                                            $tunjangan = editData("SELECT * FROM tb_tunjangan WHERE golongan = '$golongan'");
 
                                             ?>
-                                            <td style="color: green;">: Rp. <?= number_format($gaji, 0, ",", "."); ?></td>
+                                            <td style="color: green;">: Rp. <?= number_format($gaji['gaji'], 0, ",", "."); ?></td>
                                         </tr>
                                         <tr>
                                             <td><strong>Tunjangan Kinerja</strong></td>
@@ -158,7 +160,7 @@ foreach ($absensi as $row) {
                                         </tr>
                                         <tr>
                                             <td><strong>Total</strong></td>
-                                            <?php $totalGajidanTunjangan = $a + $totalTunjangan ?>
+                                            <?php $totalGajidanTunjangan = $gaji['gaji'] + $totalTunjangan ?>
                                             <td style="color: green;">: Rp. <?= number_format($totalGajidanTunjangan, 0, ",", "."); ?></td>
                                         </tr>
                                     </table>

@@ -129,6 +129,7 @@ function tambahAbsensi($data)
     $tanggal = date('Y-m-d');
     $nip = $data['nip'];
     $nama = $data['nama'];
+    $golongan = $data['golongan'];
     $catatan = 'hadir';
     $jamMasuk = date('H:i:s');
     $jamPulang = 'Belum Tercatat';
@@ -142,7 +143,7 @@ function tambahAbsensi($data)
 
         return $stmt;
     } elseif ($stmt == 0) {
-        $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$nama', '$tanggal', '$jamMasuk', '$jamPulang', '$catatan', '$tunjangan')";
+        $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggal', '$jamMasuk', '$jamPulang', '$catatan', '$tunjangan')";
 
         mysqli_query($conn, $query);
     }

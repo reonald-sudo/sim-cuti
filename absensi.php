@@ -87,23 +87,6 @@ if (empty($absensiMasukCek) && $jamMasuk >= '17:00:00') {
     mysqli_query($conn, $query);
 }
 
-if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
-    global $conn;
-
-    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$tanggalSekarang', '-', '-', 'Libur')";
-    mysqli_query($conn, $query);
-} elseif ($cekHari === 'Sun' && empty($absensiMasukCek)) {
-    global $conn;
-
-    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$tanggalSekarang', '-', '-', 'Libur')";
-    mysqli_query($conn, $query);
-}
-
-// if (isset($_POST['simpan'])) {
-//     if (cetakFilterAbsensi($_POST) > 0) {
-//     }
-// }
-
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">

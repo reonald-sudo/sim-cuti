@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 14, 2023 at 01:20 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+-- Host: localhost
+-- Generation Time: Jul 16, 2023 at 02:07 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -97,23 +97,6 @@ CREATE TABLE `tb_absensi` (
   `tunjangan` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tb_absensi`
---
-
-INSERT INTO `tb_absensi` (`id`, `nip`, `nama`, `tanggal_absen`, `jam_masuk`, `jam_pulang`, `catatan`, `tunjangan`) VALUES
-(282, '111', 'aldino', '2023-07-01', '08:50:26', '17:20:13', 'terlambat', '20000'),
-(283, '111', 'aldino', '2023-07-02', '08:07:28', '08:11:37', 'terlambat', '20000'),
-(284, '333', 'Mohamad Reonald. S,Kom', '2023-07-02', '08:52:12', 'belum tercatat', 'terlambat', '20000'),
-(285, '333', 'Mohamad Reonald. S,Kom', '2023-07-03', '14:31:28', 'belum tercatat', 'terlambat', '20000'),
-(286, '111', 'aldino', '2023-07-03', '15:29:03', '15:29:10', 'terlambat', '20000'),
-(287, '333', 'Mohamad Reonald. S,Kom', '2023-07-04', '-', '-', 'tanpa keterangan', '0'),
-(288, '333', 'Mohamad Reonald. S,Kom', '2023-07-06', '12:08:16', '18:44:38', 'terlambat', '20000'),
-(289, '333', 'Mohamad Reonald. S,Kom', '2023-07-08', '13:23:09', 'belum tercatat', 'terlambat', '20000'),
-(290, '333', 'Mohamad Reonald. S,Kom', '2023-07-10', '11:47:12', 'belum tercatat', 'terlambat', '20000'),
-(292, '333', 'Mohamad Reonald. S,Kom', '2023-07-14', '04:36:53', 'Belum Tercatat', 'hadir', '44000'),
-(293, '111', 'aldino', '2023-07-14', '05:21:33', 'Belum Tercatat', 'hadir', '44000');
-
 -- --------------------------------------------------------
 
 --
@@ -156,7 +139,23 @@ CREATE TABLE `tb_penggajian` (
 --
 
 INSERT INTO `tb_penggajian` (`kode_gaji`, `golongan`, `gaji`) VALUES
-('AB2A', '2b', '100000');
+('1ACC', '1a', '1560800'),
+('1BCD', '1b', '1851800'),
+('1CFFG', '1c', '1776600'),
+('1DEA', '1d', '1851800'),
+('3ABB', '3a', '2579400'),
+('3BBB', '3b', '2688500'),
+('3CBB', '3c', '2802300'),
+('3DBB', '3d', '2920800'),
+('4AFE', '4a', '3044300'),
+('4BFE', '4b', '3173100'),
+('4CFE', '4c', '3307300'),
+('4DFE', '4d', '3447200'),
+('4EFE', '4e', '3593100'),
+('AC2A', '2a', '2022200'),
+('AC2B', '2b', '2208400'),
+('AC2C', '2c', '2301800'),
+('AC2D', '2d', '2399200');
 
 -- --------------------------------------------------------
 
@@ -177,8 +176,23 @@ CREATE TABLE `tb_tunjangan` (
 --
 
 INSERT INTO `tb_tunjangan` (`kode_tunjangan`, `golongan`, `hadir`, `terlambat`, `tanpa_keterangan`) VALUES
+('1ABR', '1a', '23000', '11000', '0'),
+('1BCCD', '1b', '27000', '13000', '0'),
+('1CDFJ', '1c', '29000', '14000', '0'),
+('1DRRA', '1d', '30000', '15000', '0'),
 ('213AD', '2b', '33000', '15000', '0'),
-('3BA31', '3b', '55000', '30000', '0');
+('2ABBR', '2a', '31000', '15000', '0'),
+('2CDFA', '2c', '33000', '16000', '0'),
+('2DGTR', '2d', '35000', '17000', '0'),
+('3AGGF', '3a', '37000', '18000', '0'),
+('3BFR', '3b', '40000', '18000', '0'),
+('3CGEA', '3c ', '42000', '20000', '0'),
+('3DGHTR', '3d', '44000', '21000', '0'),
+('4AGGH', '4a', '45000', '22000', '0'),
+('4BTFT', '4b', '47000', '22000', '0'),
+('4CGRT', '4c', '47000', '25000', '0'),
+('4DPPO', '4d', '49000', '26000', '0'),
+('4EHYT', '4e', '50000', '25000', '0');
 
 -- --------------------------------------------------------
 
@@ -234,6 +248,7 @@ INSERT INTO `tb_uang_ganti` (`id`, `nip`, `nama`, `tanggal_transaksi`, `nominal`
 
 CREATE TABLE `user` (
   `nip` varchar(50) NOT NULL,
+  `golongan` varchar(255) DEFAULT NULL,
   `nama` varchar(50) NOT NULL,
   `hak_akses` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL
@@ -243,14 +258,15 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`nip`, `nama`, `hak_akses`, `password`) VALUES
-('111', 'aldino', 'user', '111'),
-('333', 'Mohamad Reonald. S,Kom', 'user', '333'),
-('444', 'aldi', 'user', '444'),
-('666', 'Cemara Puteri', 'user', '666'),
-('admin', 'admin', 'admin', 'admin'),
-('bendahara', 'bendahara', 'bendahara', 'bendahara'),
-('humas', 'humas', 'humas', 'humas');
+INSERT INTO `user` (`nip`, `golongan`, `nama`, `hak_akses`, `password`) VALUES
+('111', '2c', 'aldino', 'user', '111'),
+('123', '2b', 'rizka', 'user', '123'),
+('333', '2b', 'Mohamad Reonald. S,Kom', 'user', '333'),
+('444', '2b', 'aldi', 'user', '444'),
+('666', '2b', 'Cemara Puteri', 'user', '666'),
+('admin', '', 'admin', 'admin', 'admin'),
+('bendahara', '', 'bendahara', 'bendahara', 'bendahara'),
+('humas', '', 'humas', 'humas', 'humas');
 
 --
 -- Indexes for dumped tables
@@ -326,7 +342,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `tb_absensi`
 --
 ALTER TABLE `tb_absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=296;
 
 --
 -- AUTO_INCREMENT for table `tb_cuti`
