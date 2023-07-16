@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 16, 2023 at 02:07 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Jul 16, 2023 at 08:45 AM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `pangkat` (
   `golongan` varchar(50) NOT NULL,
   `pangkat` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pangkat`
@@ -68,7 +68,7 @@ CREATE TABLE `pegawai` (
   `alamat` varchar(50) NOT NULL,
   `no_telp` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pegawai`
@@ -89,13 +89,21 @@ INSERT INTO `pegawai` (`nip`, `nama`, `golongan`, `alamat`, `no_telp`, `email`) 
 CREATE TABLE `tb_absensi` (
   `id` int(11) NOT NULL,
   `nip` varchar(50) NOT NULL,
+  `golongan` varchar(10) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `tanggal_absen` date NOT NULL,
   `jam_masuk` varchar(50) NOT NULL,
   `jam_pulang` varchar(50) NOT NULL,
   `catatan` varchar(50) NOT NULL DEFAULT 'tanpa keterangan',
   `tunjangan` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_absensi`
+--
+
+INSERT INTO `tb_absensi` (`id`, `nip`, `golongan`, `nama`, `tanggal_absen`, `jam_masuk`, `jam_pulang`, `catatan`, `tunjangan`) VALUES
+(307, '333', '2b', 'Mohamad Reonald. S,Kom', '2023-07-16', '-', '-', 'Libur', '0');
 
 -- --------------------------------------------------------
 
@@ -113,7 +121,7 @@ CREATE TABLE `tb_cuti` (
   `status` varchar(50) NOT NULL,
   `surat_pengajuan` varchar(50) NOT NULL,
   `alasan` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_cuti`
@@ -132,7 +140,7 @@ CREATE TABLE `tb_penggajian` (
   `kode_gaji` varchar(100) NOT NULL,
   `golongan` varchar(100) NOT NULL,
   `gaji` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_penggajian`
@@ -169,7 +177,7 @@ CREATE TABLE `tb_tunjangan` (
   `hadir` varchar(100) NOT NULL,
   `terlambat` varchar(100) NOT NULL,
   `tanpa_keterangan` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_tunjangan`
@@ -210,7 +218,7 @@ CREATE TABLE `tb_tunjangan_dan_gaji_pegawai` (
   `kode_gaji` varchar(100) NOT NULL,
   `kode_tunjangan` varchar(100) NOT NULL,
   `total_gaji` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -227,7 +235,7 @@ CREATE TABLE `tb_uang_ganti` (
   `nota` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `alasan` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_uang_ganti`
@@ -252,7 +260,7 @@ CREATE TABLE `user` (
   `nama` varchar(50) NOT NULL,
   `hak_akses` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
@@ -290,7 +298,8 @@ ALTER TABLE `pegawai`
 --
 ALTER TABLE `tb_absensi`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `nip` (`nip`);
+  ADD KEY `nip` (`nip`),
+  ADD KEY `golongan` (`golongan`);
 
 --
 -- Indexes for table `tb_cuti`
@@ -342,7 +351,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `tb_absensi`
 --
 ALTER TABLE `tb_absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=296;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=308;
 
 --
 -- AUTO_INCREMENT for table `tb_cuti`
@@ -370,7 +379,8 @@ ALTER TABLE `pegawai`
 -- Constraints for table `tb_absensi`
 --
 ALTER TABLE `tb_absensi`
-  ADD CONSTRAINT `tb_absensi_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `pegawai` (`nip`);
+  ADD CONSTRAINT `tb_absensi_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `pegawai` (`nip`),
+  ADD CONSTRAINT `tb_absensi_ibfk_2` FOREIGN KEY (`golongan`) REFERENCES `pangkat` (`golongan`);
 
 --
 -- Constraints for table `tb_cuti`
