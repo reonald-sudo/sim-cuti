@@ -483,3 +483,53 @@ function hapusTunjangan($kode_tunjangan)
 
     return mysqli_affected_rows($conn);
 }
+
+
+// gaji dan tunjangan
+
+// tambah data
+function updateGaji($data)
+{
+    global $conn;
+
+    $idGaji = $data['idGaji'];
+    $bulan = $data['bulan'];
+    $nip = $data['nip'];
+    $golongan = $data['golongan'];
+    $nama = $data['nama'];
+    $jHadir = $data['jHadir'];
+    $jTerlambat = $data['jTerlambat'];
+    $jTanpaKet = $data['jTanpaKet'];
+    $kGaji = $data['kGaji'];
+    $gaji = $data['gaji'];
+    $kTunjangan = $data['kTunjangan'];
+    $tunjangan = $data['tunjangan'];
+    $gajiTunjangan = $data['gajiTunjangan'];
+    $status = $data['status'];
+
+    $stmt = hitungBaris("SELECT * FROM tb_tunjangan_dan_gaji_pegawai WHERE id_gaji = '$idGaji' AND nip = '$nip'");
+
+    if ($stmt > 0) {
+        $stmt = 0;
+
+        return $stmt;
+    } elseif ($stmt == 0) {
+        $query = "INSERT INTO tb_tunjangan_dan_gaji_pegawai VALUE ('','$idGaji', '$bulan', '$nip', '$golongan', '$nama', '$jHadir', '$jTerlambat', '$jTanpaKet', '$kGaji', '$gaji', '$kTunjangan', '$tunjangan', '$gajiTunjangan', '$status')";
+        mysqli_query($conn, $query);
+    }
+
+    return mysqli_affected_rows($conn);
+}
+
+// verifikasi
+function verifikasiGajidanTunjangan($data)
+{
+    global $conn;
+
+    $id = $data['id'];
+    $verifikasiGajiTunjangan = $data['verifikasiGajiTunjangan'];
+
+    $query = "UPDATE tb_tunjangan_dan_gaji_pegawai SET status = '$verifikasiGajiTunjangan' WHERE id = '$id'";
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}

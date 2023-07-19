@@ -9,7 +9,7 @@ if (isset($_POST['verifikasi'])) {
     if (verifikasiGajidanTunjangan($_POST) > 0) {
         echo "<script>
         alert('berhasil diverifikasi');
-        document.location.href = 'admin_GajidanTunjangan.php';
+        document.location.href = 'humas_GajidanTunjangan.php';
         </script>";
     }
 }
@@ -36,8 +36,8 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="absensi.php">Gaji dan tunjangan</a></li>
-                                <li class="breadcrumb-item active">Admin</li>
+                                <li class="breadcrumb-item"><a href="humas_GajiDanTunjangan.php">Gaji dan tunjangan</a></li>
+                                <li class="breadcrumb-item active">Humas</li>
                             </ol>
                         </div>
                     </div>
@@ -58,46 +58,6 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                             <a href="admin_CetakSeluruhDataGaji.php" class="btn btn-primary btn-sm mr-1" target="_blank">
                                 Cetak seluruh data
                             </a>
-
-                            <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakGajiTunjangan">
-                                Cetak data berdasarkan nip & status
-                            </button>
-
-                            <!-- Modal -->
-                            <form action="admin_cetakGajiTunjangan.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakGajiTunjangan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan NIP & Status</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="nip" id="" placeholder="Nip">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <select class="form-control verifikasiGajiTunjangan" aria-label="Default select example" name="verifikasiGajiTunjangan">
-                                                        <option selected>Verifikasi Gaji dan Tunjangan</option>
-                                                        <option value="acc humas">Acc Humas</option>
-                                                        <option value="acc admin">Acc Admin</option>
-                                                        <option value="ditolak">Ditolak</option>
-                                                    </select>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
 
                         </div>
 
@@ -185,13 +145,12 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                                                                     <input type="hidden" name="id" value="<?= $row['id']; ?>">
 
                                                                     <div class="form-group">
-                                                                        <select class="form-control verifikasiGajiTunjangan" aria-label="Default select example" name="verifikasiGajiTunjangan" required>
-                                                                            <option value="" selected disabled hidden>Pilih Verifikasi Gaji dan Tunjangan</option>
-                                                                            <option value="acc admin">Acc</option>
+                                                                        <select class="form-control verifikasiGajiTunjangan" aria-label="Default select example" name="verifikasiGajiTunjangan">
+                                                                            <option selected>Verifikasi Gaji dan Tunjangan</option>
+                                                                            <option value="acc humas">Acc</option>
                                                                             <option value="ditolak">Ditolak</option>
                                                                         </select>
                                                                     </div>
-
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

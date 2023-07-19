@@ -79,7 +79,7 @@ require_once 'templates/header.php' ?>
                                 <div class="icon">
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="humas_GajiDanTunjangan.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 

@@ -10,12 +10,15 @@ if (!isset($_SESSION)) {
 if (!isset($_SESSION['login'])) {
     header('Location:../login.php');
 } else {
-    $golongan = $_SESSION['golongan'];
     $nip = $_SESSION['nip'];
+    $golongan = $_SESSION['golongan'];
     $nama = $_SESSION['nama'];
     $password = $_SESSION['password'];
     $hakAses = $_SESSION['hak_akses'];
 }
+
+// echo $golongan;
+// die;
 
 $absensiHadir = hitungBaris("SELECT * FROM tb_absensi WHERE nip = '$nip' AND MONTH(tanggal_absen) = '$bulanIni' AND catatan = 'hadir'");
 

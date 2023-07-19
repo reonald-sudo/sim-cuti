@@ -9,8 +9,60 @@ if (!isset($_SESSION['login'])) {
 } else {
     $nip = $_SESSION['nip'];
     $nama = $_SESSION['nama'];
+    $golongan = $_SESSION['golongan'];
     $password = $_SESSION['password'];
     $hakAses = $_SESSION['hak_akses'];
+}
+
+$bulanSekarang = date('n');
+
+$gaji = editData("SELECT * FROM tb_penggajian WHERE golongan = '$golongan'");
+
+// $jHadir = editData("SELECT * FROM tb_penggajian WHERE golongan = '$golongan'");
+
+// hadir, terlambat, dan tanpa keterangan
+$jHadir = editData("SELECT COUNT(*) AS total_hadir FROM tb_absensi WHERE nip = '$nip' AND catatan LIKE 'hadir'");
+$jTerlambat = editData("SELECT COUNT(*) AS total_terlambat FROM tb_absensi WHERE nip = '$nip' AND catatan LIKE 'terlambat'");
+$jTanpaKet = editData("SELECT COUNT(*) AS total_tanpaKet FROM tb_absensi WHERE nip = '$nip' AND catatan LIKE 'tanpa keterangan'");
+
+$totalHadir = $jHadir['total_hadir'];
+$totalTerlambat = $jTerlambat['total_terlambat'];
+$totalTanpaKet = $jTanpaKet['total_tanpaKet'];
+
+// ambil kode gaji
+$gaji = editData("SELECT * FROM tb_penggajian WHERE golongan = '$golongan'");
+$kodeGaji = $gaji['kode_gaji'];
+$angkaGaji = $gaji['gaji'];
+
+// ambil kode tunjangan
+$tunjangan = editData("SELECT * FROM tb_tunjangan WHERE golongan = '$golongan'");
+$kodeTunjangan = $tunjangan['kode_tunjangan'];
+
+// hitung tunjangan berdasarkan absensi
+$absensi = showSingleTable("SELECT * FROM tb_absensi WHERE nip = $nip AND MONTH(tanggal_absen) = $bulanSekarang");
+
+$totalTunjangan = 0;
+foreach ($absensi as $row) {
+    $totalTunjangan += (float)$row['tunjangan'];
+}
+
+// total gaji + tunjangan
+$totalGajiTunjangan = $angkaGaji + $totalTunjangan;
+
+$gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai WHERE nip = $nip");
+
+if (isset($_POST['refreshGaji'])) {
+    if (updateGaji($_POST) > 0) {
+        echo "<script>
+            alert('Berhasil Update!');
+            document.location.href = 'gaji_user.php';
+        </script>";
+    } else {
+        echo "<script>
+            alert('Berhasil Update!');
+            document.location.href = 'gaji_user.php';
+        </script>";
+    }
 }
 
 ?>
@@ -57,58 +109,85 @@ if (!isset($_SESSION['login'])) {
                                 <h4>Gaji dan Tunjangan bulan ini</h4>
                                 <p><em>Dashboard ini memberikan informasi mengenai gaji dan tunjangan mu.</em></p>
 
+                                <form action="" method="post">
+
+                                    <input type="hidden" name="idGaji" id="idGaji" value="<?= $kodeGaji; ?>">
+                                    <input type="hidden" name="bulan" id="bulan" value="<?= date('F-Y'); ?>">
+                                    <input type="hidden" name="nip" id="nip" value="<?= $nip; ?>">
+                                    <input type="hidden" name="golongan" id="golongan" value="<?= $golongan; ?>">
+                                    <input type="hidden" name="nama" id="nama" value="<?= $nama; ?>">
+                                    <input type="hidden" name="jHadir" id="jHadir" value="<?= $totalHadir; ?>">
+                                    <input type="hidden" name="jTerlambat" id="jTerlambat" value="<?= $totalTerlambat; ?>">
+                                    <input type="hidden" name="jTanpaKet" id="jTanpaKet" value="<?= $totalTanpaKet; ?>">
+                                    <input type="hidden" name="kGaji" id="kGaji" value="<?= $kodeGaji; ?>">
+                                    <input type="hidden" name="gaji" id="gaji" value="<?= $angkaGaji; ?>">
+                                    <input type="hidden" name="kTunjangan" id="kTunjangan" value="<?= $kodeTunjangan; ?>">
+                                    <input type="hidden" name="tunjangan" id="tunjangan" value="<?= $totalTunjangan; ?>">
+                                    <input type="hidden" name="gajiTunjangan" id="gajiTunjangan" value="<?= $totalGajiTunjangan; ?>">
+                                    <input type="hidden" name="status" id="status" value="belum verifikasi">
+
+                                    <button type="submit" name="refreshGaji" class="btn btn-success">Update</button>
+                                </form>
+
                                 <div class="container col-lg-12 p-3">
                                     <table id="testing" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Tanggal</th>
+                                                <th>#</th>
+                                                <th>Kode Gaji</th>
+                                                <th>Bulan</th>
                                                 <th>Gaji Pokok</th>
                                                 <th>Tunjangan</th>
+                                                <th>Total</th>
                                                 <th>Status</th>
                                                 <th>Slip Gaji</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Tanggal</th>
+                                                <th>#</th>
+                                                <th>Kode Gaji</th>
+                                                <th>Bulan</th>
                                                 <th>Gaji Pokok</th>
                                                 <th>Tunjangan</th>
+                                                <th>Total</th>
                                                 <th>Status</th>
                                                 <th>Slip Gaji</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
+                                            <?php $i = 1; ?>
+                                            <?php foreach ($gajiTunjangan as $row) : ?>
+                                                <tr>
+                                                    <td><?= $i; ?></td>
+                                                    <td><?= $row['kode_gaji']; ?></td>
+                                                    <td><?= $row['bulan']; ?></td>
+                                                    <td style="color: green;">Rp. <?= number_format($gaji['gaji'], 0, ",", "."); ?></td>
+                                                    <td style="color: green;">Rp. <?= number_format($totalTunjangan, 0, ",", "."); ?></td>
+                                                    <td style="color: green;">Rp. <?= number_format($row['total_gaji'], 0, ",", "."); ?></td>
+                                                    <td>
+                                                        <?php if ($row['status'] === 'acc admin') : ?>
+                                                            <p class="badge badge-success"><?= $row['status']; ?></p>
+                                                        <?php elseif ($row['status'] === 'belum verifikasi') : ?>
+                                                            <p class="badge badge-warning"><?= $row['status']; ?></p>
+                                                        <?php elseif ($row['status'] === 'ditolak') : ?>
+                                                            <p class="badge badge-danger"><?= $row['status']; ?></p>
+                                                        <?php elseif ($row['status'] === 'acc humas') : ?>
+                                                            <p class="badge badge-success" target="_blank">[Acc humas]</p>
+                                                        <?php endif; ?>
+                                                    </td>
 
-                                            <tr>
-                                                <td>Juni</td>
-                                                <td style="color: green;">Rp.2.500.000</td>
-                                                <td style="color: green;">Rp.740.000</td>
-                                                <td>Verified</td>
+                                                    <td>
+                                                        <?php if ($row['status'] == 'acc humas') : ?>
+                                                            <a href="cetakSlipGaji.php?nip=<?= $row['nip']; ?>&id=<?= $row['id']; ?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Cetak</a>
+                                                        <?php elseif ($row['status'] !== 'acc admin') : ?>
+                                                            <p>-</p>
+                                                        <?php endif; ?>
+                                                    </td>
 
-                                                <td>
-                                                    <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#surat_pengajuan<?= $row['id']; ?>">
-                                                        <i class="far fa-eye"></i> Lihat
-                                                    </button>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="surat_pengajuan<?= $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Surat pengajuan, <?= $row['nip']; ?></h5>
-                                                                </div>
-                                                                <div class="modal-body modal-xl" id="modal-body">
-                                                                    <div>
-                                                                        <iframe src="dist/pdf/<?= $row['surat_pengajuan']; ?>" frameborder="0" width="470" height="520"></iframe>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
+                                                </tr>
+                                                <?php $i++ ?>
+                                            <?php endforeach; ?>
 
                                         </tbody>
                                     </table>

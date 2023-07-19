@@ -52,11 +52,6 @@ if (!isset($_SESSION['login'])) {
                 </div>
             </section>
         </div>
-
-        <!-- Footer -->
-        <?php require_once 'templates/footer.php' ?>
-
-        </aside>
     </div>
 
     <?php require_once 'templates/script.php' ?>

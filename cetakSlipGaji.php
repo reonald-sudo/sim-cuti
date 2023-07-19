@@ -8,18 +8,18 @@ $tahun = date("Y");
 
 function bulan($text)
 {
-  if ($text == "01") return "Januari";
-  if ($text == "02") return "Februari";
-  if ($text == "03") return "Maret";
-  if ($text == "04") return "April";
-  if ($text == "05") return "Mei";
-  if ($text == "06") return "Juni";
-  if ($text == "07") return "Juli";
-  if ($text == "08") return "Agustus";
-  if ($text == "09") return "September";
-  if ($text == "10") return "Oktober";
-  if ($text == "11") return "November";
-  if ($text == "12") return "Desember";
+    if ($text == "01") return "Januari";
+    if ($text == "02") return "Februari";
+    if ($text == "03") return "Maret";
+    if ($text == "04") return "April";
+    if ($text == "05") return "Mei";
+    if ($text == "06") return "Juni";
+    if ($text == "07") return "Juli";
+    if ($text == "08") return "Agustus";
+    if ($text == "09") return "September";
+    if ($text == "10") return "Oktober";
+    if ($text == "11") return "November";
+    if ($text == "12") return "Desember";
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -27,7 +27,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 $nip = $_GET['nip'];
 $id = $_GET['id'];
 
-$kwitansiUser = editData("SELECT * FROM tb_uang_ganti WHERE nip = '$nip' AND id = '$id'");
+$slipUser = editData("SELECT * FROM tb_tunjangan_dan_gaji_pegawai WHERE nip = '$nip' AND id = '$id'");
 
 $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
 
@@ -55,7 +55,7 @@ $html = '
             </td>
             <td style="width:70%;">
                 <center>
-                    <p style="font-size: 20px;">KWITANSI REIMBURSMENT</p>
+                    <p style="font-size: 20px;">SLIP GAJI DAN TUNJANGAN PEGAWAI</p>
                     <P style="font-size: 20px;">PENGADILAN NEGERI BANJARBARU</P>
                     <P style="font-size: 12px";>Jl. Trikora No.3, Guntung Paikat, Kec. Banjarbaru Selatan, Kota Banjar Baru, Kalimantan Selatan</P>
                     <p style="font-size: 12px";>Email: pn.banjarbarukalsel@gmail.com Kode Pos: 70714</p>
@@ -67,8 +67,9 @@ $html = '
         </tr>
     </table>
     <hr class="p-0">
+    <h3 style="text-align: center;">SLIP GAJI DAN TUNJANGAN</h3>
 
-    <p>No Kwitansi : 1JBSD0092</p>
+    <p>Kode Gaji : ' . $slipUser['id_gaji'] . '</p>
 
     <style type="text/css">
         .tg  {border-collapse:collapse;border-spacing:0;}
@@ -82,22 +83,49 @@ $html = '
 $html .= '<table class="tg">
     <thead>
         <tr>
-            <th style="width: 25%;" class="tg-0lax">Diterima oleh </th>
-<th class="tg-0lax">: ' . $kwitansiUser['nama'] . '</th>
+            <th style="width: 25%;" class="tg-0lax">Bulan </th>
+            <th class="tg-0lax">: ' . $slipUser['bulan'] . '</th>
         </tr>
         <tr>
-        <th style="width: 25%;" class="tg-0lax">Nip </th>
-<th class="tg-0lax">: ' . $kwitansiUser['nip'] . '</th>
-</tr>
+            <th style="width: 25%;" class="tg-0lax">Diterima oleh </th>
+            <th class="tg-0lax">: ' .  $slipUser['nama'] . ' </th>
+        </tr>
+        <tr>
+            <th style="width: 25%;" class="tg-0lax">Nip </th>
+            <th class="tg-0lax">: ' . $slipUser['nip'] . ' </th>
+        </tr>
+        <tr>
+            <th><hr></th>
+            <th><hr></th>
+        </tr>
     </thead>
     <tbody>
         <tr>
-            <td class="tg-0lax">Uang sejumlah</td>
-            <td class="tg-0lax">: Rp. ' . number_format($kwitansiUser['nominal'], 0, ",", ".") . ',-</td>
+            <td class="tg-0lax">Total Hadir</td>
+            <td class="tg-0lax">: ' . $slipUser['jumlah_hadir'] . ' Hari</td>
         </tr>
         <tr>
-            <td class="tg-0lax">Tanggal Pengajuan</td>
-            <td class="tg-0lax">: ' . $kwitansiUser['tanggal_transaksi'] . '</td>
+            <td class="tg-0lax">Total Terlambat</td>
+            <td class="tg-0lax">: ' . $slipUser['jumlah_terlambat'] . ' Hari</td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">Total Tanpa Keterangan</td>
+            <td class="tg-0lax">: ' . $slipUser['jumlah_tanpa_keterangan'] . ' Hari</td>
+        </tr>
+        <tr>
+            <th><hr></th>
+            <th><hr></th>
+        <tr>
+            <td class="tg-0lax">Gaji</td>
+            <td class="tg-0lax">: Rp. ' . number_format($slipUser['gaji'], 0, ",", ".") . ',-</td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">Tunjangan</td>
+            <td class="tg-0lax">: Rp. ' . number_format($slipUser['tunjangan'], 0, ",", ".") . ',-</td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">Total</td>
+            <td class="tg-0lax">: Rp. ' . number_format($slipUser['total_gaji'], 0, ",", ".") . ',-</td>
         </tr>
         <tr>
             <td class="tg-0lax"></td>
@@ -105,7 +133,7 @@ $html .= '<table class="tg">
         </tr>
         <tr>
             <td class="tg-0lax">Verifikasi</td>
-            <td class="tg-0lax">: Admin, Bendahara & Humas</td>
+            <td class="tg-0lax">: Admin dan Humas</td>
         </tr>
     </tbody>
     </table>';
@@ -143,6 +171,7 @@ $html .= '<hr class="p-0">
   <table>
     <tr>
       <td>
+        <p>SIM Cuti PN</p>
         <p>Mengetahui,</p>
         <p>Admin</p>
         <br>
@@ -151,6 +180,7 @@ $html .= '<hr class="p-0">
         <p>NIP. 192873 820 2374</p>
       </td>
       <td>
+        <p>Banjarbaru, ' . date('d F Y') . '.</p>
         <p>Bertanggung Jawab,</p>
         <p>Humas</p>
         <br>
@@ -167,11 +197,11 @@ $mpdf->WriteHTML($html);
 $mpdf->Output();
 
 if (hapusUangGantiAcc($status) > 0) {
-  echo "
+    echo "
     <script>
     document.location.href = 'uangGanti.php';
     </script>
     ";
 } else {
-  mysqli_error($conn);
+    mysqli_error($conn);
 }

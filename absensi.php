@@ -76,15 +76,19 @@ $tanggalSekarang = date('Y-m-d');
 $cekHari = date('D');
 // error_reporting(0);
 
+$tunjangan = editData("SELECT * FROM tb_tunjangan WHERE golongan = '$golongan'");
+
+
 if (empty($absensiMasukCek) && $jamMasuk >= '17:00:00' && $cekHari !== 'Sat' && $cekHari !== 'Sun') {
     global $conn;
 
-    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '-', '-', 'tanpa keterangan', '0')";
+    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '-', '-', 'tanpa keterangan', '" . $tunjangan['tanpa_keterangan'] . "')";
     mysqli_query($conn, $query);
 } else if (empty($absensiMasukCek) && $jamMasuk >= '07:30:00' && $cekHari !== 'Sat' && $cekHari !== 'Sun') {
     global $conn;
 
-    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '$jamMasuk', 'belum tercatat', 'terlambat', '20000')";
+    $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '$jamMasuk', 'belum tercatat', 'terlambat', '" . $tunjangan['terlambat'] . "' )";
+
     mysqli_query($conn, $query);
 }
 
@@ -99,11 +103,6 @@ if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
     $query = "INSERT INTO tb_absensi VALUE ('', '$nip', '$golongan', '$nama', '$tanggalSekarang', '-', '-', 'Libur', 0)";
     mysqli_query($conn, $query);
 }
-
-// if (isset($_POST['simpan'])) {
-//     if (cetakFilterAbsensi($_POST) > 0) {
-//     }
-// }
 
 ?>
 
@@ -207,7 +206,7 @@ if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
 
                                         <input type="text" class="form-control mb-3" name="catatan" id="" placeholder="Hadir / Izin">
 
-                                        <input type="hidden" class="form-control mb-3" name="tunjangan" id="" value="44000">
+                                        <input type="hidden" class="form-control mb-3" name="tunjangan" id="" value="<?= $tunjangan['hadir']; ?>">
 
                                         <button type="submit" name="masukKerja" class="btn btn-success mr-2" id="masukKerja">Masuk Kerja</button>
 
