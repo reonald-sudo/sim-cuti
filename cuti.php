@@ -240,7 +240,7 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                                     <?php elseif ($row['status'] === 'sedang proses') : ?>
                                                         <p class="badge badge-warning"><?= $row['status']; ?></p>
                                                     <?php elseif ($row['status'] === 'acc humas') : ?>
-                                                        <a href="#" class="btn btn-success btn-sm" target="_blank">[Acc humas] - Cetak SK</a>
+                                                        <p class="badge badge-success">[Acc humas]</p>
                                                     <?php else : ?>
                                                         <p class="badge badge-danger"><?= $row['status'] . ' - ' . $row['alasan']; ?></p>
                                                     <?php endif; ?>

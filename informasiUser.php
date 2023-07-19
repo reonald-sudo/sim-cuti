@@ -116,7 +116,7 @@ $pangkat = $queryPangkat['pangkat'];
                 <div class="container-fluid">
 
                     <div class="employee-card">
-                        <img src="dist/img/reonald.jpeg" alt="Foto Pegawai">
+                        <img src="dist/img/orang.jpg" alt="Foto Pegawai">
                         <table>
                             <tr>
                                 <td>
@@ -147,7 +147,7 @@ $pangkat = $queryPangkat['pangkat'];
                             </tr>
                         </table>
                     </div>
-                    <a href="#" class="btn btn-warning">Ubah data</a>
+
                 </div>
             </section>
         </div>

@@ -510,11 +510,18 @@ function updateGaji($data)
     $stmt = hitungBaris("SELECT * FROM tb_tunjangan_dan_gaji_pegawai WHERE id_gaji = '$idGaji' AND nip = '$nip'");
 
     if ($stmt > 0) {
-        $stmt = 0;
+        $deleteData = "DELETE FROM tb_tunjangan_dan_gaji_pegawai WHERE nip = '$nip' AND bulan = '" . date('F') . '-' . date('Y') . "'";
+        mysqli_query($conn, $deleteData);
+
+        $query = "INSERT INTO tb_tunjangan_dan_gaji_pegawai VALUE ('','$idGaji', '$bulan', '$nip', '$golongan', '$nama', '$jHadir', '$jTerlambat', '$jTanpaKet', '$kGaji', '$gaji', '$kTunjangan', '$tunjangan', '$gajiTunjangan', '$status')";
+
+        mysqli_query($conn, $query);
 
         return $stmt;
     } elseif ($stmt == 0) {
+
         $query = "INSERT INTO tb_tunjangan_dan_gaji_pegawai VALUE ('','$idGaji', '$bulan', '$nip', '$golongan', '$nama', '$jHadir', '$jTerlambat', '$jTanpaKet', '$kGaji', '$gaji', '$kTunjangan', '$tunjangan', '$gajiTunjangan', '$status')";
+
         mysqli_query($conn, $query);
     }
 
