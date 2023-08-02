@@ -89,6 +89,49 @@ if (isset($_POST['tambahPegawai'])) {
                                                     </div>
                                                 </div>
 
+                                                <div class="row">
+                                                    <div class="form-group col-lg-6">
+                                                        <label for="">Jenis Kelamin</label>
+                                                        <select name="jenis_kelamin" class="form-control mb-3">
+                                                            <option value="" disabled selected>-- Silahkan Pilih --</option>
+                                                            <option value="L">Laki-laki</option>
+                                                            <option value="P">Perempuan</option>
+                                                        </select>
+                                                    </div>
+
+
+
+                                                    <div class="form-group col-lg-6">
+                                                        <label for="agama">Agama</label>
+                                                        <select name="agama" id="agama" class="form-control mb-3">
+                                                            <option value="" disabled selected>-- Silahkan Pilih --</option>
+                                                            <option value="Islam">Islam</option>
+                                                            <option value="Kristen Protestan">Kristen Protestan</option>
+                                                            <option value="Kristen Katolik">Kristen Katolik</option>
+                                                            <option value="Hindu">Hindu</option>
+                                                            <option value="Buddha">Buddha</option>
+                                                            <option value="Konghucu">Konghucu</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-lg-6">
+                                                        <label for="">Tempat lahir</label>
+                                                        <input type="text" name="tLahir" id="tLahir" class="form-control mb-3">
+                                                    </div>
+
+                                                    <div class="form-group col-lg-6">
+                                                        <label for="">Tanggal Lahir</label>
+                                                        <input type="date" name="tglLahir" id="tglLahir" class="form-control mb-3">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="">Pendidikan</label>
+                                                    <input type="text" name="pendidikan" id="" class="form-control mb-3">
+                                                </div>
+
 
                                                 <div class="form-group">
                                                     <label for="">Alamat</label>
@@ -125,24 +168,28 @@ if (isset($_POST['tambahPegawai'])) {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nip</th>
-                                        <th>Nama</th>
-                                        <th>Golongan</th>
+                                        <th>Nip & Nama</th>
+                                        <th>Jk</th>
+                                        <th>Agama</th>
+                                        <th>Pendidikan</th>
+                                        <th>Gol</th>
                                         <th>Alamat</th>
-                                        <th>Handphone</th>
-                                        <th>Email</th>
+                                        <th>TTL</th>
+                                        <th>Telp</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nip</th>
-                                        <th>Nama</th>
-                                        <th>Golongan</th>
+                                        <th>Nip & Nama</th>
+                                        <th>Jk</th>
+                                        <th>Agama</th>
+                                        <th>Pendidikan</th>
+                                        <th>Gol</th>
                                         <th>Alamat</th>
-                                        <th>Handphone</th>
-                                        <th>Email</th>
+                                        <th>TTL</th>
+                                        <th>Telp</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </tfoot>
@@ -151,12 +198,14 @@ if (isset($_POST['tambahPegawai'])) {
                                     <?php foreach ($pegawai as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $row['nip']; ?></td>
-                                            <td><?= $row['nama']; ?></td>
+                                            <td><?= $row['nip']; ?><br><?= $row['nama']; ?></td>
+                                            <td><?= $row['jk']; ?></td>
+                                            <td><?= $row['agama']; ?></td>
+                                            <td><?= $row['pendidikan']; ?></td>
                                             <td><?= $row['golongan']; ?></td>
                                             <td><?= $row['alamat']; ?></td>
+                                            <td><?= $row['t_lahir']; ?>, <?= $row['tgl_lahir']; ?></td>
                                             <td><?= $row['no_telp']; ?></td>
-                                            <td><?= $row['email']; ?></td>
                                             <td>
                                                 <a href="editPegawai.php?nip=<?= $row['nip']; ?>" class="badge badge-warning">Edit</a>
                                                 <a href="hapusPegawai.php?nip=<?= $row['nip']; ?>" class="badge badge-danger" onclick="javascript: return confirm('Konfirmasi data akan dihapus');">Hapus</a>

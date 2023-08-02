@@ -94,7 +94,47 @@ $editPegawai = editData("SELECT * FROM pegawai WHERE nip = $nip1");
                                             <label for="">Golongan</label>
                                             <input type="text" name="golongan" id="" class="form-control" value="<?= $editPegawai['golongan']; ?>">
                                         </div>
+                                    </div>
 
+                                    <div class="row">
+                                        <div class="form-group col-lg-3">
+                                            <label for="">Jenis Kelamin</label>
+                                            <select name="jenis_kelamin" class="form-control mb-3">
+                                                <option value="<?= $editPegawai['jk']; ?>" selected><?= $editPegawai['jk']; ?></option>
+                                                <option value="" disabled>-- Silahkan Pilih --</option>
+                                                <option value="L">Laki-laki</option>
+                                                <option value="P">Perempuan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-lg-3">
+                                            <label for="">Agama</label>
+                                            <select name="agama" id="agama" class="form-control mb-3">
+                                                <option value="<?= $editPegawai['agama']; ?>" selected><?= $editPegawai['agama']; ?></option>
+                                                <option value="" disabled>-- Silahkan Pilih --</option>
+                                                <option value="Islam">Islam</option>
+                                                <option value="Kristen Protestan">Kristen Protestan</option>
+                                                <option value="Kristen Katolik">Kristen Katolik</option>
+                                                <option value="Hindu">Hindu</option>
+                                                <option value="Buddha">Buddha</option>
+                                                <option value="Konghucu">Konghucu</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-lg-3">
+                                            <label for="">Tempat Lahir</label>
+                                            <input type="text" name="tLahir" id="tLahir" class="form-control mb-3" value="<?= $editPegawai['t_lahir']; ?>">
+                                        </div>
+
+                                        <div class="form-group col-lg-3">
+                                            <label for="">Tanggal Lahir</label>
+                                            <input type="date" name="tglLahir" id="tglLahir" class="form-control mb-3" value="<?= $editPegawai['tgl_lahir']; ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">Pendidikan</label>
+                                        <input type="text" name="pendidikan" id="" class="form-control mb-3" value="<?= $editPegawai['pendidikan']; ?>">
                                     </div>
 
                                     <div class="form-group">

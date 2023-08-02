@@ -238,11 +238,16 @@ function tambahPegawai($data)
     $nip = $data['nip'];
     $nama = $data['nama'];
     $golongan = $data['golongan'];
+    $jk = $data['jenis_kelamin'];
+    $agama = $data['agama'];
+    $tLahir = $data['tLahir'];
+    $tglLahir = $data['tglLahir'];
+    $pendidikan = $data['pendidikan'];
     $alamat = $data['alamat'];
     $no_telp = $data['no_telp'];
     $email = $data['email'];
 
-    $query = "INSERT INTO pegawai VALUE('$nip', '$nama', '$golongan', '$alamat', '$no_telp', '$email')";
+    $query = "INSERT INTO pegawai VALUE('$nip', '$nama', '$golongan', $jk, $agama, $tLahir, $tglLahir, $pendidikan, '$alamat', '$no_telp', '$email')";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
@@ -255,11 +260,16 @@ function ubahPegawai($data)
     $nip = $data['nip'];
     $nama = $data['nama'];
     $golongan = $data['golongan'];
+    $jk = $data['jenis_kelamin'];
+    $agama = $data['agama'];
+    $tLahir = $data['tLahir'];
+    $tglLahir = $data['tglLahir'];
+    $pendidikan = $data['pendidikan'];
     $alamat = $data['alamat'];
     $no_telp = $data['no_telp'];
     $email = $data['email'];
 
-    $query = "UPDATE pegawai SET nama = '$nama', golongan = '$golongan', alamat = '$alamat', no_telp = '$no_telp', email = '$email' WHERE nip = '$nip'";
+    $query = "UPDATE pegawai SET nama = '$nama', golongan = '$golongan', jk = '$jk', agama = '$agama', t_lahir = '$tLahir', tgl_lahir = '$tglLahir', pendidikan = '$pendidikan', alamat = '$alamat', no_telp = '$no_telp', email = '$email' WHERE nip = '$nip'";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
