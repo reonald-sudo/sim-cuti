@@ -247,7 +247,8 @@ function tambahPegawai($data)
     $no_telp = $data['no_telp'];
     $email = $data['email'];
 
-    $query = "INSERT INTO pegawai VALUE('$nip', '$nama', '$golongan', $jk, $agama, $tLahir, $tglLahir, $pendidikan, '$alamat', '$no_telp', '$email')";
+    $query = "INSERT INTO pegawai VALUE('$nip', '$nama', '$golongan', '$jk', '$agama', '$tLahir', '$tglLahir', '$pendidikan', '$alamat', '$no_telp', '$email')";
+
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);

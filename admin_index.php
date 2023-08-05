@@ -85,7 +85,7 @@ require_once 'templates/header.php' ?>
                             <div class="small-box bg-secondary">
                                 <div class="inner">
 
-                                    <p>Data Pengguna</p>
+                                    <p>Data User</p>
                                 </div>
                                 <a href="admin_pengguna.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>

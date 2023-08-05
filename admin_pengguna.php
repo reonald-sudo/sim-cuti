@@ -6,6 +6,7 @@ require_once 'functions.php' ?>
 
 <?php
 $pengguna = showSingleTable("SELECT * FROM user");
+$pegawai = showSingleTable("SELECT * FROM pegawai");
 
 if (isset($_POST['tambahPengguna'])) {
     if (tambahPengguna($_POST) > 0) {
@@ -19,6 +20,8 @@ if (isset($_POST['tambahPengguna'])) {
 }
 
 ?>
+
+
 
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -34,11 +37,11 @@ if (isset($_POST['tambahPengguna'])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Data Pengguna SIM Cuti</h1>
+                            <h1 class="m-0">Data Pengguna</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="absensi.php">Data Pengguna SIM Cuti</a></li>
+                                <li class="breadcrumb-item"><a href="absensi.php">Data Pengguna</a></li>
                                 <li class="breadcrumb-item active">Dashboard Admin</li>
                             </ol>
                         </div>
@@ -54,8 +57,8 @@ if (isset($_POST['tambahPengguna'])) {
                     <div class="card">
                         <div class="card-header mb-0">
                             <img src="dist/img/pengguna.jpg" class="float-right" style="width: 250px;">
-                            <h5>Halaman data pengguna sim cuti</h5>
-                            <p><em>Halam ini, berisikan rincian pengguna aplikasi SIM Cuti</em></p>
+                            <h5>Halaman data pengguna </h5>
+                            <p><em>Halaman ini, berisikan rincian pengguna aplikasi SIM Cuti</em></p>
 
 
                             <!-- Button trigger modal -->
@@ -76,24 +79,21 @@ if (isset($_POST['tambahPengguna'])) {
                                         <form action="" method="post">
                                             <div class="modal-body">
 
-                                                <div class="row">
-                                                    <div class="form-group col-lg-4">
-                                                        <h6 for="">NIP</h6>
-                                                        <input type="text" name="nip" class="form-control" placeholder="Masukkan Nip" required>
-                                                        <small style="color: red;">* Sesuaikan nip</small>
-                                                    </div>
-
-                                                    <div class="form-group col-lg-4">
-                                                        <h6 for="">Golongan</h6>
-                                                        <input type="text" name="golongan" class="form-control" placeholder="Masukkan Golongan" required>
-                                                    </div>
-
-                                                    <div class="form-group col-lg-4">
-                                                        <h6 for="">Nama</h6>
-                                                        <input type="text" name="nama" class="form-control" placeholder="Masukkan Nama" required>
-                                                        <small style="color: red;">* Sesuaikan dengan gelar</small>
-                                                    </div>
+                                                <div class="form-group">
+                                                    <label for="nip">NIP</label>
+                                                    <select name="nip" id="nip" class="form-control js-example-basic-single" style="width: 100%;" required onchange="autoFillPengguna()">
+                                                        <option value="" selected disabled hidden></option>
+                                                        <?php
+                                                        foreach ($pegawai as $row) { ?>
+                                                            <option value="<?= $row['nip']; ?>"> <?= $row['nip']; ?> - <?= $row['nama']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <small style="color: red;">* Sesuaikan NIP</small>
                                                 </div>
+
+                                                <input type="hidden" name="golongan" id="golongan" class="form-control" placeholder="Masukkan Golongan" required>
+
+                                                <input type="hidden" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama" required>
 
                                                 <div class="form-group">
                                                     <h6 for="">Password</h6>
@@ -130,8 +130,6 @@ if (isset($_POST['tambahPengguna'])) {
                                         <tr>
                                             <th>#</th>
                                             <th>Nip</th>
-                                            <th>Golongan</th>
-                                            <th>Nama</th>
                                             <th>Hak Akses</th>
                                             <th>Opsi</th>
                                         </tr>
@@ -140,8 +138,6 @@ if (isset($_POST['tambahPengguna'])) {
                                         <tr>
                                             <th>#</th>
                                             <th>Nip</th>
-                                            <th>Golongan</th>
-                                            <th>Nama</th>
                                             <th>Hak Akses</th>
                                             <th>Opsi</th>
                                         </tr>
@@ -154,8 +150,6 @@ if (isset($_POST['tambahPengguna'])) {
                                             <tr>
                                                 <td><?= $i; ?></td>
                                                 <td><?= $row['nip']; ?></td>
-                                                <td><?= $row['golongan']; ?></td>
-                                                <td><?= $row['nama']; ?></td>
                                                 <td><?= $row['hak_akses']; ?></td>
                                                 <td>
                                                     <a href="admin_editDataPengguna.php?nip=<?= $row['nip']; ?>" class="badge badge-warning mr-1">Edit</a>
@@ -187,6 +181,14 @@ if (isset($_POST['tambahPengguna'])) {
 </body>
 
 <script src="js/script.js"></script>
+<script src="js/tambahPengguna.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $('.js-example-basic-single').select2({
+        dropdownParent: $('#exampleModal')
+    });
+</script>
 
 <script>
     $(function() {

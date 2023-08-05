@@ -6,6 +6,7 @@ require_once 'functions.php';
 $pegawai = query("SELECT * FROM pegawai");
 
 if (isset($_POST['tambahPegawai'])) {
+
     if (tambahPegawai($_POST) > 0) {
         echo "<script>
         alert('Berhasil tambah data pegawai');
@@ -207,8 +208,8 @@ if (isset($_POST['tambahPegawai'])) {
                                             <td><?= $row['t_lahir']; ?>, <?= $row['tgl_lahir']; ?></td>
                                             <td><?= $row['no_telp']; ?></td>
                                             <td>
-                                                <a href="editPegawai.php?nip=<?= $row['nip']; ?>" class="badge badge-warning">Edit</a>
-                                                <a href="hapusPegawai.php?nip=<?= $row['nip']; ?>" class="badge badge-danger" onclick="javascript: return confirm('Konfirmasi data akan dihapus');">Hapus</a>
+                                                <a href="editPegawai.php?nip=<?= $row['nip']; ?>" class="mr-2"><i class="fa fa-edit" style="color: orange;"></a></i>
+                                                <a href="hapusPegawai.php?nip=<?= $row['nip']; ?>" onclick="javascript: return confirm('Konfirmasi data akan dihapus');"><i class="fa fa-trash" style="color: red;"></a></i></a>
                                             </td>
                                         </tr>
                                         <?php $i++; ?>

@@ -57,34 +57,36 @@ if (isset($_POST['ubahData'])) {
 
 
                                 <div class="row">
-                                    <div class="form-group col-lg-3">
+                                    <div class="form-group col-lg-4">
                                         <label for="" class="">Nip</label>
                                         <input class="form-control" type="text" name="nip" id="" value="<?= $pengguna['nip']; ?>" readonly>
                                     </div>
 
-                                    <div class="form-group col-lg-3">
+                                    <div class="form-group col-lg-3" style="display: none;">
                                         <label for="" class="">Golongan</label>
-                                        <input class="form-control" type="text" name="golongan" id="" value="<?= $pengguna['golongan']; ?>">
+                                        <input class="form-control" type="text" name="golongan" id="" value="<?= $pengguna['golongan']; ?>" readonly>
                                     </div>
 
-                                    <div class="form-group col-lg-3">
+                                    <div class="form-group col-lg-3" style="display: none;">
                                         <label for="" class="">Nama</label>
-                                        <input class="form-control" type="text" name="nama" id="" value="<?= $pengguna['nama']; ?>">
+                                        <input class="form-control" type="text" name="nama" id="" value="<?= $pengguna['nama']; ?>" readonly>
                                     </div>
 
-                                    <div class="form-group col-lg-3">
+                                    <div class="form-group col-lg-4">
+                                        <label for="" class="">Password baru</label>
+                                        <input class="form-control" type="password" name="password" id="" placeholder="Input password baru">
+                                    </div>
+
+                                    <div class="form-group col-lg-4">
                                         <label for="" class="">Hak akses</label>
                                         <select class="form-control" aria-label="Default select example" name="hakAkses">
-                                            <option selected>Ubah hak akses</option>
+                                            <option selected value="<?= $pengguna['hak_akses'] ?>"><?= $pengguna['hak_akses'] ?></option>
+                                            <option disabled value="">-- Ubah Hak Akses --</option>
                                             <option value="admin">Admin</option>
                                             <option value="user">User</option>
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-lg-3">
-                                        <label for="" class="">Password baru</label>
-                                        <input class="form-control" type="password" name="password" id="" placeholder="Input password baru">
-                                    </div>
                                 </div>
                             </div>
                         </div>
