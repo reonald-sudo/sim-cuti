@@ -94,9 +94,8 @@ $html .= '</title>
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
         <tr style="background-color: #BAD7E9;">
             <td style="border: 1px solid black;">No</td>
-            <td style="border: 1px solid black;">Nama</td>
-            <td style="border: 1px solid black;">Nip</td>
-            <td style="border: 1px solid black;">Tanggal absen</td>
+            <td style="border: 1px solid black; width: 40%">Nip & Nama</td>
+            <td style="border: 1px solid black;">Tanggal</td>
             <td style="border: 1px solid black;">Jam masuk</td>
             <td style="border: 1px solid black;">Jam pulang</td>
             <td style="border: 1px solid black;">Catatan</td>
@@ -107,8 +106,7 @@ $i = 1;
 foreach ($cetakFilterPresensiByTahunAndBulan as $row) :
     $html .= '<tr>';
     $html .= '<td style="border: 1px solid black;">' .  $i  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . ' <br> ' .  $row['nama']  . ' </td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_absen']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['jam_masuk']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['jam_pulang']  . '</td>';

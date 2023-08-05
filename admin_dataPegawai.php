@@ -4,6 +4,7 @@ session_start();
 require_once 'functions.php';
 
 $pegawai = query("SELECT * FROM pegawai");
+$golongan = query("SELECT * FROM pangkat");
 
 if (isset($_POST['tambahPegawai'])) {
 
@@ -74,20 +75,27 @@ if (isset($_POST['tambahPegawai'])) {
                                         <div class="modal-body">
                                             <form action="" method="post">
                                                 <div class="row">
-                                                    <div class="form-group col-lg-4">
+                                                    <div class="form-group col-lg-6">
                                                         <label for="">Nip</label>
                                                         <input type="text" name="nip" id="" class="form-control mb-3">
                                                     </div>
 
-                                                    <div class="form-group col-lg-4">
-                                                        <label for="">Nama</label>
-                                                        <input type="text" name="nama" id="" class="form-control mb-3">
+                                                    <div class="form-group col-lg-6">
+                                                        <label for="golongan">golongan</label>
+                                                        <select name="golongan" id="golongan" class="form-control js-example-basic-single" style="width: 100%;" required>
+                                                            <option value="" selected disabled hidden></option>
+                                                            <?php
+                                                            foreach ($golongan as $row) { ?>
+                                                                <option value="<?= $row['golongan']; ?>"> <?= $row['golongan']; ?> - <?= $row['pangkat']; ?></option>
+                                                            <?php } ?>
+                                                        </select>
                                                     </div>
+                                                </div>
 
-                                                    <div class="form-group col-lg-4">
-                                                        <label for="">Golongan</label>
-                                                        <input type="text" name="golongan" id="" class="form-control mb-3">
-                                                    </div>
+
+                                                <div class="form-group">
+                                                    <label for="">Nama</label>
+                                                    <input type="text" name="nama" id="" class="form-control mb-3">
                                                 </div>
 
                                                 <div class="row">
@@ -236,6 +244,14 @@ if (isset($_POST['tambahPegawai'])) {
 <script>
     $(function() {
         $('#testing').DataTable()
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $('.js-example-basic-single').select2({
+        dropdownParent: $('#exampleModal')
     });
 </script>
 

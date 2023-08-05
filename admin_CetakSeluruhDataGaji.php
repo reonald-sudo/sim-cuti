@@ -64,10 +64,8 @@ $html .= '</title>
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
         <tr style="background-color: #BAD7E9;">
             <td style="border: 1px solid black;">No</td>
-            <td style="border: 1px solid black;">Id Gaji</td>
             <td style="border: 1px solid black;">Bulan</td>
-            <td style="border: 1px solid black;">Nip</td>
-            <td style="border: 1px solid black;">Nama</td>
+            <td style="border: 1px solid black;">Nip & Nama</td>
             <td style="border: 1px solid black;">Gaji</td>
             <td style="border: 1px solid black;">Tunjangan</td>
             <td style="border: 1px solid black;">Total</td>
@@ -78,10 +76,8 @@ $i = 1;
 foreach ($cetakFilterGajiTunjangan as $row) :
     $html .= '<tr>';
     $html .= '<td style="border: 1px solid black;">' .  $i  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['id_gaji']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['bulan']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . ' <br> ' .  $row['nama']  . '</td>';
     $html .= '<td style="border: 1px solid black;">Rp. ' . number_format($row['gaji'], 0, ",", ".")  . ',-</td>';
     $html .= '<td style="border: 1px solid black;">Rp. ' . number_format($row['tunjangan'], 0, ",", ".")  . ',-</td>';
     $html .= '<td style="border: 1px solid black;">Rp. ' . number_format($row['total_gaji'], 0, ",", ".")  . ',-</td>';

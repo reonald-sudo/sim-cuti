@@ -4,6 +4,8 @@ session_start();
 require_once 'functions.php';
 require_once 'templates/header.php';
 
+$pegawai = query("SELECT * FROM pegawai");
+
 
 if (isset($_POST['verifikasi'])) {
     if (verifikasiGajidanTunjangan($_POST) > 0) {
@@ -77,7 +79,15 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
 
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="nip" id="" placeholder="Nip">
+                                                    <label for="nip">NIP</label>
+                                                    <select name="nip" id="nip" class="form-control js-example-basic-single" style="width: 100%;" required>
+                                                        <option value="" selected disabled hidden></option>
+                                                        <?php
+                                                        foreach ($pegawai as $row) { ?>
+                                                            <option value="<?= $row['nip']; ?>"> <?= $row['nip']; ?> - <?= $row['nama']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <small style="color: red;">* Sesuaikan NIP</small>
                                                 </div>
 
                                                 <div class="form-group">
@@ -107,17 +117,13 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Id</th>
                                         <th>Bulan</th>
-                                        <th>Nip</th>
-                                        <th>G</th>
-                                        <th>Nama</th>
+                                        <th>Nip & Nama</th>
+                                        <th>Golongan</th>
                                         <th>Hadir</th>
                                         <th>Tlambat</th>
                                         <th>T Ket</th>
-                                        <th>K Gaji</th>
                                         <th>Gaji</th>
-                                        <th>K Tun</th>
                                         <th>Tun</th>
                                         <th>Total</th>
                                         <th>Status</th>
@@ -127,17 +133,13 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Id</th>
                                         <th>Bulan</th>
-                                        <th>Nip</th>
-                                        <th>G</th>
-                                        <th>Nama</th>
+                                        <th>Nip & Nama </th>
+                                        <th>Golongan</th>
                                         <th>Hadir</th>
                                         <th>Tlambat</th>
                                         <th>T Ket</th>
-                                        <th>K Gaji</th>
                                         <th>Gaji</th>
-                                        <th>K Tun</th>
                                         <th>Tun</th>
                                         <th>Total</th>
                                         <th>Status</th>
@@ -149,17 +151,13 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                                     <?php foreach ($gajiTunjangan as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $row['id_gaji']; ?></td>
                                             <td><?= $row['bulan'] ?></td>
-                                            <td><?= $row['nip']; ?></td>
+                                            <td><?= $row['nip']; ?> <br> <?= $row['nama']; ?></td>
                                             <td><?= $row['golongan']; ?></td>
-                                            <td><?= $row['nama']; ?></td>
                                             <td><?= $row['jumlah_hadir']; ?></td>
                                             <td><?= $row['jumlah_terlambat']; ?></td>
                                             <td><?= $row['jumlah_tanpa_keterangan']; ?></td>
-                                            <td><?= $row['kode_gaji']; ?></td>
                                             <td style="color: green;">Rp. <?= number_format($row['gaji'], 0, ",", "."); ?></td>
-                                            <td><?= $row['kode_tunjangan']; ?></td>
                                             <td style="color: green;">Rp. <?= number_format($row['tunjangan'], 0, ",", "."); ?></td>
                                             <td style="color: green;">Rp. <?= number_format($row['total_gaji'], 0, ",", "."); ?></td>
                                             <td><?= $row['status']; ?></td>
@@ -244,6 +242,14 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
         } else {
             alasanDitolak.attr("readonly", "readonly");
         }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $('.js-example-basic-single').select2({
+        dropdownParent: $('#cetakGajiTunjangan')
     });
 </script>
 

@@ -1,7 +1,10 @@
 <?php
 session_start();
 require_once 'functions.php';
-require_once 'templates/header.php'
+require_once 'templates/header.php';
+
+
+$pegawai = query("SELECT * FROM pegawai");
 
 ?>
 
@@ -71,8 +74,17 @@ require_once 'templates/header.php'
                                             </div>
 
                                             <div class="modal-body">
+
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="nip" id="" placeholder="Nip">
+                                                    <label for="nip">NIP</label>
+                                                    <select name="nip" id="nip" class="form-control js-example-basic-single" style="width: 100%;" required>
+                                                        <option value="" selected disabled hidden></option>
+                                                        <?php
+                                                        foreach ($pegawai as $row) { ?>
+                                                            <option value="<?= $row['nip']; ?>"> <?= $row['nip']; ?> - <?= $row['nama']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <small style="color: red;">* Sesuaikan NIP</small>
                                                 </div>
 
                                             </div>
@@ -132,8 +144,15 @@ require_once 'templates/header.php'
                                             </div>
 
                                             <div class="modal-body">
+
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="catatan" id="" placeholder="Hadir">
+                                                    <label for="catatan">Catatan</label>
+                                                    <select name="catatan" id="catatan" class="form-control" style="width: 100%;" required>
+                                                        <option value="" selected disabled hidden></option>
+                                                        <option value="hadir">Hadir</option>
+                                                        <option value="terlambat">Terlambat</option>
+                                                        <option value="tanpa keterangan">Tanpa Keterangan</option>
+                                                    </select>
                                                 </div>
 
                                             </div>
@@ -153,8 +172,7 @@ require_once 'templates/header.php'
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
+                                        <th>Nip & Nama</th>
                                         <th>Tanggal Absen</th>
                                         <th>Jam Masuk</th>
                                         <th>Jam Pulang</th>
@@ -164,8 +182,7 @@ require_once 'templates/header.php'
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
+                                        <th>Nip & Nama</th>
                                         <th>Tanggal</th>
                                         <th>Jam Masuk</th>
                                         <th>Jam Pulang</th>
@@ -178,12 +195,34 @@ require_once 'templates/header.php'
                                     <?php foreach ($absensi as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $row['nama']; ?></td>
-                                            <td><?= $row['nip']; ?></td>
+                                            <td><?= $row['nip']; ?><br><?= $row['nama']; ?></td>
                                             <td><?= $row['tanggal_absen']; ?></td>
-                                            <td><?= $row['jam_masuk']; ?></td>
-                                            <td><?= $row['jam_pulang']; ?></td>
-                                            <td><?= $row['catatan']; ?></td>
+                                            <!-- jam masuk -->
+                                            <?php if ($row['jam_masuk'] == 'belum tercatat') : ?>
+                                                <td style="color: red;"><?= $row['jam_masuk']; ?></td>
+                                            <?php elseif ($row['jam_masuk'] >= '07:30:00') : ?>
+                                                <td style="color: red;"><?= $row['jam_masuk']; ?></td>
+                                            <?php elseif ($row['jam_masuk'] < '07:30:00') : ?>
+                                                <td style="color: green;"><?= $row['jam_masuk']; ?></td>
+                                            <?php endif; ?>
+
+                                            <!-- jam pulang -->
+                                            <?php if ($row['jam_pulang'] == 'belum tercatat') : ?>
+                                                <td style="color: red;"><?= $row['jam_pulang']; ?></td>
+                                            <?php elseif ($row['jam_pulang'] >= '17:00:00') : ?>
+                                                <td style="color: green;"><?= $row['jam_pulang']; ?></td>
+                                            <?php elseif ($row['jam_pulang'] < '17:00:00') : ?>
+                                                <td style="color: red;"><?= $row['jam_pulang']; ?></td>
+                                            <?php endif; ?>
+
+                                            <!-- catatan -->
+                                            <?php if ($row['catatan'] == 'hadir') : ?>
+                                                <td style="color: green;"><?= $row['catatan']; ?></td>
+                                            <?php elseif ($row['catatan'] == 'terlambat') : ?>
+                                                <td style="color: red;"><?= $row['catatan']; ?></td>
+                                            <?php elseif ($row['catatan'] == 'tanpa keterangan') : ?>
+                                                <td style="color: red;"><?= $row['catatan']; ?></td>
+                                            <?php endif; ?>
                                         </tr>
                                         <?php $i++; ?>
                                     <?php endforeach; ?>
@@ -207,10 +246,18 @@ require_once 'templates/header.php'
 </body>
 
 <script src="js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 <script>
     $(function() {
         $('#testing').DataTable()
+    });
+</script>
+
+<script>
+    $('.js-example-basic-single').select2({
+        dropdownParent: $('#cetakPresensiNip')
     });
 </script>
 
