@@ -142,10 +142,6 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
 
                         </div>
 
-                        <div>
-                            <canvas id="myChart"></canvas>
-                        </div>
-                        <hr>
 
                         <div class="container mb-3 p-3">
                             <table id="testing" class="table table-bordered table-hover">
@@ -266,6 +262,11 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
                                 </tbody>
 
                             </table>
+                        </div>
+
+                        <hr>
+                        <div>
+                            <canvas id="myChart"></canvas>
                         </div>
 
                     </div>

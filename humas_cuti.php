@@ -128,12 +128,6 @@ $cutiDataString = implode(', ', $cutiData);
                             </form>
                         </div>
 
-
-                        <div>
-                            <canvas id="myChart"></canvas>
-                        </div>
-                        <hr>
-
                         <div class="container col-lg-12 p-3">
                             <table id="testing" class="table table-bordered table-hover">
                                 <thead>
@@ -252,6 +246,11 @@ $cutiDataString = implode(', ', $cutiData);
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <hr>
+                        <div>
+                            <canvas id="myChart"></canvas>
                         </div>
 
                     </div>

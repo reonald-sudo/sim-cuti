@@ -49,25 +49,22 @@ $pegawai = query("SELECT * FROM pegawai");
                             <p class="badge badge-primary"><?= $absensi; ?> Data</p>
                             <br>
 
-                            <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakPresensiNip">
-                                Cetak data berdasarkan nip
-                            </button>
-
                             <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#cetakPresensiTanggal" style="display: inline;">
-                                Cetak data berdasarkan tanggal
+                                Cetak data berdasarkan tanggal & Nip
                             </button>
 
                             <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#cetakPresensiCatatan" style="display: inline;">
                                 Cetak data berdasarkan catatan
                             </button>
 
+
                             <!-- Modal -->
-                            <form action="admin_cetakAbsensiByNip.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakPresensiNip" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form action="admin_cetakAbsensiByTanggal.php" method="get" target="_blank">
+                                <div class="modal fade" id="cetakPresensiTanggal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan NIP</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Tanggal & Nip</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -77,7 +74,7 @@ $pegawai = query("SELECT * FROM pegawai");
 
                                                 <div class="form-group">
                                                     <label for="nip">NIP</label>
-                                                    <select name="nip" id="nip" class="form-control js-example-basic-single" style="width: 100%;" required>
+                                                    <select name="nip" id="nip" class="form-control js-tanggal" style="width: 100%;">
                                                         <option value="" selected disabled hidden></option>
                                                         <?php
                                                         foreach ($pegawai as $row) { ?>
@@ -87,31 +84,8 @@ $pegawai = query("SELECT * FROM pegawai");
                                                     <small style="color: red;">* Sesuaikan NIP</small>
                                                 </div>
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-
-                            <!-- Modal -->
-                            <form action="admin_cetakAbsensiByTanggal.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakPresensiTanggal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Tanggal</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
                                                 <div class="row">
+
                                                     <div class="form-group col-lg-6">
                                                         <input type="date" class="form-control" name="dari" id="">
                                                     </div>
@@ -133,7 +107,7 @@ $pegawai = query("SELECT * FROM pegawai");
 
                             <!-- Modal -->
                             <form action="admin_cetakAbsensiByCatatan.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakPresensiCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="cetakPresensiCatatan" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -256,8 +230,11 @@ $pegawai = query("SELECT * FROM pegawai");
 </script>
 
 <script>
-    $('.js-example-basic-single').select2({
-        dropdownParent: $('#cetakPresensiNip')
+    $(document).ready(function() {
+
+        $('.js-tanggal').select2({
+            dropdownParent: $('#cetakPresensiTanggal')
+        });
     });
 </script>
 

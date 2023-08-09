@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2023 at 05:41 AM
+-- Generation Time: Aug 09, 2023 at 10:28 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -65,6 +65,7 @@ CREATE TABLE `pegawai` (
   `nip` varchar(50) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `golongan` varchar(50) NOT NULL,
+  `jabatan` varchar(255) NOT NULL,
   `jk` varchar(50) DEFAULT NULL,
   `agama` varchar(100) DEFAULT NULL,
   `t_lahir` varchar(100) DEFAULT NULL,
@@ -79,29 +80,31 @@ CREATE TABLE `pegawai` (
 -- Dumping data for table `pegawai`
 --
 
-INSERT INTO `pegawai` (`nip`, `nama`, `golongan`, `jk`, `agama`, `t_lahir`, `tgl_lahir`, `pendidikan`, `alamat`, `no_telp`, `email`) VALUES
-('009', 'Ahmad Subaktie', '4a', 'L', 'Hindu', 'Pesayangan', '2023-08-05', 'S1 Fisika', 'Banjarmasin', '+62283484521', 'subaktieBjm@gmail.com'),
-('046988087080830', 'Lalita Zulaika, S.H.I.', '3a', 'L', 'Islam', 'Coba', '1984-08-09', 'S1 Hukum', 'Martapura', '+62854978985', 'lalita226@gmail.com'),
-('083906892990302', 'Ade Dabukke, S.Kom.', '3a', 'L', 'Kristen', 'Binuang', '1988-08-06', 'S1 Pendidikan', 'Banjarbaru', '+6228293531359', 'dabukkeAde334@gmail.com'),
-('104621197737824', 'Banawa Thamrin, S.Si.', '2a', 'L', 'Islam', 'Martapura', '1990-08-31', 'S1 Kehutanan', 'Banjarbaru', '+6238590430104', 'banawaTham@gmail.com'),
-('123456', 'Mamat', '3a', 'L', 'Islam', 'Kandangan', '2023-08-03', 'S1 Teknik Sipil', 'Banjarmasin', '+6223252526', 'mamatKdg@gmail.com'),
-('124290454787808', 'Kawaya Haryanto, S.H.', '4b', 'L', 'Islam', 'Barabai', '1993-08-18', 'S1 Teknik', 'Kandangan', '+6233260920944', 'kaa_har@gmail.com'),
-('125615399226617', 'Teguh Maheswara, S.Ag.', '4a', 'L', 'Islam', 'Banjarbaru', '1983-08-11', 'S1 Arsitektur', 'Amuntai', '+62876267233', 'mmhaesateguh45@gmail.com'),
-('141305679454637', 'Bakti Zulkarnain, S.K.M.', '4b', 'L', 'Islam', 'Banjarbaru', '1993-08-04', 'S1 Psikologi', 'Batola', '+62411470055', 'baktiakbar209@gmail.com'),
-('185968642362066', 'Darmana Latupono, S.Sn.', '3a', 'L', 'Islam', 'Banjarmasin', '1993-08-04', 'S1 Sipil', 'Banjarbaru', '+627664452072', 'darmajay22lat@gmail.com'),
-('225587452011402', 'Ana Laksita, S.I.P.', '2d', 'P', 'Islam', 'Pekauman', '1993-08-04', 'S1 Matematika', 'Pekauman', '+62335397213', 'anaLaksita@gmail.com'),
-('253154511280542', 'Najwa Padmasari, S.K.M.', '2d', 'P', 'Islam', 'Martapura', '1993-10-21', 'S1 Pendidikan', 'Banjarmasin', '+628846436733', 'nanajwaapat@gmail.com'),
-('277890972795334', 'Galuh Putra, S.S.', '2d', 'L', 'Islam', 'Amuntai', '1993-01-06', 'S1 Farmasi', 'Banjarbaru', '+62827613369', 'galuhputra_256_2@gmail.com'),
-('333', 'M. Reonald. S,Kom', '2b', 'L', 'Islam', 'Jember', '2000-07-26', 'S1 Teknik Informatika', 'Banjarbaru', '02138137821', 'mohamadreonald2607@gmail.com'),
-('334243040747543', 'Prayitna Kusumo, S.E.', '3d', 'P', 'Hindu', 'Kelayan', '1990-11-12', 'S1 Sastra', 'Martapura', '+62864419794', 'prayitkusumaprajana88@gmail.ciom'),
-('489010865403043', 'Yessi Oktaviani, S.Sos.', '4b', 'P', 'Kristen', 'Solo', '1981-08-04', 'S1 Arsitektur', 'Martapura', '+62873432001729', 'yessianiokta_bjb@gmail.com'),
-('519797005981021', 'Jail Wahyudin, S.T.', '3b', 'L', 'Islam', 'Surabaya', '1991-03-10', 'S1 Arsitektur', 'Banjarmasin', '+6256794314960', 'wahyuniindirajail@gmail.com'),
-('575685219345220', '', '3b', NULL, NULL, NULL, NULL, NULL, 'Pekauman', '+62711497215', 'gastipekaumanbjm_2@gmail.com'),
-('578801727823295', 'Eman Pradana, S.Hum.', '3a', NULL, NULL, NULL, NULL, NULL, 'Banjarbaru', '+62613462071', 'pradanajukiemanbjb@gmail.com'),
-('668962008418767', 'Pardi Jailani, S.Pd.I.', '3c', NULL, NULL, NULL, NULL, NULL, 'Kandangan', '+62413874127', 'pardijailani@gmail.com'),
-('827335666195448', 'Wardi Budiyanto, M.Pd.', '4c', NULL, NULL, NULL, NULL, NULL, 'Amuntai', '+62249281767', 'wardiii256budi@gmail.com'),
-('855618436241709', 'Chelsea Mandasari, M.T.', '4a', NULL, NULL, NULL, NULL, NULL, 'Banjarbaru', '+6226431021058', 'mandasarichealsea@gmail.com'),
-('996533308158025', 'Slamet Prasetya, S.I.P.', '2c', NULL, NULL, NULL, NULL, NULL, 'Martapura', '+623246057263', 'slametprasetyabjb433@gmail.com');
+INSERT INTO `pegawai` (`nip`, `nama`, `golongan`, `jabatan`, `jk`, `agama`, `t_lahir`, `tgl_lahir`, `pendidikan`, `alamat`, `no_telp`, `email`) VALUES
+('009', 'Ahmad Subaktie', '4a', '', 'L', 'Hindu', 'Pesayangan', '2023-08-05', 'S1 Fisika', 'Banjarmasin', '+62283484521', 'subaktieBjm@gmail.com'),
+('046988087080830', 'Lalita Zulaika, S.H.I.', '3a', '', 'L', 'Islam', 'Coba', '1984-08-09', 'S1 Hukum', 'Martapura', '+62854978985', 'lalita226@gmail.com'),
+('0812', 'Zimbabwe', '2a', 'Kepala Dinas', 'L', 'Islam', 'Kalteng', '2023-08-09', 'S1 Pendidikan Agama Islam', 'Bjb', '081237474152', 'zimbabwebjb@gmail.com'),
+('083906892990302', 'Ade Dabukke, S.Kom.', '3a', '', 'L', 'Kristen', 'Binuang', '1988-08-06', 'S1 Pendidikan', 'Banjarbaru', '+6228293531359', 'dabukkeAde334@gmail.com'),
+('1001', 'Jubay', '1c', 'petugas mediasi perdata', 'L', 'Islam', 'Surabaya', '2023-08-09', 'S1 Ilmu Hukum', 'Kandangan', '0812377412', 'jubaydillahkdg@gmail.com'),
+('104621197737824', 'Banawa Thamrin, S.Si.', '2a', '', 'L', 'Islam', 'Martapura', '1990-08-31', 'S1 Kehutanan', 'Banjarbaru', '+6238590430104', 'banawaTham@gmail.com'),
+('123456', 'Mamat', '3a', '', 'L', 'Islam', 'Kandangan', '2023-08-03', 'S1 Teknik Sipil', 'Banjarmasin', '+6223252526', 'mamatKdg@gmail.com'),
+('124290454787808', 'Kawaya Haryanto, S.H.', '4b', '', 'L', 'Islam', 'Barabai', '1993-08-18', 'S1 Teknik', 'Kandangan', '+6233260920944', 'kaa_har@gmail.com'),
+('125615399226617', 'Teguh Maheswara, S.Ag.', '4a', '', 'L', 'Islam', 'Banjarbaru', '1983-08-11', 'S1 Arsitektur', 'Amuntai', '+62876267233', 'mmhaesateguh45@gmail.com'),
+('141305679454637', 'Bakti Zulkarnain, S.K.M.', '4b', '', 'L', 'Islam', 'Banjarbaru', '1993-08-04', 'S1 Psikologi', 'Batola', '+62411470055', 'baktiakbar209@gmail.com'),
+('185968642362066', 'Darmana Latupono, S.Sn.', '3a', '', 'L', 'Islam', 'Banjarmasin', '1993-08-04', 'S1 Sipil', 'Banjarbaru', '+627664452072', 'darmajay22lat@gmail.com'),
+('225587452011402', 'Ana Laksita, S.I.P.', '2d', '', 'P', 'Islam', 'Pekauman', '1993-08-04', 'S1 Matematika', 'Pekauman', '+62335397213', 'anaLaksita@gmail.com'),
+('253154511280542', 'Najwa Padmasari, S.K.M.', '2d', '', 'P', 'Islam', 'Martapura', '1993-10-21', 'S1 Pendidikan', 'Banjarmasin', '+628846436733', 'nanajwaapat@gmail.com'),
+('277890972795334', 'Galuh Putra, S.S.', '2d', '', 'L', 'Islam', 'Amuntai', '1993-01-06', 'S1 Farmasi', 'Banjarbaru', '+62827613369', 'galuhputra_256_2@gmail.com'),
+('333', 'M. Reonald. S,Kom', '2b', '', 'L', 'Islam', 'Jember', '2000-07-26', 'S1 Teknik Informatika', 'Banjarbaru', '02138137821', 'mohamadreonald2607@gmail.com'),
+('334243040747543', 'Prayitna Kusumo, S.E.', '3d', '', 'P', 'Hindu', 'Kelayan', '1990-11-12', 'S1 Sastra', 'Martapura', '+62864419794', 'prayitkusumaprajana88@gmail.ciom'),
+('489010865403043', 'Yessi Oktaviani, S.Sos.', '4b', '', 'P', 'Kristen', 'Solo', '1981-08-04', 'S1 Arsitektur', 'Martapura', '+62873432001729', 'yessianiokta_bjb@gmail.com'),
+('519797005981021', 'Jail Wahyudin, S.T.', '3b', '', 'L', 'Islam', 'Surabaya', '1991-03-10', 'S1 Arsitektur', 'Banjarmasin', '+6256794314960', 'wahyuniindirajail@gmail.com'),
+('575685219345220', '', '3b', '', NULL, NULL, NULL, NULL, NULL, 'Pekauman', '+62711497215', 'gastipekaumanbjm_2@gmail.com'),
+('578801727823295', 'Eman Pradana, S.Hum.', '3a', '', NULL, NULL, NULL, NULL, NULL, 'Banjarbaru', '+62613462071', 'pradanajukiemanbjb@gmail.com'),
+('668962008418767', 'Pardi Jailani, S.Pd.I.', '3c', '', NULL, NULL, NULL, NULL, NULL, 'Kandangan', '+62413874127', 'pardijailani@gmail.com'),
+('827335666195448', 'Wardi Budiyanto, M.Pd.', '4c', '', NULL, NULL, NULL, NULL, NULL, 'Amuntai', '+62249281767', 'wardiii256budi@gmail.com'),
+('855618436241709', 'Chelsea Mandasari, M.T.', '4a', '', NULL, NULL, NULL, NULL, NULL, 'Banjarbaru', '+6226431021058', 'mandasarichealsea@gmail.com'),
+('996533308158025', 'Slamet Prasetya, S.I.P.', '2c', '', NULL, NULL, NULL, NULL, NULL, 'Martapura', '+623246057263', 'slametprasetyabjb433@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -205,7 +208,8 @@ INSERT INTO `tb_absensi` (`id`, `nip`, `golongan`, `nama`, `tanggal_absen`, `jam
 (397, '575685219345220', '3b', 'Gasti Mulyani, S.Si.', '2023-07-06', '06:43:22', '17:11:41', 'hadir', '40000'),
 (398, '575685219345220', '3b', 'Gasti Mulyani, S.Si.', '2023-07-07', '06:43:22', '17:11:41', 'hadir', '40000'),
 (399, '277890972795334', '2d', 'Galuh Putra, S.S.', '2023-07-19', '15:41:21', '15:41:36', 'terlambat', '17000'),
-(400, '253154511280542', '2d', 'Najwa Padmasari, S.K.M.', '2023-07-19', '15:42:23', '15:42:29', 'terlambat', '17000');
+(400, '253154511280542', '2d', 'Najwa Padmasari, S.K.M.', '2023-07-19', '15:42:23', '15:42:29', 'terlambat', '17000'),
+(401, '333', '2b', 'Mohamad Reonald. S,Kom', '2023-08-08', '14:38:50', 'belum tercatat', 'terlambat', '15000');
 
 -- --------------------------------------------------------
 
@@ -230,7 +234,6 @@ CREATE TABLE `tb_cuti` (
 --
 
 INSERT INTO `tb_cuti` (`id`, `nip`, `nama`, `tanggal_cuti`, `hari`, `tanggal_kembali`, `status`, `surat_pengajuan`, `alasan`) VALUES
-(36, '333', 'Mohamad Reonald. S,Kom', '2023-07-01', '10', '2023-07-10', 'acc admin', 'Surat Pernyataan Orang tua OK.pdf', ''),
 (37, '125615399226617', 'Teguh Maheswara, S.Ag.', '2023-07-19', '4', '2023-07-22', 'sedang proses', 'Surat Pernyataan Orang tua OK.pdf', ''),
 (38, '141305679454637', 'Bakti Zulkarnain, S.K.M.', '2023-07-20', '3', '2023-07-22', 'acc humas', 'Surat Pernyataan Orang tua OK.pdf', ''),
 (39, '253154511280542', 'Najwa Padmasari, S.K.M.', '2023-07-20', '3', '2023-07-23', 'acc humas', 'Surat Pernyataan Orang tua OK.pdf', '');
@@ -336,7 +339,7 @@ CREATE TABLE `tb_tunjangan_dan_gaji_pegawai` (
 --
 
 INSERT INTO `tb_tunjangan_dan_gaji_pegawai` (`id`, `id_gaji`, `bulan`, `nip`, `golongan`, `nama`, `jumlah_hadir`, `jumlah_terlambat`, `jumlah_tanpa_keterangan`, `kode_gaji`, `gaji`, `kode_tunjangan`, `tunjangan`, `total_gaji`, `status`) VALUES
-(8, 'AC2B', 'July-2023', '333', '2b', 'Mohamad Reonald. S,Kom', '6', '2', '0', 'AC2B', '2208400', '213AD', '228000', '2436400', 'acc admin'),
+(8, 'AC2B', 'July-2023', '333', '2b', 'Mohamad Reonald. S,Kom', '6', '2', '0', 'AC2B', '2208400', '213AD', '228000', '2436400', 'acc humas'),
 (9, '3ABB', 'July-2023', '046988087080830', '3a', 'Lalita Zulaika, S.H.I.', '5', '0', '0', '3ABB', '2579400', '3AGGF', '185000', '2764400', 'acc admin'),
 (10, '3ABB', 'July-2023', '083906892990302', '3a', 'Ade Dabukke, S.Kom.', '5', '0', '0', '3ABB', '2579400', '3AGGF', '185000', '2764400', 'belum verifikasi'),
 (11, 'AC2A', 'July-2023', '104621197737824', '2a', 'Banawa Thamrin, S.Si.', '5', '0', '0', 'AC2A', '2022200', '2ABBR', '155000', '2177200', 'belum verifikasi'),
@@ -502,7 +505,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `tb_absensi`
 --
 ALTER TABLE `tb_absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=401;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=402;
 
 --
 -- AUTO_INCREMENT for table `tb_cuti`

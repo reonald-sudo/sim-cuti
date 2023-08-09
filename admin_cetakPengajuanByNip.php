@@ -68,7 +68,7 @@ $html .= '</title>
     <table style="border: 1px solid #fff; width: 100%;">
         <tr>
             <td style="width: 15%;">
-                <img src="dist/img/banjarbaru.png" style="width:80px; height:100px;">
+                <img src="dist/img/banjarbaru.jpg" style="width:80px; height:100px;">
             </td>
             <td style="width:70%;">
                 <center>
@@ -79,7 +79,7 @@ $html .= '</title>
                 </center>
             </td>
             <td style="width:15%;">
-            <img src="dist/img/logo.png" alt="" style="width:80px; height: 100px;">
+            <img src="dist/img/logo.jpg" alt="" style="width:80px; height: 100px;">
             </td>
         </tr>
     </table>

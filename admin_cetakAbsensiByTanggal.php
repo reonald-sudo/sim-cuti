@@ -22,10 +22,16 @@ if (!isset($_SESSION['login'])) {
 
 // $nipModal = $_GET['nip'];
 
+$nipInput = isset($_GET['nip']) ? $_GET['nip'] : '';
 $dariTanggal = $_GET['dari'];
 $sampaiTanggal = $_GET['sampai'];
 
-$cetakFilterPresensiByTahunAndBulan = query("SELECT * FROM " . 'tb_absensi' . " WHERE " . "tanggal_absen >= " . "'$dariTanggal'" . ' AND ' . "tanggal_absen <= " . "'$sampaiTanggal'");
+if (empty($nipInput)) {
+    $cetakFilterPresensiByTahunAndBulan = query("SELECT * FROM " . 'tb_absensi' . " WHERE " . "tanggal_absen >= " . "'$dariTanggal'" . ' AND ' . "tanggal_absen <= " . "'$sampaiTanggal'");
+} else {
+    $cetakFilterPresensiByTahunAndBulan = query("SELECT * FROM " . 'tb_absensi' . " WHERE " . "tanggal_absen >= " . "'$dariTanggal'" . ' AND ' . "tanggal_absen <= " . "'$sampaiTanggal'" . ' AND ' . "nip = " . "'$nipInput'");
+}
+
 
 // $cetakFilterPresensiByNip = query("SELECT * FROM tb_absensi WHERE nip = '$nipModal'");
 
@@ -73,7 +79,7 @@ $html .= '</title>
     <table style="border: 1px solid #fff; width: 100%;">
         <tr>
             <td style="width: 15%;">
-                <img src="dist/img/banjarbaru.png" style="width:80px; height:100px;">
+                <img src="dist/img/banjarbaru.jpg" style="width:80px; height:100px;">
             </td>
             <td style="width:70%;">
                 <center>
@@ -84,12 +90,20 @@ $html .= '</title>
                 </center>
             </td>
             <td style="width:15%;">
-            <img src="dist/img/logo.png" alt="" style="width:80px; height: 100px;">
+            <img src="dist/img/logo.jpg" alt="" style="width:80px; height: 100px;">
             </td>
         </tr>
     </table>
-    <hr>
-    <h3 style="text-align: center;">REKAPITULASI PRESENSI DARI : ' . $dariTanggal . ' SAMPAI ' . $sampaiTanggal . '</h3>';
+    <hr>';
+
+foreach ($cetakFilterPresensiByTahunAndBulan as $row) :
+endforeach;
+
+if (empty($nipInput)) {
+    $html .= '<h3 style="text-align: center;">Rekapitulasi presensi dari : ' . $dariTanggal . ' sampai ' . $sampaiTanggal . '</h3>';
+} else {
+    $html .= '<h3 style="text-align: center;">Rekapitulasi presensi ' . $row['nip'] . ' - ' . $row['nama'] . '. <br> dari : ' . $dariTanggal . ' sampai ' . $sampaiTanggal . '</h3>';
+}
 
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
         <tr style="background-color: #BAD7E9;">
