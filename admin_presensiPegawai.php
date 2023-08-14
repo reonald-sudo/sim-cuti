@@ -164,13 +164,13 @@ $pegawai = query("SELECT * FROM pegawai");
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <?php $absensi = query("SELECT * FROM tb_absensi"); ?>
+                                    <?php $absensi = query("SELECT * FROM tb_absensi ORDER BY tanggal_absen DESC "); ?>
                                     <?php $i = 1; ?>
                                     <?php foreach ($absensi as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
                                             <td><?= $row['nip']; ?><br><?= $row['nama']; ?></td>
-                                            <td><?= $row['tanggal_absen']; ?></td>
+                                            <td><?= date('d-m-Y', strtotime($row['tanggal_absen'])); ?></td>
                                             <!-- jam masuk -->
                                             <?php if ($row['jam_masuk'] == 'belum tercatat') : ?>
                                                 <td style="color: red;"><?= $row['jam_masuk']; ?></td>

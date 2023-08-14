@@ -22,7 +22,7 @@ if (!isset($_SESSION['login'])) {
     $hakAses = $_SESSION['hak_akses'];
 }
 
-$humasCetakAbsensi = query("SELECT * FROM tb_cuti WHERE YEAR(tanggal_cuti) = '$tahun' AND status = '$status'");
+$humasCetakAbsensi = query("SELECT * FROM tb_cuti WHERE YEAR(tanggal_cuti) = '$tahun' AND status = '$status' ORDER BY tanggal_cuti DESC");
 
 $mpdf = new \Mpdf\Mpdf();
 
@@ -68,8 +68,7 @@ $html .= '</title>
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
         <tr style="background-color: #BAD7E9;">
             <td style="border: 1px solid black;">No</td>
-            <td style="border: 1px solid black;">Nip</td>
-            <td style="border: 1px solid black;">Nama</td>
+            <td style="border: 1px solid black;">Nama & Nip</td>
             <td style="border: 1px solid black;">Tanggal Cuti</td>
             <td style="border: 1px solid black;">Hari</td>
             <td style="border: 1px solid black;">Tanggal Kembali</td>
@@ -82,11 +81,10 @@ $i = 1;
 foreach ($humasCetakAbsensi as $row) :
     $html .= '<tr>';
     $html .= '<td style="border: 1px solid black;">' .  $i  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_cuti']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . ' <br> ' . $row['nama'] . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  date('d-m-Y', strtotime($row['tanggal_cuti']))  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['hari'] . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_kembali']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  date('d-m-Y', strtotime($row['tanggal_kembali']))  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['status']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['alasan']  . '</td>';
     $html .= '</tr>';

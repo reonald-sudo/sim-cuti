@@ -20,7 +20,7 @@ if (isset($_POST['simpan'])) {
     }
 }
 
-$uangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip");
+$uangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip ORDER BY tanggal_transaksi DESC");
 $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip AND status = 'acc humas'");
 ?>
 
@@ -43,11 +43,11 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Uang Ganti</h1>
+                            <h1 class="m-0">Reamburstment</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="absensi.php">Uang Ganti</a></li>
+                                <li class="breadcrumb-item"><a href="absensi.php">Reamburstment</a></li>
                                 <li class="breadcrumb-item active">Dashboard User</li>
                             </ol>
                         </div>
@@ -63,8 +63,8 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
                     <div class="card">
                         <div class="card-header pb-3">
                             <img src="dist/img/duit bro.jpg" class="float-right" alt="" srcset="" style="width: 250px;">
-                            <h4>Pengajuan penggantian uang</h4>
-                            <p><em>Halaman ini berisikan pengajuan penggantian uang anda</em></p>
+                            <h4>Pengajuan Reamburstment</h4>
+                            <p><em>Halaman ini berisikan pengajuan reamburstment anda</em></p>
 
 
                             <!-- Button trigger modal -->
@@ -152,7 +152,8 @@ $hitungUangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE nip = $nip
                                             <?php $total += $row['nominal'] ?>
                                             <tr>
                                                 <td><?= $i; ?></td>
-                                                <td><?= $row['tanggal_transaksi']; ?></td>
+                                                <td><?= date('d-m-Y', strtotime($row['tanggal_transaksi'])); ?></td>
+
                                                 <td>Rp. <?= number_format($row['nominal'], 0, ",", "."); ?></td>
 
                                                 <td>

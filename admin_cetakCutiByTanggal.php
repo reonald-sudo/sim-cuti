@@ -20,7 +20,7 @@ $nipModal = $_GET['nip'];
 $dariTanggal = $_GET['dari'];
 $sampaiTanggal = $_GET['sampai'];
 
-$cetakFilterCutiByTahunAndBulan = query("SELECT * FROM " . 'tb_cuti' . " WHERE " . "tanggal_cuti >= " . "'$dariTanggal'" . ' AND ' . "tanggal_cuti <= " . "'$sampaiTanggal'");
+$cetakFilterCutiByTahunAndBulan = query("SELECT * FROM " . 'tb_cuti' . " WHERE " . "tanggal_cuti >= " . "'$dariTanggal'" . ' AND ' . "tanggal_cuti <= " . "'$sampaiTanggal'" . 'ORDER BY tanggal_kembali DESC' . "");
 
 $cetakFilterPengajuanCutiByNip = query("SELECT * FROM tb_cuti WHERE nip = '$nipModal'");
 
@@ -55,7 +55,7 @@ $html = '<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Rekap Absensi ';
+    <title>Cetak Rekap Cuti ';
 
 $html .= '</title>
 
@@ -89,8 +89,7 @@ $html .= '</title>
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
         <tr style="background-color: #BAD7E9;">
             <td style="border: 1px solid black;">No</td>
-            <td style="border: 1px solid black;">Nama</td>
-            <td style="border: 1px solid black;">Nip</td>
+            <td style="border: 1px solid black;">Nama & Nip</td>
             <td style="border: 1px solid black;">Tanggal Cuti</td>
             <td style="border: 1px solid black;">Hari</td>
             <td style="border: 1px solid black;">Tanggal Kembali</td>
@@ -101,11 +100,10 @@ $i = 1;
 foreach ($cetakFilterCutiByTahunAndBulan as $row) :
     $html .= '<tr>';
     $html .= '<td style="border: 1px solid black;">' .  $i  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_cuti']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . ' <br> ' . $row['nama'] . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  date('d-m-Y', strtotime($row['tanggal_cuti']))  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['hari']  . ' Hari</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_kembali']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  date('d-m-Y', strtotime($row['tanggal_kembali']))  . '</td>';
     $html .= '</tr>';
     $i++;
 endforeach;

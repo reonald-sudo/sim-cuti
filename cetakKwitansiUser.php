@@ -97,7 +97,7 @@ $html .= '<table class="tg">
         </tr>
         <tr>
             <td class="tg-0lax">Tanggal Pengajuan</td>
-            <td class="tg-0lax">: ' . $kwitansiUser['tanggal_transaksi'] . '</td>
+            <td class="tg-0lax">: ' . date('d-m-Y', strtotime($kwitansiUser['tanggal_transaksi'])) . '</td>
         </tr>
         <tr>
             <td class="tg-0lax"></td>

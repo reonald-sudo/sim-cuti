@@ -145,6 +145,12 @@ if (!isset($_SESSION['login'])) {
                                     <p>Cuti</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="gaji_user.php" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Gaji dan Tunjangan</p>
+                                </a>
+                            </li>
 
                         </ul>
                     </li>
@@ -188,7 +194,7 @@ if (!isset($_SESSION['login'])) {
                             <li class="nav-item">
                                 <a href="admin_pengajuanUangGanti.php" class="nav-link">
                                     <i class="fas fa-file nav-icon"></i>
-                                    <p>Pengajuan uang ganti</p>
+                                    <p>Reamburstmen</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -197,38 +203,14 @@ if (!isset($_SESSION['login'])) {
                                     <p>Pengajuan Cuti</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="admin_GajidanTunjangan.php" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Gaji dan Tunjangan</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
-
-                    <!-- <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-folder"></i>
-                            <p>
-                                Arsip
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-file nav-icon"></i>
-                                    <p>Arsip Presensi</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-file nav-icon"></i>
-                                    <p>Arsip Penggantian Uang</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-file nav-icon"></i>
-                                    <p>Arsip Cuti</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li> -->
 
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -267,7 +249,45 @@ if (!isset($_SESSION['login'])) {
                     </li>
 
                 <?php
-                } ?>
+                } else { ?>
+                    <li class="nav-header">MENU HUMAS</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-folder"></i>
+                            <p>
+                                Laporan
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="humas_laporanPresensi.php" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Laporan Presensi</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="humas_uangGanti.php" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Laporan Reamburstment</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="humas_cuti.php" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Laporan Cuti</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="humas_GajiDanTunjangan.php" class="nav-link">
+                                    <i class="fas fa-file nav-icon"></i>
+                                    <p>Laporan Gaji</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                <?php } ?>
 
             </ul>
         </nav>

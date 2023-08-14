@@ -112,7 +112,7 @@ $pangkat = $queryPangkat['pangkat'];
             </style>
 
             <!-- Main content -->
-            <section class="content">
+            <!-- <section class="content">
                 <div class="container-fluid">
 
                     <div class="employee-card">
@@ -149,7 +149,95 @@ $pangkat = $queryPangkat['pangkat'];
                     </div>
 
                 </div>
+            </section> -->
+
+
+            <section class="content">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-header">
+                            <img src="dist/img/user.jpg" style="width: 15%;" class="float-right pl-3">
+                            <br>
+                            <br>
+                            <h4 class="m-0"><strong>Hi, <?= $informasi['nama']; ?> ! </strong></h4>
+
+                            <p class="m-0"><em>ini merupakan papan informasi mu, kamu dapat melakukan konfigurasi di halaman ini.</em></p>
+                            <a href="editInformasi.php?nip=<?= $informasi['nip']; ?>" class="btn btn-sm btn-warning mt-2">Ubah data</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td>Nama</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['nama']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nip</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['nip']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Golongan</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['golongan']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jabatan</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['jabatan']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jenis Kelamin</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['jk']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agama</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['agama']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>TTL</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['t_lahir']; ?>, <?= date('d-m-Y', strtotime($informasi['tgl_lahir'])); ?></td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td>Pendidikan</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['pendidikan']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alamat</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['alamat']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>No Telp</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['no_telp']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>:</td>
+                                            <td><?= $informasi['email']; ?></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </section>
+
+
         </div>
 
         <!-- Footer -->

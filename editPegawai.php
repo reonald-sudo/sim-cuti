@@ -51,11 +51,11 @@ $editPegawai = editData("SELECT * FROM pegawai WHERE nip = $nip1");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Cuti</h1>
+                            <h1 class="m-0">Data Pegawai</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="absensi.php">Cuti</a></li>
+                                <li class="breadcrumb-item"><a href="absensi.php">Data Pegawai</a></li>
                                 <li class="breadcrumb-item active">Dashboard User</li>
                             </ol>
                         </div>
@@ -94,7 +94,7 @@ $editPegawai = editData("SELECT * FROM pegawai WHERE nip = $nip1");
                                         <div class="form-group col-lg-3">
                                             <label for="golongan">golongan</label>
                                             <select name="golongan" id="golongan" class="form-control js-example-basic-single" style="width: 100%;" required>
-                                                <option value="<?= $editPegawai['golongan']; ?>" selected disabled hidden><?= $editPegawai['golongan']; ?></option>
+                                                <option value="<?= $editPegawai['golongan']; ?>" selected hidden><?= $editPegawai['golongan']; ?></option>
                                                 <option value="" disabled hidden>-- Silahkan Pilih --</option>
                                                 <?php
                                                 foreach ($golongan as $row) { ?>
@@ -106,7 +106,7 @@ $editPegawai = editData("SELECT * FROM pegawai WHERE nip = $nip1");
                                         <div class="form-group col-lg-3 mb-3">
                                             <label for="jabatan">Jabatan</label>
                                             <select name="jabatan" id="jabatan" class="form-control jabatan" style="width: 100%;" required>
-                                                <option value="<?= $editPegawai['jabatan']; ?>" selected disabled><?= $editPegawai['jabatan']; ?></option>
+                                                <option value="<?= $editPegawai['jabatan']; ?>" selected><?= $editPegawai['jabatan']; ?></option>
                                                 <option value="" disabled hidden>-- Silahkan Pilih --</option>
                                                 <option value="hakim">Hakim</option>
                                                 <option value="panitera">Panitera</option>
@@ -194,14 +194,9 @@ $editPegawai = editData("SELECT * FROM pegawai WHERE nip = $nip1");
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="">Pendidikan</label>
-                                        <input type="text" name="pendidikan" id="" class="form-control mb-3" value="<?= $editPegawai['pendidikan']; ?>">
-                                    </div>
-
-                                    <div class="form-group">
                                         <label for="pendidikan">Pendidikan</label>
                                         <select name="pendidikan" id="pendidikan" class="form-control pendidikan" style="width: 100%;" required>
-                                            <option value="<?= $editPegawai['pendidikan']; ?>" selected disabled><?= $editPegawai['pendidikan']; ?></option>
+                                            <option value="<?= $editPegawai['pendidikan']; ?>" selected><?= $editPegawai['pendidikan']; ?></option>
                                             <option value="" disabled hidden>-- Silahkan Pilih --</option>
                                             <option value="S1 Teknik Informatika">S1 Teknik Informatika</option>
                                             <option value="S1 Teknik Sipil">S1 Teknik Sipil</option>

@@ -16,7 +16,7 @@ if (isset($_POST['verifikasi'])) {
     }
 }
 
-$gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
+$gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai ORDER BY bulan ASC");
 
 ?>
 
@@ -92,9 +92,10 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
 
                                                 <div class="form-group">
                                                     <select class="form-control verifikasiGajiTunjangan" aria-label="Default select example" name="verifikasiGajiTunjangan">
-                                                        <option selected>Verifikasi Gaji dan Tunjangan</option>
+                                                        <option selected disabled hidden>Verifikasi Gaji dan Tunjangan</option>
                                                         <option value="acc humas">Acc Humas</option>
                                                         <option value="acc admin">Acc Admin</option>
+                                                        <option value="belum Verifikasi">Belum Verifikasi</option>
                                                         <option value="ditolak">Ditolak</option>
                                                     </select>
                                                 </div>

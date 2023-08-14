@@ -58,7 +58,7 @@ foreach ($absensi as $row) {
 
         <a href="absensi.php?tanggal_absen=<?= $tanggal; ?>" class="btn btn-outline-success mr-2">Presensi</a>
 
-        <a href="uangGanti.php" class="btn btn-outline-success mr-2">Ajukan uang ganti</a>
+        <a href="uangGanti.php" class="btn btn-outline-success mr-2">Reamburstment</a>
         <a href="cuti.php" class="btn btn-outline-success mr-2">Cuti</a>
     </div>
 </div>
@@ -226,7 +226,7 @@ foreach ($absensi as $row) {
                 <?php endforeach; ?>
                 <h5>Rp. <?= number_format($total, 0, ",", "."); ?></h5>
 
-                <p>Ajukan uang ganti</p>
+                <p>Reamburstment</p>
             </div>
             <div class="icon">
                 <i class="fa fa-credit-card" aria-hidden="true"></i>

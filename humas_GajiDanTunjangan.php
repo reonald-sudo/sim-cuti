@@ -14,7 +14,10 @@ if (isset($_POST['verifikasi'])) {
     }
 }
 
-$gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
+$gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai ORDER BY bulan ASC");
+
+$pegawai = query("SELECT * FROM pegawai");
+
 
 ?>
 
@@ -55,9 +58,58 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                             <h4>Data keseluruhan gaji dan tunjangan pegawai</h4>
                             <p><em>Berisikan data gaji pegawai beserta tunjangan yang diterima per satu bulan.</em></p>
 
-                            <a href="admin_CetakSeluruhDataGaji.php" class="btn btn-primary btn-sm mr-1" target="_blank">
+                            <a href="humas_CetakSeluruhDataGaji.php" class="btn btn-primary btn-sm mr-1" target="_blank">
                                 Cetak seluruh data
                             </a>
+
+                            <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakGajiTunjangan">
+                                Cetak data berdasarkan nip & status
+                            </button>
+
+                            <!-- Modal -->
+                            <form action="humas_cetakGajiTunjangan.php" method="get" target="_blank">
+                                <div class="modal fade" id="cetakGajiTunjangan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan NIP & Status</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="nip">NIP</label>
+                                                    <select name="nip" id="nip" class="form-control js-example-basic-single" style="width: 100%;" required>
+                                                        <option value="" selected disabled hidden></option>
+                                                        <?php
+                                                        foreach ($pegawai as $row) { ?>
+                                                            <option value="<?= $row['nip']; ?>"> <?= $row['nip']; ?> - <?= $row['nama']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <small style="color: red;">* Sesuaikan NIP</small>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <select class="form-control verifikasiGajiTunjangan" aria-label="Default select example" name="verifikasiGajiTunjangan">
+                                                        <option selected hidden>Verifikasi Gaji dan Tunjangan</option>
+                                                        <option value="acc humas">Acc Humas</option>
+                                                        <option value="acc admin">Acc Admin</option>
+                                                        <option value="belum verifikasi">belum verifikasi</option>
+                                                        <option value="ditolak">Ditolak</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 
                         </div>
 
@@ -67,17 +119,13 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Id</th>
                                         <th>Bulan</th>
-                                        <th>Nip</th>
-                                        <th>G</th>
-                                        <th>Nama</th>
+                                        <th>Nama & Nip</th>
+                                        <th>Golongan</th>
                                         <th>Hadir</th>
                                         <th>Tlambat</th>
                                         <th>T Ket</th>
-                                        <th>K Gaji</th>
                                         <th>Gaji</th>
-                                        <th>K Tun</th>
                                         <th>Tun</th>
                                         <th>Total</th>
                                         <th>Status</th>
@@ -87,17 +135,13 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Id</th>
                                         <th>Bulan</th>
-                                        <th>Nip</th>
-                                        <th>G</th>
-                                        <th>Nama</th>
+                                        <th>Nama & Nip</th>
+                                        <th>Golongan</th>
                                         <th>Hadir</th>
                                         <th>Tlambat</th>
                                         <th>T Ket</th>
-                                        <th>K Gaji</th>
                                         <th>Gaji</th>
-                                        <th>K Tun</th>
                                         <th>Tun</th>
                                         <th>Total</th>
                                         <th>Status</th>
@@ -109,17 +153,13 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
                                     <?php foreach ($gajiTunjangan as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $row['id_gaji']; ?></td>
                                             <td><?= $row['bulan'] ?></td>
-                                            <td><?= $row['nip']; ?></td>
+                                            <td><?= $row['nip']; ?><br><?= $row['nama']; ?></td>
                                             <td><?= $row['golongan']; ?></td>
-                                            <td><?= $row['nama']; ?></td>
-                                            <td><?= $row['jumlah_hadir']; ?></td>
-                                            <td><?= $row['jumlah_terlambat']; ?></td>
-                                            <td><?= $row['jumlah_tanpa_keterangan']; ?></td>
-                                            <td><?= $row['kode_gaji']; ?></td>
+                                            <td><?= $row['jumlah_hadir']; ?> Hari</td>
+                                            <td><?= $row['jumlah_terlambat']; ?> Hari</td>
+                                            <td><?= $row['jumlah_tanpa_keterangan']; ?> Hari</td>
                                             <td style="color: green;">Rp. <?= number_format($row['gaji'], 0, ",", "."); ?></td>
-                                            <td><?= $row['kode_tunjangan']; ?></td>
                                             <td style="color: green;">Rp. <?= number_format($row['tunjangan'], 0, ",", "."); ?></td>
                                             <td style="color: green;">Rp. <?= number_format($row['total_gaji'], 0, ",", "."); ?></td>
                                             <td><?= $row['status']; ?></td>
@@ -203,6 +243,14 @@ $gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
         } else {
             alasanDitolak.attr("readonly", "readonly");
         }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $('.js-example-basic-single').select2({
+        dropdownParent: $('#cetakGajiTunjangan')
     });
 </script>
 

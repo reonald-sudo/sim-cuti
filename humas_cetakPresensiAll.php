@@ -63,8 +63,7 @@ $html .= '</title>
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
         <tr style="background-color: #BAD7E9;">
             <td style="border: 1px solid black;">No</td>
-            <td style="border: 1px solid black;">Nip</td>
-            <td style="border: 1px solid black;">Nama</td>
+            <td style="border: 1px solid black;">Nip & Nama</td>
             <td style="border: 1px solid black;">Tanggal</td>
             <td style="border: 1px solid black;">Catatan</td>
         </tr>';
@@ -74,9 +73,8 @@ $i = 1;
 foreach ($humasCetakAbsensi as $row) :
     $html .= '<tr>';
     $html .= '<td style="border: 1px solid black;">' .  $i  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_absen']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . ' <br> ' . $row['nama'] . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  date('d-m-Y', strtotime($row['tanggal_absen']))  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['catatan'] . '</td>';
     $html .= '</tr>';
     $i++;

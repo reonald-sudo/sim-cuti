@@ -5,7 +5,6 @@ session_start();
 require_once 'functions.php';
 require_once 'templates/header.php';
 
-$uangGantiHumas = query("SELECT * FROM tb_uang_ganti");
 
 if (isset($_POST['verifikasi'])) {
     if (verifikasiPengajuan($_POST) > 0) {
@@ -22,8 +21,13 @@ if (isset($_GET['tahun']) && isset($_GET['status'])) {
     $tahun = $_GET['tahun'];
     $status = $_GET['status'];
 
+    $uangGantiHumas = query("SELECT * FROM tb_uang_ganti WHERE YEAR(tanggal_transaksi) = '$tahun' AND status = '$status' ORDER BY tanggal_transaksi DESC");
+
     $reimburstment = query("SELECT SUM(nominal) AS total_nominal, MONTH(tanggal_transaksi) AS bulan FROM tb_uang_ganti WHERE YEAR(tanggal_transaksi) = '$tahun' AND status = '$status' GROUP BY bulan");
 } else {
+
+    $uangGantiHumas = query("SELECT * FROM tb_uang_ganti ORDER BY tanggal_transaksi DESC");
+
     $reimburstment = query("SELECT SUM(nominal) AS total_nominal, MONTH(tanggal_transaksi) AS bulan FROM tb_uang_ganti WHERE YEAR(tanggal_transaksi) = '$tahunSekarang' AND status = 'acc humas' GROUP BY bulan");
 }
 
@@ -48,6 +52,9 @@ $totalNominalFormatted = 'Rp. ' . number_format($totalNominal, 0, ',', '.');
 // Konversi array reimbursementData menjadi string yang dipisahkan oleh koma
 $reimburstmentDataString = implode(', ', $reimburstmentData);
 
+$pegawai = query("SELECT * FROM pegawai");
+
+
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -64,11 +71,11 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Laporan pengajuan uang ganti</h1>
+                            <h1 class="m-0">Laporan Reamburstment</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Data Pengajuan Uang Ganti</a></li>
+                                <li class="breadcrumb-item"><a href="#">Data Reamburstment</a></li>
                                 <li class="breadcrumb-item active">Humas</li>
                             </ol>
                         </div>
@@ -81,14 +88,6 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
             <section class="content">
                 <div class="container-fluid">
 
-                    <div class="mb-2">
-                        <?php if (isset($_GET['tahun']) && isset($_GET['status'])) : ?>
-                            <a href="humas_cetakUangGanti.php?tahun=<?= $_GET['tahun']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-success btn-sm" target="_blank">Cetak berdasarkan pencarian</a>
-                        <?php else : ?>
-                            <a href="humas_cetakUangGantiAll.php" class="btn btn-success btn-sm" target="_blank">Cetak semua data</a>
-                        <?php endif; ?>
-                    </div>
-
                     <div class="card">
                         <div class="card-header mb-0">
                             <img src="dist/img/duitadmin.jpg" alt="" style="width: 250px;" class="float-right pl-3">
@@ -98,7 +97,7 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
                             $tahunNow =  date('Y');
                             ?>
 
-                            <p style="margin: 0px; padding: 0px;"><b>Total reimbursement bulan <?= date('F') ?> - <?= $tahunNow ?></b></p>
+                            <p style="margin: 0px; padding: 0px;"><b>Total reimbursment bulan <?= date('F') ?> - <?= $tahunNow ?></b></p>
 
                             <?php
                             $uangGanti = showSingleTable("SELECT * FROM tb_uang_ganti WHERE MONTH(tanggal_transaksi) = '$bulanNow' AND YEAR (tanggal_transaksi) = '$tahunNow' ");
@@ -140,6 +139,103 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
 
                             </form>
 
+                            <div class="mb-2">
+                                <?php if (isset($_GET['tahun']) && isset($_GET['status'])) : ?>
+                                    <a href="humas_cetakUangGanti.php?tahun=<?= $_GET['tahun']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-success btn-sm mr-1" target="_blank">Cetak berdasarkan pencarian</a>
+                                <?php else : ?>
+                                    <a href="humas_cetakUangGantiAll.php" class="btn btn-success btn-sm mr-1" target="_blank">Cetak semua data</a>
+                                <?php endif; ?>
+
+
+                                <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakPengajuanByNip">
+                                    Cetak data berdasarkan nip
+                                </button>
+
+                                <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#cetakPengajuanByTanggal" style="display: inline;">
+                                    Cetak data spesifik
+                                </button>
+
+                                <!-- Modal -->
+                                <form action="humas_cetakPengajuanByNip.php" method="get" target="_blank">
+                                    <div class="modal fade" id="cetakPengajuanByNip" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Cetak Pengajuan Berdasarkan NIP</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="nip">NIP</label>
+                                                        <select name="nip" id="nip" class="form-control js-tanggal" style="width: 100%;">
+                                                            <option value="" selected disabled hidden></option>
+                                                            <?php
+                                                            foreach ($pegawai as $row) { ?>
+                                                                <option value="<?= $row['nip']; ?>"> <?= $row['nip']; ?> - <?= $row['nama']; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                        <small style="color: red;">* Sesuaikan NIP</small>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" name="">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- Modal -->
+                                <form action="humas_cetakPengajuanByTanggal.php" method="get" target="_blank">
+                                    <div class="modal fade" id="cetakPengajuanByTanggal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Cetak Reimbursment Spesifik</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-lg-4">
+                                                            <input type="date" class="form-control" name="dari" id="">
+                                                        </div>
+
+                                                        <div class="form-group col-lg-4">
+                                                            <input type="date" class="form-control" name="sampai" id="">
+                                                        </div>
+
+                                                        <div class="form-group col-lg-4">
+                                                            <select class="form-control" aria-label="Default select example" name="status">
+                                                                <option selected>Status</option>
+                                                                <option value="ditolak">ditolak</option>
+                                                                <option value="acc admin">acc admin</option>
+                                                                <option value="acc humas">acc humas</option>
+                                                            </select>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" name="">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
                         </div>
 
 
@@ -148,8 +244,7 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
+                                        <th>Nama & Nip</th>
                                         <th>Tanggal Transaksi</th>
                                         <th>Nominal</th>
                                         <th>Nota</th>
@@ -160,8 +255,7 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
+                                        <th>Nama & Nip</th>
                                         <th>Tanggal Transaksi</th>
                                         <th>Nominal</th>
                                         <th>Nota</th>
@@ -176,9 +270,9 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
                                     <?php foreach ($uangGantiHumas as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $row['nama']; ?></td>
-                                            <td><?= $row['nip']; ?></td>
-                                            <td><?= $row['tanggal_transaksi']; ?></td>
+                                            <td><?= $row['nip']; ?> <br> <?= $row['nama']; ?></td>
+                                            <td><?= date('d-m-Y', strtotime($row['tanggal_transaksi'])); ?></td>
+
                                             <td>Rp. <?= number_format($row['nominal'], 0, ",", "."); ?></td>
 
                                             <td>
@@ -289,6 +383,8 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
 </body>
 
 <script src="js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 <script>
     $(function() {
@@ -302,6 +398,13 @@ $reimburstmentDataString = implode(', ', $reimburstmentData);
         } else {
             alasanDitolak.attr("readonly", "readonly");
         }
+    });
+
+    $(document).ready(function() {
+
+        $('.js-tanggal').select2({
+            dropdownParent: $('#cetakPengajuanByNip')
+        });
     });
 </script>
 

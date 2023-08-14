@@ -22,7 +22,7 @@ if (!isset($_SESSION['login'])) {
 $dariTanggal = $_GET['dari'];
 $sampaiTanggal = $_GET['sampai'];
 
-$cetakFilterPresensiByTahunAndBulan = query("SELECT * FROM " . 'tb_absensi' . " WHERE " . "tanggal_absen >= " . "'$dariTanggal'" . ' AND ' . "tanggal_absen <= " . "'$sampaiTanggal'" . ' AND ' . " nip = " . "'$nip'");
+$cetakFilterPresensiByTahunAndBulan = query("SELECT * FROM " . 'tb_absensi' . " WHERE " . "tanggal_absen >= " . "'$dariTanggal'" . ' AND ' . "tanggal_absen <= " . "'$sampaiTanggal'" . ' AND ' . " nip = " . "'$nip'" . 'ORDER BY tanggal_absen DESC' . "");
 
 // $cetakFilterPresensiByTahunAndBulan2 = query("SELECT * FROM " . 'tb_absensi' . " WHERE " . "MONTH (tanggal_absen) = " . "'$bulan'" . ' AND ' . "YEAR (tanggal_absen) = " . "'$tahun'" . ' AND ' . "nip = " . "'$nip'");
 
@@ -81,13 +81,12 @@ $html .= '</title>
         </tr>
     </table>
     <hr>
-    <h3 style="text-align: center;">REKAPITULASI PRESENSI : ' . $nama . '</h3>';
+    <h3 style="text-align: center;">REKAPITULASI PRESENSI : <br> ' . $nip . ' - ' . $nama . '</h3>';
 
 $html .= '<table style="width: 100%; border: 1px solid black;" cellspacing="0" cellpadding="5">
         <tr style="background-color: #BAD7E9;">
             <td style="border: 1px solid black;">No</td>
-            <td style="border: 1px solid black;">Nama</td>
-            <td style="border: 1px solid black;">Nip</td>
+            <td style="border: 1px solid black;">Nama & Nip</td>
             <td style="border: 1px solid black;">Tanggal absen</td>
             <td style="border: 1px solid black;">Jam masuk</td>
             <td style="border: 1px solid black;">Jam pulang</td>
@@ -99,11 +98,10 @@ $i = 1;
 foreach ($cetakFilterPresensiByTahunAndBulan as $row) :
     $html .= '<tr>';
     $html .= '<td style="border: 1px solid black;">' .  $i  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nama']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['tanggal_absen']  . '</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['jam_masuk']  . ' WITA</td>';
-    $html .= '<td style="border: 1px solid black;">' .  $row['jam_pulang']  . ' WITA</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['nip']  . ' <br> ' . $row['nama'] . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  date('d-m-Y', strtotime($row['tanggal_absen']))  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['jam_masuk']  . '</td>';
+    $html .= '<td style="border: 1px solid black;">' .  $row['jam_pulang']  . '</td>';
     $html .= '<td style="border: 1px solid black;">' .  $row['catatan']  . '</td>';
     $html .= '</tr>';
     $i++;

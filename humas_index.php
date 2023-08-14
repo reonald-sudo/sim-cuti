@@ -48,7 +48,7 @@ require_once 'templates/header.php' ?>
                             <div class="small-box bg-success">
                                 <div class="inner">
 
-                                    <p>Laporan Pengajuan uang ganti</p>
+                                    <p>Laporan Reamburstment</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -74,7 +74,7 @@ require_once 'templates/header.php' ?>
                             <div class="small-box bg-secondary">
                                 <div class="inner">
 
-                                    <p>Laporan penggajian dan tunjangan</p>
+                                    <p>Laporan Gaji</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-users" aria-hidden="true"></i>

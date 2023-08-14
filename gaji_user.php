@@ -49,7 +49,7 @@ foreach ($absensi as $row) {
 // total gaji + tunjangan
 $totalGajiTunjangan = $angkaGaji + $totalTunjangan;
 
-$gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai WHERE nip = $nip");
+$gajiTunjangan = showSingleTable("SELECT * FROM tb_tunjangan_dan_gaji_pegawai WHERE nip = $nip ORDER BY bulan ASC");
 
 if (isset($_POST['refreshGaji'])) {
     if (updateGaji($_POST) > 0) {
@@ -134,7 +134,6 @@ if (isset($_POST['refreshGaji'])) {
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Kode Gaji</th>
                                                 <th>Bulan</th>
                                                 <th>Gaji Pokok</th>
                                                 <th>Tunjangan</th>
@@ -146,7 +145,6 @@ if (isset($_POST['refreshGaji'])) {
                                         <tfoot>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Kode Gaji</th>
                                                 <th>Bulan</th>
                                                 <th>Gaji Pokok</th>
                                                 <th>Tunjangan</th>
@@ -160,7 +158,6 @@ if (isset($_POST['refreshGaji'])) {
                                             <?php foreach ($gajiTunjangan as $row) : ?>
                                                 <tr>
                                                     <td><?= $i; ?></td>
-                                                    <td><?= $row['kode_gaji']; ?></td>
                                                     <td><?= $row['bulan']; ?></td>
                                                     <td style="color: green;">Rp. <?= number_format($gaji['gaji'], 0, ",", "."); ?></td>
                                                     <td style="color: green;">Rp. <?= number_format($totalTunjangan, 0, ",", "."); ?></td>

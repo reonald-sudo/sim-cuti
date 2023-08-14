@@ -60,7 +60,7 @@ if (isset($_POST['pulangKerja'])) {
 
 $bulanSekarang = date('m');
 
-$absensi = showSingleTable("SELECT * FROM tb_absensi WHERE nip = $nip AND MONTH(tanggal_absen) = $bulanSekarang");
+$absensi = showSingleTable("SELECT * FROM tb_absensi WHERE nip = $nip AND MONTH(tanggal_absen) = $bulanSekarang ORDER BY tanggal_absen DESC");
 $absensiCek = editData("SELECT * FROM tb_absensi WHERE nip = $nip");
 
 $absensiMasukCek = editData("SELECT * FROM tb_absensi WHERE nip = $nip AND tanggal_absen = '$tanggal'");
@@ -259,7 +259,7 @@ if ($cekHari === 'Sat' && empty($absensiMasukCek)) {
 
                                             <tr>
                                                 <td><?= $i; ?></td>
-                                                <td><?= $row['tanggal_absen']; ?></td>
+                                                <td><?= date('d-m-Y', strtotime($row['tanggal_absen'])); ?></td>
                                                 <td><?= $row['jam_masuk']; ?></td>
                                                 <td><?= $row['jam_pulang']; ?></td>
                                                 <?php if ($row['catatan'] == 'terlambat') : ?>

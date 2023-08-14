@@ -21,7 +21,7 @@ if (isset($_POST['tambahCuti'])) {
     }
 }
 
-$cuti = showSingleTable("SELECT * FROM tb_cuti WHERE nip = $nip");
+$cuti = showSingleTable("SELECT * FROM tb_cuti WHERE nip = $nip ORDER BY tanggal_cuti DESC");
 $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
 // $uangDiverifikasi = editData("SELECT * FROM tb_uang_ganti WHERE nip = $nip AND status = 'acc'");
 
@@ -177,8 +177,7 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nama</th>
-                                            <th>Nip</th>
+                                            <th>Nama & Nip</th>
                                             <th>Tanggal Cuti</th>
                                             <th>Hari</th>
                                             <th>Tanggal Kembali</th>
@@ -190,8 +189,7 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nama</th>
-                                            <th>Nip</th>
+                                            <th>Nama & Nip</th>
                                             <th>Tanggal Cuti</th>
                                             <th>Hari</th>
                                             <th>Tanggal Kembali</th>
@@ -205,12 +203,10 @@ $hariCuti = editData("SELECT * FROM tb_cuti WHERE nip = '$nip'");
                                         <?php foreach ($cuti as $row) : ?>
                                             <tr>
                                                 <td><?= $i; ?></td>
-                                                <td><?= $row['nama']; ?></td>
-                                                <td><?= $row['nip']; ?></td>
-                                                <td><?= $row['tanggal_cuti']; ?></td>
+                                                <td><?= $row['nama']; ?> <br> <?= $row['nip']; ?></td>
+                                                <td><?= date('d-m-Y', strtotime($row['tanggal_cuti'])); ?></td>
                                                 <td><?= $row['hari']; ?></td>
-                                                <td><?= $row['tanggal_kembali']; ?></td>
-
+                                                <td><?= date('d-m-Y', strtotime($row['tanggal_kembali'])); ?></td>
                                                 <td>
                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#surat_pengajuan<?= $row['id']; ?>">

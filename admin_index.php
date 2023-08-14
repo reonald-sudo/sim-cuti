@@ -45,7 +45,7 @@ require_once 'templates/header.php' ?>
                             <div class="small-box bg-success">
                                 <div class="inner">
 
-                                    <p>Pengajuan uang ganti</p>
+                                    <p>Reamburstment</p>
                                 </div>
                                 <a href="admin_pengajuanUangGanti.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>

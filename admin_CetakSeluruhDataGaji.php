@@ -18,7 +18,7 @@ if (!isset($_SESSION['login'])) {
 $nipGet = $_GET['nip'];
 $verifikasiGajiTunjangan = $_GET['verifikasiGajiTunjangan'];
 
-$cetakFilterGajiTunjangan = query("SELECT * FROM tb_tunjangan_dan_gaji_pegawai");
+$cetakFilterGajiTunjangan = query("SELECT * FROM tb_tunjangan_dan_gaji_pegawai ORDER BY bulan asc");
 
 $mpdf = new \Mpdf\Mpdf();
 
@@ -30,7 +30,7 @@ $html = '<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Rekap Absensi ';
+    <title>Cetak Rekap Gaji dan Tunjangan ';
 
 $html .= '</title>
 

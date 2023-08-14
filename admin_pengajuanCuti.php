@@ -4,7 +4,7 @@ session_start();
 require_once 'functions.php';
 require_once 'templates/header.php';
 
-$cuti = showSingleTable("SELECT * FROM tb_cuti");
+$cuti = showSingleTable("SELECT * FROM tb_cuti ORDER BY tanggal_cuti DESC");
 
 if (isset($_POST['verifikasi'])) {
     if (verifikasiPengajuanCuti($_POST) > 0) {
@@ -14,6 +14,9 @@ if (isset($_POST['verifikasi'])) {
         </script>";
     }
 }
+
+$pegawai = query("SELECT * FROM pegawai");
+
 
 ?>
 
@@ -58,56 +61,38 @@ if (isset($_POST['verifikasi'])) {
                             <p class="badge badge-primary"><?= $hitungCuti; ?> Data</p>
                             <br>
 
-                            <button type="button" class="btn btn-warning btn-sm mr-1" data-toggle="modal" data-target="#cetakCutiNip">
-                                Cetak data berdasarkan nip
+                            <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#cetakPresensiTanggal" style="display: inline;">
+                                Cetak data berdasarkan tanggal & Nip
                             </button>
-
-                            <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#cetakCutiTanggal" style="display: inline;">
-                                Cetak data berdasarkan tanggal
-                            </button>
-
-                            <!-- Modal -->
-                            <form action="admin_cetakCutiByNip.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakCutiNip" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan NIP</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="nip" id="" placeholder="Nip">
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
 
                             <!-- Modal -->
                             <form action="admin_cetakCutiByTanggal.php" method="get" target="_blank">
-                                <div class="modal fade" id="cetakCutiTanggal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="cetakPresensiTanggal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Tanggal</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Tanggal & Nip</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
 
                                             <div class="modal-body">
+
+                                                <div class="form-group">
+                                                    <label for="nip">NIP</label>
+                                                    <select name="nip" id="nip" class="form-control js-tanggal" style="width: 100%;">
+                                                        <option value="" selected disabled hidden></option>
+                                                        <?php
+                                                        foreach ($pegawai as $row) { ?>
+                                                            <option value="<?= $row['nip']; ?>"> <?= $row['nip']; ?> - <?= $row['nama']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <small style="color: red;">* Sesuaikan NIP</small>
+                                                </div>
+
                                                 <div class="row">
+
                                                     <div class="form-group col-lg-6">
                                                         <input type="date" class="form-control" name="dari" id="">
                                                     </div>
@@ -135,8 +120,7 @@ if (isset($_POST['verifikasi'])) {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
+                                        <th>Nama & Nip</th>
                                         <th>Tanggal Cuti</th>
                                         <th>Hari</th>
                                         <th>Tanggal Kembali</th>
@@ -148,8 +132,7 @@ if (isset($_POST['verifikasi'])) {
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
+                                        <th>Nama & Nip</th>
                                         <th>Tanggal Cuti</th>
                                         <th>Hari</th>
                                         <th>Tanggal Kembali</th>
@@ -163,11 +146,11 @@ if (isset($_POST['verifikasi'])) {
                                     <?php foreach ($cuti as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $row['nama']; ?></td>
-                                            <td><?= $row['nip']; ?></td>
-                                            <td><?= $row['tanggal_cuti']; ?></td>
+                                            <td><?= $row['nip']; ?> <br> <?= $row['nama']; ?></td>
+                                            <td><?= date('d-m-Y', strtotime($row['tanggal_cuti'])); ?></td>
                                             <td><?= $row['hari']; ?></td>
-                                            <td><?= $row['tanggal_kembali']; ?></td>
+                                            <td><?= date('d-m-Y', strtotime($row['tanggal_kembali'])); ?></td>
+
 
                                             <td>
                                                 <!-- Button trigger modal -->
@@ -266,10 +249,16 @@ if (isset($_POST['verifikasi'])) {
 </body>
 
 <script src="js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 <script>
     $(function() {
         $('#testing').DataTable()
+    });
+
+    $('.js-tanggal').select2({
+        dropdownParent: $('#cetakPresensiTanggal')
     });
 </script>
 

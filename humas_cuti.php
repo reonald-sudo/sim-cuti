@@ -4,7 +4,7 @@ session_start();
 require_once 'functions.php';
 require_once 'templates/header.php';
 
-$cutiHumas = query("SELECT * FROM tb_cuti");
+$cutiHumas = query("SELECT * FROM tb_cuti ORDER BY tanggal_cuti DESC");
 
 if (isset($_POST['verifikasi'])) {
     if (verifikasiPengajuanCuti($_POST) > 0) {
@@ -22,9 +22,9 @@ if (isset($_GET['tahun']) && isset($_GET['status'])) {
     $tahun = $_GET['tahun'];
     $status = $_GET['status'];
 
-    $cuti = query("SELECT * FROM tb_cuti WHERE YEAR(tanggal_cuti) = '$tahun' AND status = '$status'");
+    $cuti = query("SELECT * FROM tb_cuti WHERE YEAR(tanggal_cuti) = '$tahun' AND status = '$status' ORDER BY tanggal_cuti DESC");
 } else {
-    $cuti = query("SELECT * FROM tb_cuti WHERE YEAR(tanggal_cuti) = '$tahunSekarang' AND status = 'acc humas'");
+    $cuti = query("SELECT * FROM tb_cuti ORDER BY tanggal_cuti DESC");
 }
 
 $cutiData = [];  // Inisialisasi array untuk menyimpan data bulanan
@@ -42,6 +42,9 @@ foreach ($cuti as $data) {
 
 // Konversi array absensiData menjadi string yang dipisahkan oleh koma
 $cutiDataString = implode(', ', $cutiData);
+
+$pegawai = query("SELECT * FROM pegawai");
+
 
 
 ?>
@@ -77,14 +80,6 @@ $cutiDataString = implode(', ', $cutiData);
             <section class="content">
                 <div class="container-fluid">
 
-                    <div class="mb-2">
-                        <?php if (isset($_GET['tahun']) && isset($_GET['status'])) : ?>
-                            <a href="humas_cetakCuti.php?tahun=<?= $_GET['tahun']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-success btn-sm" target="_blank">Cetak berdasarkan pencarian</a>
-                        <?php else : ?>
-                            <a href="humas_cetakCutiAll.php" class="btn btn-success btn-sm" target="_blank">Cetak semua data</a>
-                        <?php endif; ?>
-                    </div>
-
                     <div class="card">
                         <div class="card-header mb-0">
                             <img src="dist/img/cutiadmin.jpg" alt="" style="width: 210px;" class="float-right pl-3">
@@ -119,6 +114,7 @@ $cutiDataString = implode(', ', $cutiData);
                                             <option selected>Status</option>
                                             <option value="acc humas">acc humas</option>
                                             <option value="ditolak">ditolak</option>
+                                            <option value="sedang proses">sedang proses</option>
                                         </select>
                                     </div>
 
@@ -126,6 +122,68 @@ $cutiDataString = implode(', ', $cutiData);
                                 </div>
 
                             </form>
+
+                            <div class="mb-2">
+                                <?php if (isset($_GET['tahun']) && isset($_GET['status'])) : ?>
+                                    <a href="humas_cetakCuti.php?tahun=<?= $_GET['tahun']; ?>&status=<?= $_GET['status']; ?>" class="btn btn-success btn-sm mr-1" target="_blank">Cetak berdasarkan pencarian</a>
+                                <?php else : ?>
+                                    <a href="humas_cetakCutiAll.php" class="btn btn-success btn-sm mr-1" target="_blank">Cetak semua data</a>
+                                <?php endif; ?>
+
+                                <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#cetakPresensiTanggal" style="display: inline;">
+                                    Cetak data berdasarkan tanggal & Nip
+                                </button>
+
+                                <!-- Modal -->
+                                <form action="humas_cetakCutiByTanggal.php" method="get" target="_blank">
+                                    <div class="modal fade" id="cetakPresensiTanggal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Cetak Presensi Berdasarkan Tanggal & Nip</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body">
+
+                                                    <div class="form-group">
+                                                        <label for="nip">NIP</label>
+                                                        <select name="nip" id="nip" class="form-control js-tanggal" style="width: 100%;">
+                                                            <option value="" selected disabled hidden></option>
+                                                            <?php
+                                                            foreach ($pegawai as $row) { ?>
+                                                                <option value="<?= $row['nip']; ?>"> <?= $row['nip']; ?> - <?= $row['nama']; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                        <small style="color: red;">* Sesuaikan NIP</small>
+                                                    </div>
+
+                                                    <div class="row">
+
+                                                        <div class="form-group col-lg-6">
+                                                            <input type="date" class="form-control" name="dari" id="">
+                                                        </div>
+
+                                                        <div class="form-group col-lg-6">
+                                                            <input type="date" class="form-control" name="sampai" id="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" name="">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+
                         </div>
 
                         <div class="container col-lg-12 p-3">
@@ -133,8 +191,7 @@ $cutiDataString = implode(', ', $cutiData);
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
+                                        <th>Nip & Nama</th>
                                         <th>Tanggal Cuti</th>
                                         <th>Hari</th>
                                         <th>Tanggal Kembali</th>
@@ -146,8 +203,7 @@ $cutiDataString = implode(', ', $cutiData);
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Nip</th>
+                                        <th>Nip & Nama</th>
                                         <th>Tanggal Cuti</th>
                                         <th>Hari</th>
                                         <th>Tanggal Kembali</th>
@@ -158,14 +214,13 @@ $cutiDataString = implode(', ', $cutiData);
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    <?php foreach ($cutiHumas as $row) : ?>
+                                    <?php foreach ($cuti as $row) : ?>
                                         <tr>
                                             <td><?= $i; ?></td>
-                                            <td><?= $row['nama']; ?></td>
-                                            <td><?= $row['nip']; ?></td>
-                                            <td><?= $row['tanggal_cuti']; ?></td>
+                                            <td><?= $row['nip']; ?> <br> <?= $row['nama']; ?></td>
+                                            <td><?= date('d-m-Y', strtotime($row['tanggal_cuti'])); ?></td>
                                             <td><?= $row['hari']; ?></td>
-                                            <td><?= $row['tanggal_kembali']; ?></td>
+                                            <td><?= date('d-m-Y', strtotime($row['tanggal_kembali'])); ?></td>
 
                                             <td>
                                                 <!-- Button trigger modal -->
@@ -323,6 +378,18 @@ $cutiDataString = implode(', ', $cutiData);
                 }
             }
         }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+    $(document).ready(function() {
+
+        $('.js-tanggal').select2({
+            dropdownParent: $('#cetakPresensiTanggal')
+        });
     });
 </script>
 

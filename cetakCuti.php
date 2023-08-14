@@ -124,7 +124,7 @@ $html .= '
 $html .= '<p align="right" style="margin-right: 5px; margin-bottom: 0px; padding-bottom: 0px;">' . "Pengadilan Negeri Banjarbaru," . " " . $tanggal . " " . bulan($bulan) . " " . $tahun . '</p>';
 
 $html .= '<p align="right" style="margin-right: 40px; margin-bottom: 0px; padding-bottom: 10px; padding-top: 0px; margin-top: 0px;">Ketua Pengadilan Negeri Banjarbaru</p>
-<img style="margin-left: 450px; width: 150px;" src="dist/img/tanda_tangan.png">
+<img style="margin-left: 450px; width: 150px;" src="dist/img/ttd_1.jpg">
 <p align="right" style="margin-right: 45px; margin-bottom: 0px; padding-bottom: 0px; padding-top: 0px;"><b>BENNY SUDARSONO, SH., MH</b></p>
 <p align="right" style="margin-right: 70px; margin-top: 0px; padding-top: 0px;"><b>19781214 200212 1 005</b></p>
 </div>
